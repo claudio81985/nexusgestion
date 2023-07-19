@@ -11,5 +11,15 @@ public class inventarioController {
         model.addAttribute("titulo", "Inventario");
         
         return "inventario";
+
+
     }   
+
+    @GetMapping("/ventas")
+    public String ventas(Model model) {
+        model.addAttribute("titulo", "Ventas");
+
+        return "ventas";
+    }
 }
+
