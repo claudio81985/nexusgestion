@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+}
+
+#sidebar-menu {
+    width: 280px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+}
+
+/* .nav-link:hover {
+    border-radius: 5px;
+    background: #87adff;
+} */
+
+/* Estilos de la sección de contenido */
+#content {
+    margin: 1rem  280px 1rem 1rem;
+    margin-left: 280px; /* Ancho del sidebar */
+    padding: 20px; /* Espacio para evitar que el contenido se superponga al sidebar */
+}
+
+/* Estilos para el buscador */
+#search-form {
+    margin-bottom: 20px; /* Espacio para separar el buscador de la tabla */
+}
+
+#search-input {
+    width: 500px; /* Ajusta el ancho según lo desees */
+}
+
+
+
+/* Estilos para el formulario de agregar nuevos artículos */
+#add-item-form {
+    margin-bottom: 20px; /* Espacio para separar el formulario de la tabla */
+}
+
+  /* Estilos para el campo de entrada de texto del formulario */
+ #item-name {
+    width: 400px; /* Ajusta el ancho según lo desees */
+}
+
+#item-code, #item-price {
+    width: 200px; /* Ajusta el ancho según lo desees */
+}
+
+  /* Estilos para el botón de enviar del formulario */
+#add-item-btn {
+    margin-top: 10px; /* Espacio para separar el botón del campo de entrada */
+}
+
+
+
+
+/* TABLA */
+.table-container {
+    /* width: 100%; */
+    height: 400px;
+}
+
+.table-container table thead {
+    position: sticky;
+    top:0;
+  }
