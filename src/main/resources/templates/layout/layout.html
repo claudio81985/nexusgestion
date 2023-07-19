@@ -42,7 +42,7 @@
 
 </head>
 
-<body>
+<body class="vh-100">
     <!-- mensajes-->
     <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
         <i class='bx bx-info-circle bx-tada'></i>
@@ -122,46 +122,7 @@
     <!--Lo que se reemplazara por el contenido de otras paginas-->
     <div layout:fragment="contenido">...</div>
 
-        
-        <!-- MENU ADMINISTRADOR PARA PANTALLAS PEQUEÑAS -->
-        <!-- <div sec:authorize="${hasRole('ADMIN') or hasRole('USER')}" class="row row-sm-2 d-md-none" id="bottom-navigation">
-            <div class="d-flex fixed-bottom bg-primary justify-content-center">
-                <ul class="navbar-nav flex-row align-items-center gap-5">
-                    <li class="nav-item" title="Ventas">
-                        <a th:href="@{/ventas/listado}" class="nav-link link-light">
-                            <i class="bi bi-cash-coin lead"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item" th:title="Compras">
-                        <a th:href="@{/compras/listado}" class="nav-link link-light">
-                            <i class='bx bxs-cart lead'></i>
-                        </a>
-                    </li>
-                    <li class="nav-item" th:title="Productos">
-                        <a th:href="@{/productos/listado}" class="nav-link link-light">
-                            <i class="bi bi-boxes lead"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item" th:title="Clientes">
-                        <a th:href="@{/clientes/listado}" class="nav-link link-light">
-                            <i class="bi bi-person-lines-fill lead"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item" th:title="Proveedores">
-                        <a th:href="@{/proveedores/listado}" class="nav-link link-light">
-                            <i class="bi bi-truck lead"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item" th:title="Usuarios">
-                        <a th:href="@{/usuarios/listado}" class="nav-link link-light">
-                            <i class="bi bi-person-fill-lock"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div> -->
-    <!-- </div> -->
-
+    
 
     <!--JQuery-->
     <script src="https://code.jquery.com/jquery-3.6.1.js"
@@ -186,21 +147,7 @@
 
 
     <!--seccion que sera reemplazada por link-->
-
-    <script th:replace=":: js"></script>
-
-    <!-- <script>
-
-        setInterval("cerrar()", 2000);
-
-        const cerrar = () => {
-            $(".alert").delay(500).slideUp(500, () => {
-                $(this).hide();
-            });
-        }
-
-    </script> -->
-
+    <script th:replace=":: js" th:src="@{/js/layout.js}"></script>
 
 </body>
 
