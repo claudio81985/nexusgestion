@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${titulo}"></title>
+</head>
+<body>
+
+  <div layout:fragment="contenido">
+    <div id="content" class="container">
+      <div class="row">
+        <div class="col-lg-8 col-sm-2">
+          <!-- Buscador -->
+          <h4>Buscador</h4>
+          <form id="search-form" class="form-inline d-flex align-items-center">
+            <!-- <div class="form-group"> -->
+              <!-- <label for="search-input" class="sr-only"></label> -->
+              <input type="text" class="form-control" id="search-input" placeholder="Ingresa un término para buscar">
+            <!-- </div> -->
+            <button type="submit" class="btn btn-primary ms-1">Buscar</button>
+          </form>
+        </div>
+        <div class="col-lg-1">
+          <button class="btn btn-success">Nuevo Artículo</button>
+        </div>
+        <div class="col-lg-1">
+          <button class="btn btn-warning">Realizar movimiento</button>
+        </div>
+      </div>
+   
+      <div class="row">
+        <div class="col-lg-11 col-sm-4">
+          <!-- Tabla Articulos -->
+          <h4>Artículos</h4>
+          <div class="table-container overflow-auto">
+            <table class="table table-hover caption-top">
+              <thead class="bg-dark text-light">
+                <tr>
+                  <th scope="col">Código</th>
+                  <th scope="col">Categoría</th>
+                  <th scope="col">Artículo</th>
+                  <th scope="col">Stock <span>Fontana</span></th>
+                  <th scope="col">Stock <span>Sauzalito</span></th>
+                  <th scope="col">Precio</th>
+                </tr>
+              </thead>
+              
+              <tbody>
+                <tr>
+                  <th scope="row">89273489</th>
+                  <td>TUERCA</td>
+                  <td>Tuerca De Piñon Yamaha Ybr Xtz Ys 250da Twister Tornado Rocket</td>
+                  <td>93</td>
+                  <td>21</td>
+                  <td>$3385</td>
+                </tr>
+                <tr>
+                  <th scope="row">91827321</th>
+                  <td>ACEITE</td>
+                  <td>Aceite Valvoline SynPower 4T 10W-50 Sintético</td>
+                  <td>17</td>
+                  <td>30</td>
+                  <td>$4228</td>
+                </tr>
+                <tr>
+                  <th scope="row">12351235</th>
+                  <td>ACEITE</td>
+                  <td>Aceite para motor Motul semi-sintético 15W-50 para motos y cuatriciclos x 1L</td>
+                  <td>28</td>
+                  <td>2</td>
+                  <td>$5290</td>
+                </tr>
+                <tr>
+                  <th scope="row">89273489</th>
+                  <td>TUERCA</td>
+                  <td>Tuerca De Piñon Yamaha Ybr Xtz Ys 250da Twister Tornado Rocket</td>
+                  <td>93</td>
+                  <td>21</td>
+                  <td>$3385</td>
+                </tr>
+                <tr>
+                  <th scope="row">91827321</th>
+                  <td>ACEITE</td>
+                  <td>Aceite Valvoline SynPower 4T 10W-50 Sintético</td>
+                  <td>17</td>
+                  <td>30</td>
+                  <td>$4228</td>
+                </tr>
+                <tr>
+                  <th scope="row">12351235</th>
+                  <td>ACEITE</td>
+                  <td>Aceite para motor Motul semi-sintético 15W-50 para motos y cuatriciclos x 1L</td>
+                  <td>28</td>
+                  <td>2</td>
+                  <td>$5290</td>
+                </tr>
+                <tr>
+                  <th scope="row">89273489</th>
+                  <td>TUERCA</td>
+                  <td>Tuerca De Piñon Yamaha Ybr Xtz Ys 250da Twister Tornado Rocket</td>
+                  <td>93</td>
+                  <td>21</td>
+                  <td>$3385</td>
+                </tr>
+                <tr>
+                  <th scope="row">91827321</th>
+                  <td>ACEITE</td>
+                  <td>Aceite Valvoline SynPower 4T 10W-50 Sintético</td>
+                  <td>17</td>
+                  <td>30</td>
+                  <td>$4228</td>
+                </tr>
+                <tr>
+                  <th scope="row">12351235</th>
+                  <td>ACEITE</td>
+                  <td>Aceite para motor Motul semi-sintético 15W-50 para motos y cuatriciclos x 1L</td>
+                  <td>28</td>
+                  <td>2</td>
+                  <td>$5290</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+
+
+
+  <script th:fragment="js"></script>
+  <!-- <script src="index.js"></script> -->
+</body>
+</html>
