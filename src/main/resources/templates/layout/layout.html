@@ -64,39 +64,38 @@
     <!-- MENU SIDEBAR -->
     <div id="sidebar-menu" class="d-flex flex-column flex-shrink-0 p-3 bg-light shadow">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-          <img src="logo.png" alt="logo" class="w-100">
-          <!-- <span class="fs-4">Nexus Gestión</span> -->
+            <img th:src="@{/img/logo-texto.png}" alt="logo" class="w-100">
         </a>
         <hr>
         <h5 class="text-center">¡Hola Nexus!</h5>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
-            <a id="link-ventas" th:href="@{/ventas/listado}" class="nav-link link-dark active" aria-current="page">
+            <a href="/" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/' ? ' active' : ''))}" aria-current="page">
                 <i class="bi bi-receipt"></i>
                 Ventas
             </a>
           </li>
           <li>
-            <a id="link-inventario" th:href="@{/inventario}" class="nav-link link-dark">
+            <a th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/inventario' ? ' active' : ''))}" href="/inventario">
                 <i class="bi bi-boxes"></i>
                 Inventario
             </a>
           </li>
           <li>
-            <a id="link-compras" href="#" class="nav-link link-dark">
+            <a th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/compras' ? ' active' : ''))}" href="/compras">
                 <i class="bi bi-cart3"></i>
                 Compras
             </a>
           </li>
           <li>
-            <a id="link-proveedores" href="#" class="nav-link link-dark">
+            <a th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/proveedores' ? ' active' : ''))}" href="/proveedores">
                 <i class="bi bi-truck"></i>
                 Proveedores
             </a>
           </li>
           <li>
-            <a id="link-sucursales" href="#" class="nav-link link-dark">
+                <a th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/sucursales' ? ' active' : ''))}" href="/sucursales">
                 <i class="bi bi-shop"></i>
                 Sucursales
             </a>
@@ -105,7 +104,7 @@
         <hr>
         <div class="dropdown">
           <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="" alt="foto-perfil" width="32" height="32" class="rounded-circle me-2">
+            <img th:src="@{/img/logo.png}" alt="foto-perfil" width="32" height="32" class="rounded-circle me-2">
             <strong>Cuenta</strong>
           </a>
           <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
