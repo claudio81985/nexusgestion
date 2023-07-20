@@ -8,10 +8,9 @@ import org.springframework.ui.Model;
 @Controller
 @RequestMapping("/ventas")
 public class ventasController {
-    @GetMapping("/listado")
+    @GetMapping("/")
     public String ventas(Model model) {
         model.addAttribute("titulo", "Ventas");
-
-        return "ventas/list";
+        return "ventas/ventas"; // ventas.html dentro de la carpeta "ventas"
     }
 }

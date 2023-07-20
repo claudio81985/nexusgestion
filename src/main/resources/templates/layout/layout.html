@@ -23,8 +23,6 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
 
 
-    <!--Box Icons-->
-    <!-- <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> -->
     <title th:text="${titulo}"></title>
 
     <!-- Datatables CSS -->
@@ -71,7 +69,7 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
-            <a href="/" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/' ? ' active' : ''))}" aria-current="page">
+            <a href="/ventas/" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/ventas/' ? ' active' : ''))}" aria-current="page">
                 <i class="bi bi-receipt"></i>
                 Ventas
             </a>
