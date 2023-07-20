@@ -6,3 +6,4 @@ const cerrar = () => {
         $(this).hide();
     });
 }
+
