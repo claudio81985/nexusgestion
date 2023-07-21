@@ -24,20 +24,6 @@
 
 
     <title th:text="${titulo}"></title>
-
-    <!-- Datatables CSS -->
-    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css"> -->
-
-    <!-- CSS -->
-    <!-- <link rel="stylesheet" th:href="@{/css/style.css}"> -->
-
-
-
-
 </head>
 
 <body class="vh-100">
@@ -59,43 +45,42 @@
     </div>
 
 
-    <!-- MENU SIDEBAR -->
     <div id="sidebar-menu" class="d-flex flex-column flex-shrink-0 p-3 bg-light shadow">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            <img th:src="@{/img/logo-texto.png}" alt="logo" class="w-100">
+          <img th:src="@{/img/logo-texto.png}" alt="logo" class="w-100">
         </a>
         <hr>
-        <h5 class="text-center">¡Hola Nexus!</h5>
+        <h5 class="text-center">¡Hola <span>Nexus</span>!</h5>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
-            <a href="/ventas/" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/ventas/' ? ' active' : ''))}" aria-current="page">
-                <i class="bi bi-receipt"></i>
-                Ventas
+            <a href="/ventas/" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/ventas/' ? ' active' : ''))}">
+              <i class="bi bi-receipt"></i>
+              Ventas
             </a>
           </li>
           <li>
-            <a th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/inventario' ? ' active' : ''))}" href="/inventario">
-                <i class="bi bi-boxes"></i>
-                Inventario
+            <a href="/inventario" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/inventario' ? ' active' : ''))}">
+              <i class="bi bi-boxes"></i>
+              Inventario
             </a>
           </li>
           <li>
-            <a th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/compras' ? ' active' : ''))}" href="/compras">
-                <i class="bi bi-cart3"></i>
-                Compras
+            <a href="/compras" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/compras' ? ' active' : ''))}">
+              <i class="bi bi-cart3"></i>
+              Compras
             </a>
           </li>
           <li>
-            <a th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/proveedores' ? ' active' : ''))}" href="/proveedores">
-                <i class="bi bi-truck"></i>
-                Proveedores
+            <a href="/proveedores" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/proveedores' ? ' active' : ''))}">
+              <i class="bi bi-truck"></i>
+              Proveedores
             </a>
           </li>
           <li>
-                <a th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/sucursales' ? ' active' : ''))}" href="/sucursales">
-                <i class="bi bi-shop"></i>
-                Sucursales
+            <a href="/sucursales" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/sucursales' ? ' active' : ''))}">
+              <i class="bi bi-shop"></i>
+              Sucursales
             </a>
           </li>
         </ul>
@@ -108,7 +93,6 @@
           <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
             <li><a class="dropdown-item" href="#">Perfil</a></li>
             <li><a class="dropdown-item" href="#">Configuración</a></li>
-            <!-- <li><a class="dropdown-item" href="#">Permisos</a></li> -->
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
           </ul>
