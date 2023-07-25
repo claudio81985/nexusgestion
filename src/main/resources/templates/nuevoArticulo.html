@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${titulo}"></title>
+</head>
+<body>
+
+  <div layout:fragment="contenido">
+    <div id="content" class="p-3">
+        <form action="" method="post" object="">
+        <div class="container border rounded shadow p-3 bg-light">
+            <div class="row">
+                <div class="col-1">
+                    <a 
+                        th:href="@{/inventario}" class="btn btn-primary"
+                        data-bs-toggle="tooltip" data-bs-placement="right"
+                        title="Volver"
+                        >
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </div>
+                <div class="col-10 text-center">
+                    <h3>Nuevo artículo</h3>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="prov" class="form-label" style="width: 90%;">Proveedor:</label>
+                    <a  href="#" class="link-primary"
+                        data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Agregar nuevo proveedor"
+                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+                        </svg>
+                    </a>
+                    <select id="prov" class="form-select" name="prov">
+                        <!-- <option th:each="c : $(categorias)" th:value="${c.id}" th:text="${c}"></option> -->
+                        <option selected disabled>Selecciona un proveedor</option>
+                        <option>inmotos</option>
+                        <option>pepe repuestos</option>
+                        <option>todo motos</option>
+                        <option>airepuestos</option>
+                        <option>Otro</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label for="cod" class="form-label">Código del artículo:</label>
+                    <input
+                        id="cod" type="text" 
+                        class="form-control" maxlength="10"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Máximo 10 carácteres"
+                        placeholder="xxxxxxxxxx"
+                    >
+                </div>
+                <div class="col-4">
+                        <label for="cate" class="form-label" style="width: 90%;">Categoría:</label>
+                        <a  href="#" class="link-primary"
+                        data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Agregar nueva categoría"
+                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+                        </svg>
+                    </a>
+                        <select id="cate" class="form-select" name="cate">
+                            <!-- <option th:each="c : $(categorias)" th:value="${c.id}" th:text="${c}"></option> -->
+                            <option selected disabled>Selecciona una categoría</option>
+                            <option>Bulon</option>
+                            <option>Válvula</option>
+                            <option>Tuerca</option>
+                            <option>Aceite</option>
+                            <option>Otro</option>
+                        </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <label for="nombreProd" class="form-label">Nombre común:</label>
+                    <input
+                        id="nombreProd" type="text" 
+                        class="form-control" maxlength="30"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Máximo 30 carácteres"
+                        placeholder="Nombre que utilice para identificar el producto."
+                    >
+                </div>
+                <div class="col">
+                    <label for="nombreProd" class="form-label">Nombre técnico:</label>
+                    <input
+                        id="nombreProd" type="text" 
+                        class="form-control" maxlength="30"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Máximo 30 carácteres"
+                        placeholder="Marca, modelo, alguna característica del artículo."
+                    >
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-">
+                    <label for="nombreProd" class="form-label">Descripción:</label>
+                    <input
+                        id="nombreProd" type="text" 
+                        class="form-control" maxlength="50"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Máximo 50 carácteres"
+                        placeholder="Cualquier información adicional que sea de utilidad como la compatibildad con modelos de vehículos."
+                    >
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-success"><i class="bi bi-check-square-fill"></i> Guardar</button>
+                    <button type="reset" class="btn btn-secondary"><i class="bi bi-stars"></i> Limpiar</button>
+                    <a th:href="@{/inventario}" type="button" class="btn btn-danger"><i class="bi bi-x-square-fill"></i> Cancelar</a>
+                </div>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+  <script th:fragment="js" th:src="@{/js/inventario.js}"></script>
+</body>
+</html>
