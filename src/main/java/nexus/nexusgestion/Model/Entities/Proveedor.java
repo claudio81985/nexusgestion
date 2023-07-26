@@ -33,9 +33,12 @@ public class Proveedor {
 
     @Pattern(regexp = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", message = "Escribe nuevamente tu email")
     private String email;
-    
+
     @NotBlank(message = "La direccion es Obligatoria...")
     private String localidad;
+
+    @NotBlank(message = "La direccion es Obligatoria...")
+    private String provincia;
 
     @NotNull(message = "el telefono es obligatorio...")
     @Size(max = 12)
@@ -112,11 +115,17 @@ public class Proveedor {
         this.activo = activo;
     }
 
-    @Override
-    public String toString() {
-        return  razon_soc;
+    public String getProvincia() {
+        return provincia;
     }
 
-    
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    @Override
+    public String toString() {
+        return razon_soc;
+    }
 
 }
