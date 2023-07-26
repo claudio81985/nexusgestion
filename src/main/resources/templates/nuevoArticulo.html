@@ -18,9 +18,10 @@
         <form action="" method="post" object="">
         <div class="container border rounded shadow p-3 bg-light">
             <div class="row">
+                <!-- Botón Volver -->
                 <div class="col-1">
                     <a 
-                        th:href="@{/inventario}" class="btn btn-primary"
+                        th:href="'javascript:history.back()'" class="btn btn-primary"
                         data-bs-toggle="tooltip" data-bs-placement="right"
                         title="Volver"
                         >
@@ -35,7 +36,7 @@
             <div class="row">
                 <div class="col-4">
                     <label for="prov" class="form-label" style="width: 90%;">Proveedor:</label>
-                    <a  href="#" class="link-primary"
+                    <a  th:href="@{/proveedores/nuevo}" class="link-primary"
                         data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Agregar nuevo proveedor"
                         >

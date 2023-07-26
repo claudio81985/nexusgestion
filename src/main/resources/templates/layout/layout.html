@@ -60,19 +60,19 @@
             </a>
           </li>
           <li>
-            <a href="/inventario" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/inventario' ? ' active' : ''))}">
+            <a th:href="@{/inventario}" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/inventario' ? ' active' : ''))}">
               <i class="bi bi-boxes"></i>
               Inventario
             </a>
           </li>
           <li>
-            <a href="/compras" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/compras' ? ' active' : ''))}">
+            <a th:href="@{/compras}" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/compras' ? ' active' : ''))}">
               <i class="bi bi-cart3"></i>
               Compras
             </a>
           </li>
           <li>
-            <a href="/proveedores" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/proveedores' ? ' active' : ''))}">
+            <a th:href="@{/proveedores/listado}" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/proveedores' ? ' active' : ''))}">
               <i class="bi bi-truck"></i>
               Proveedores
             </a>
