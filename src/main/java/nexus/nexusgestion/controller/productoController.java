@@ -78,7 +78,7 @@ public class productoController {
         msgFlash.addFlashAttribute("success", "Producto Guardado Correctamente.");
         status.setComplete();
 
-        return "redirect:/productos/listado";
+        return "redirect:/inventario";
     }
 
     @GetMapping("/borrar/{id}")

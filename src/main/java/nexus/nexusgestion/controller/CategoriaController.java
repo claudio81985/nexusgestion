@@ -1,4 +1,4 @@
-package com.analistas.nexus.web.controller;
+package nexus.nexusgestion.controller;
 
 
 

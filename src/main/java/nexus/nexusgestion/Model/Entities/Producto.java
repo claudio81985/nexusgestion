@@ -56,7 +56,7 @@ public class Producto {
     @NotNull(message = "Ingrese la cantidad de Stock")
     private int stockSucursalDos;
 
-    @NotNull(message = "Ingrese la cantidad de Stock")
+
     private int stockGeneral;
 
     @JsonIgnore
