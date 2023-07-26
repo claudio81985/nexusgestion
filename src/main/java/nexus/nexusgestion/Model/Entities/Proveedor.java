@@ -34,10 +34,7 @@ public class Proveedor {
     @Pattern(regexp = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", message = "Escribe nuevamente tu email")
     private String email;
     
-    
-    private String provincia;
-
-       
+    @NotBlank(message = "La direccion es Obligatoria...")
     private String localidad;
 
     @NotNull(message = "el telefono es obligatorio...")

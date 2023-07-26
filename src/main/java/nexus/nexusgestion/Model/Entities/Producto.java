@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "productos")
 public class Producto {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,9 +31,17 @@ public class Producto {
     @Column(name = "codigoIdentificacion", length = 13)
     private String codigoIdentificacion;
 
-    @Size(max = 500)
+    @Size(max = 50)
     @NotBlank(message = "La descripcion es requerida.")
     private String descripcion;
+
+    @Size(max = 30)
+    @NotBlank(message = "La descripcion es requerida.")
+    private String nombreComun;
+
+    @Size(max = 30)
+    @NotBlank(message = "La descripcion es requerida.")
+    private String nombreTecnico;
 
     @NotNull(message = "El precio es requerido.")
     @NumberFormat(pattern = "#,##0.00", style = Style.CURRENCY)
@@ -41,6 +49,15 @@ public class Producto {
 
     @Column(name = "activo", columnDefinition = "boolean default 1")
     private boolean activo;
+
+    @NotNull(message = "Ingrese la cantidad de Stock")
+    private int stockSucursalUno;
+
+    @NotNull(message = "Ingrese la cantidad de Stock")
+    private int stockSucursalDos;
+
+    @NotNull(message = "Ingrese la cantidad de Stock")
+    private int stockGeneral;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -51,12 +68,6 @@ public class Producto {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_proveedor", referencedColumnName = "id")
     private Proveedor proveedor;
-
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_stock", referencedColumnName = "id")
-    private Stock stock;
 
     public Producto() {
         activo = true;
@@ -77,7 +88,6 @@ public class Producto {
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
     }
-  
 
     public String getDescripcion() {
         return descripcion;
@@ -119,19 +129,58 @@ public class Producto {
         this.codigoIdentificacion = codigoIdentificacion;
     }
 
-    public Stock getStock() {
-        return stock;
+    public String getNombreComun() {
+        return nombreComun;
     }
 
-    public void setStock(Stock stock) {
-        this.stock = stock;
+    public void setNombreComun(String nombreComun) {
+        this.nombreComun = nombreComun;
+    }
+
+    public String getNombreTecnico() {
+        return nombreTecnico;
+    }
+
+    public void setNombreTecnico(String nombreTecnico) {
+        this.nombreTecnico = nombreTecnico;
+    }
+
+    public int getStockSucursalUno() {
+        return stockSucursalUno;
+    }
+
+    public int getStockSucursalDos() {
+        return stockSucursalDos;
+    }
+
+    public int getStockGeneral() {
+        return stockGeneral;
+    }
+
+    public void setStockGeneral(int stockGeneral) {
+        this.stockGeneral = stockGeneral;
+    }
+
+    // Método personalizado para actualizar stockSucursalUno
+    public void setStockSucursalUno(int stockSucursalUno) {
+        this.stockSucursalUno = stockSucursalUno;
+        actualizarStockGeneral();
+    }
+
+    // Método personalizado para actualizar stockSucursalDos
+    public void setStockSucursalDos(int stockSucursalDos) {
+        this.stockSucursalDos = stockSucursalDos;
+        actualizarStockGeneral();
+    }
+
+    // Método privado para actualizar stockGeneral
+    private void actualizarStockGeneral() {
+        this.stockGeneral = stockSucursalUno + stockSucursalDos;
     }
 
     @Override
     public String toString() {
-        return  id + " - " + descripcion + " - " + precio;
+        return id + " - " + descripcion + " - " + precio;
     }
 
-       
-    
 }
