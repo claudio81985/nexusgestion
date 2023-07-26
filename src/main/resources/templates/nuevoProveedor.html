@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${titulo}"></title>
+</head>
+<body>
+
+  <div layout:fragment="contenido">
+    <div id="content" class="p-3">
+        <form action="" method="post" object="">
+        <div class="container border rounded shadow p-3 bg-light">
+            <div class="row">
+                <div class="col-1">
+                    <a 
+                        href="#" class="btn btn-primary"
+                        data-bs-toggle="tooltip" data-bs-placement="right"
+                        title="Volver"
+                        >
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </div>
+                <div class="col-10 text-center">
+                    <h3>Nuevo proveedor</h3>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="cuitProv" class="form-label">CUIT/CUIL:</label>
+                    <input
+                        id="cuitProv" type="text" 
+                        class="form-control"
+                        pattern="[0-9]{11}"
+                        maxlength="11"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="No uses puntos ni guiones."
+                        placeholder="Ingresa los 11 dígitos que corresponden"
+                        autocomplete="off"
+                    >
+                </div>
+                <div class="col-8">
+                    <label for="nomProv" class="form-label">Nombre/Razón Social:</label>
+                    <input
+                        id="nomProv" type="text" 
+                        class="form-control" maxlength="50"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Campo obligatorio"
+                        placeholder="Proveedor S.A."
+                        required
+                        autocomplete="off"
+                    >
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-3">
+                    <label for="provincia" class="form-label">Provincia:</label>
+                    <select id="cate" class="form-select" name="cate">
+                        <!-- <option th:each="c : $(categorias)" th:value="${c.id}" th:text="${c}"></option> -->
+                        <option selected disabled>Selecciona una provincia</option>
+                        <option>Buenos Aires</option>
+                        <option>Catamarca</option>
+                        <option>Chaco</option>
+                        <option>Chubut</option>
+                        <option>Corrientes</option>
+                        <option>Mendoza</option>
+                        <option>Misiones</option>
+                        <option>Santa Cruz</option>
+                        <option>Santiago del Estero</option>
+                        <option>Tierra del Fuego</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <label for="localidad" class="form-label">Localidad/Ciudad:</label>
+                    <input
+                        id="localidad" type="text" 
+                        class="form-control" maxlength="10"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Máximo 20 carácteres"
+                        placeholder="CABA"
+                        autocomplete="off"
+                    >
+                </div>
+                <div class="col-6">
+                    <label for="direccion" class="form-label">Dirección:</label>
+                    <input
+                        id="direccion" type="text" 
+                        class="form-control" maxlength="10"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Máximo 20 carácteres"
+                        placeholder="Calle, Altura, Barrio, etc."
+                        autocomplete="off"
+                    >
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-4">
+                    <label for="tel" class="form-label">Teléfono:</label>
+                    <input
+                        id="tel" type="tel" 
+                        class="form-control"
+                        placeholder="Sin 0 ni 15"
+                        autocomplete="off"
+                    >
+                </div>
+                <div class="col">
+                    <label for="email" class="form-label">Correo Electrónico (e-mail):</label>
+                    <input
+                        id="email" type="email" 
+                        class="form-control"
+                        placeholder="micorre@ejemplo.com"
+                        autocomplete="off"
+                    >
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-success"><i class="bi bi-check-square-fill"></i> Guardar</button>
+                    <button type="reset" class="btn btn-secondary"><i class="bi bi-stars"></i> Limpiar</button>
+                    <a href="#" type="button" class="btn btn-danger"><i class="bi bi-x-square-fill"></i> Cancelar</a>
+                </div>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+  <script th:fragment="js" th:src="@{/js/inventario.js}"></script>
+</body>
+</html>
