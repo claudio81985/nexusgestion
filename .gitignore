@@ -34,4 +34,4 @@ build/
 
 
 ### No Subir Controller ###
-/controller
+**/controller/**
