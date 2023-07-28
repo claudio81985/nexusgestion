@@ -30,8 +30,8 @@
                     <hr>
                     <div class="row">
                         <div class="col-4">
-                            <label for="prov" class="form-label" style="width: 90%;">Proveedor:</label>
-                            <a href="#" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+                            <label for="provee" class="form-label" style="width: 90%;">Proveedor:</label>
+                            <a th:href="@{/proveedores/nuevo/}" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="Agregar nuevo proveedor">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                     class="bi bi-plus-square-fill" viewBox="0 0 16 16">
@@ -40,7 +40,7 @@
                                 </svg>
                             </a>
 
-                            <select name="prov" id="prov" class="form-select">
+                            <select name="provee" id="provee" class="form-select">
                                 <option th:each="p : ${proveedores}" th:value="${p.id}" th:text="${p}"></option>
                             </select>
                         </div>
