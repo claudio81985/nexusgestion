@@ -1,5 +1,7 @@
 package nexus.nexusgestion.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +10,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import nexus.nexusgestion.Model.Entities.Categoria;
 import nexus.nexusgestion.Model.Entities.Proveedor;
+import nexus.nexusgestion.Model.Entities.Provincias;
 import nexus.nexusgestion.Model.Service.IProveedorService;
+import nexus.nexusgestion.Model.Service.IProvinciasService;
 
 @Controller
 @RequestMapping("/proveedores")
@@ -26,6 +33,9 @@ public class ProveedorController {
 
     @Autowired
     IProveedorService proveedorService;
+
+    @Autowired
+    IProvinciasService provinciasService;
 
     @GetMapping("/listado")
     public String listado(Model model) {
@@ -46,7 +56,7 @@ public class ProveedorController {
     }
 
     @PostMapping("/guardar")
-    public String guardar(@Valid Proveedor proveedor, BindingResult result,
+    public String guardar(@Valid Proveedor proveedor, BindingResult result, @RequestParam("pro") Long idPro,
             Model model, RedirectAttributes msgFlash, SessionStatus status) {
 
         // Verificar si hay errores
@@ -55,6 +65,7 @@ public class ProveedorController {
             return "proveedores/form";
         }
 
+        proveedor.setProvincias(provinciasService.buscarPorId(idPro));
         proveedorService.guardar(proveedor);
 
         msgFlash.addFlashAttribute("success", "Proveedor Guardado Correctamente.");
@@ -88,31 +99,8 @@ public class ProveedorController {
 
     }
 
-    @GetMapping("/nuevo2")
-    public String nuevo2(Model model) {
-
-        model.addAttribute("titulo", "Nuevo Proveedor");
-        model.addAttribute("proveedor", new Proveedor());
-
-        return "proveedores/form2";
+   @ModelAttribute("provincias")
+    public List<Provincias> getProvincias() {
+        return provinciasService.buscarTodo();
     }
-
-    // @PostMapping("/guardar2")
-    // public String guardar2(@Valid Proveedor proveedor, BindingResult result,
-    //         Model model, RedirectAttributes msgFlash, SessionStatus status) {
-
-    //     // Verificar si hay errores
-    //     if (result.hasErrors()) {
-    //         model.addAttribute("danger", "Corrija los Errores...");
-    //         return "proveedores/form2";
-    //     }
-
-    //     proveedorService.guardar(proveedor);
-
-    //     msgFlash.addFlashAttribute("success", "Proveedor Guardado Correctamente.");
-    //     status.setComplete();
-
-    //     return "redirect:/compras/nuevo";
-    // }
-
 }

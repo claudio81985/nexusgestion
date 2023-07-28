@@ -2,14 +2,19 @@ package nexus.nexusgestion.Model.Entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "proveedores")
@@ -37,15 +42,18 @@ public class Proveedor {
     @NotBlank(message = "La direccion es Obligatoria...")
     private String localidad;
 
-    @NotBlank(message = "La direccion es Obligatoria...")
-    private String provincia;
-
+    
     @NotNull(message = "el telefono es obligatorio...")
     @Size(max = 12)
     private String telefono;
 
     @Column(name = "activo", columnDefinition = "boolean default 1")
     private boolean activo;
+
+     @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_provincias", referencedColumnName = "id")
+    private Provincias provincias;
 
     public Proveedor() {
         activo = true;
@@ -115,17 +123,18 @@ public class Proveedor {
         this.activo = activo;
     }
 
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
-
+    
     @Override
     public String toString() {
         return razon_soc;
+    }
+
+    public Provincias getProvincias() {
+        return provincias;
+    }
+
+    public void setProvincias(Provincias provincias) {
+        this.provincias = provincias;
     }
 
 }

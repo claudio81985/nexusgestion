@@ -1,134 +1,157 @@
 <!DOCTYPE html>
-<html   lang="es"
-        xmlns="http://www.w3.org/1999/xhtml" 
-        xmlns:th="http://thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-    
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Hoja de estilos -->
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <!-- Hoja de estilos -->
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
 
-    <!-- Bootstrap 5.0.2 CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    
-    <!-- Bootstrap iconos -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    
-    <!--JQuery ui css-->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+  <!-- Bootstrap 5.0.2 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!-- Bootstrap iconos -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <!--JQuery ui css-->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
 
 
-    <title th:text="${titulo}"></title>
+  <title th:text="${titulo}"></title>
 </head>
 
 <body class="vh-100">
-    <!-- mensajes-->
-    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
-        <i class='bx bx-info-circle bx-tada'></i>
-        <span th:text="${success}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="cerrar"></button>
-    </div>
-    <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${warning != null}">
-        <i class='bx bx-message-rounded-dots bx-tada'></i>
-        <span th:text="${warning}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="cerrar"></button>
-    </div>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${danger != null}">
-        <i class='bx bxs-error bx-tada'></i>
-        <span th:text="${danger}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="cerrar"></button>
-    </div>
+  <!-- mensajes-->
+  <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+    <i class='bx bx-info-circle bx-tada'></i>
+    <span th:text="${success}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="cerrar"></button>
+  </div>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${warning != null}">
+    <i class='bx bx-message-rounded-dots bx-tada'></i>
+    <span th:text="${warning}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="cerrar"></button>
+  </div>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${danger != null}">
+    <i class='bx bxs-error bx-tada'></i>
+    <span th:text="${danger}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="cerrar"></button>
+  </div>
 
 
-    <div id="sidebar-menu" class="d-flex flex-column flex-shrink-0 p-3 bg-light shadow">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-          <img th:src="@{/img/logo-texto.png}" alt="logo" class="w-100">
+  <div id="sidebar-menu" class="d-flex flex-column flex-shrink-0 p-3 bg-light shadow">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+      <img th:src="@{/img/logo-texto.png}" alt="logo" class="w-100">
+    </a>
+    <hr>
+    <h5 class="text-center">¡Hola <span>Nexus</span>!</h5>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a th:href="@{/ventas/listado}"
+          th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/ventas/' ? ' active' : ''))}">
+          <i class="bi bi-receipt"></i>
+          Ventas
         </a>
-        <hr>
-        <h5 class="text-center">¡Hola <span>Nexus</span>!</h5>
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-          <li class="nav-item">
-            <a href="/ventas/" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/ventas/' ? ' active' : ''))}">
-              <i class="bi bi-receipt"></i>
-              Ventas
-            </a>
-          </li>
-          <li>
-            <a th:href="@{/inventario}" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/inventario' ? ' active' : ''))}">
-              <i class="bi bi-boxes"></i>
-              Inventario
-            </a>
-          </li>
-          <li>
-            <a th:href="@{/compras}" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/compras' ? ' active' : ''))}">
-              <i class="bi bi-cart3"></i>
-              Compras
-            </a>
-          </li>
-          <li>
-            <a th:href="@{/proveedores/listado}" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/proveedores' ? ' active' : ''))}">
-              <i class="bi bi-truck"></i>
-              Proveedores
-            </a>
-          </li>
-          <li>
-            <a href="/sucursales" th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/sucursales' ? ' active' : ''))}">
-              <i class="bi bi-shop"></i>
-              Sucursales
-            </a>
-          </li>
-        </ul>
-        <hr>
-        <div class="dropdown">
-          <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-            <img th:src="@{/img/logo.png}" alt="foto-perfil" width="32" height="32" class="rounded-circle me-2">
-            <strong>Cuenta</strong>
-          </a>
-          <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-            <li><a class="dropdown-item" href="#">Perfil</a></li>
-            <li><a class="dropdown-item" href="#">Configuración</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
-          </ul>
-        </div>
-    </div>  
+      </li>
+      <li>
+        <a th:href="@{/inventario}"
+          th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/inventario' ? ' active' : ''))}">
+          <i class="bi bi-boxes"></i>
+          Inventario
+        </a>
+      </li>
+      <li>
+        <a th:href="@{/compras}"
+          th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/compras' ? ' active' : ''))}">
+          <i class="bi bi-cart3"></i>
+          Compras
+        </a>
+      </li>
+      <li>
+        <a th:href="@{/proveedores/listado}"
+          th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/proveedores' ? ' active' : ''))}">
+          <i class="bi bi-truck"></i>
+          Proveedores
+        </a>
+      </li>
+      <li>
+        <a href="/sucursales"
+          th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/sucursales' ? ' active' : ''))}">
+          <i class="bi bi-shop"></i>
+          Sucursales
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        <img th:src="@{/img/logo.png}" alt="foto-perfil" width="32" height="32" class="rounded-circle me-2">
+        <strong>Cuenta</strong>
+      </a>
+      <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+        <li><a class="dropdown-item" href="#">Perfil</a></li>
+        <li><a class="dropdown-item" href="#">Configuración</a></li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+      </ul>
+    </div>
+  </div>
 
 
-    <!--Lo que se reemplazara por el contenido de otras paginas-->
-    <div layout:fragment="contenido">...</div>
-
-    
-
-    <!--JQuery-->
-    <script src="https://code.jquery.com/jquery-3.6.1.js"
-        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-
-    <!--JQuery UI JS-->
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
-    <!-- JQuery Mask -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
-
-    <!-- Sweet Alert 2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Datatables JS -->
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-
-    <!--bootstrap 5.0.2 JS CDN-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <!--Lo que se reemplazara por el contenido de otras paginas-->
+  <div layout:fragment="contenido">...</div>
 
 
 
+  <!--JQuery-->
+  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"></script>
 
-    <!--seccion que sera reemplazada por link-->
-    <script th:replace=":: js" th:src="@{/js/layout.js}"></script>
+  <!--JQuery UI JS-->
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+  <!-- JQuery Mask -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+
+  <!-- Sweet Alert 2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Datatables JS -->
+  <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+  <!--bootstrap 5.0.2 JS CDN-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+
+
+
+  <!--seccion que sera reemplazada por link-->
+  <script th:replace=":: js" th:src="@{/js/layout.js}"></script>
+
+  <script>
+
+    setInterval("cerrar()", 2000);
+
+    const cerrar = () => {
+      $(".alert").delay(500).slideUp(500, () => {
+        $(this).hide();
+      });
+    }
+
+  </script>
+
+
 
 </body>
 

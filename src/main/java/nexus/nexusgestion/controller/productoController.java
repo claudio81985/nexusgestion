@@ -62,7 +62,7 @@ public class productoController {
 
     @PostMapping("/guardar")
     public String guardar(@Valid Producto producto, BindingResult result, @RequestParam("cate") Long idCate,
-            @RequestParam("prov") Long idProv,
+            @RequestParam("provee") Long idProvee,
             Model model, RedirectAttributes msgFlash, SessionStatus status) {
 
         // Verificar si hay errores
@@ -72,7 +72,7 @@ public class productoController {
         }
 
         producto.setCategoria(categoriaService.buscarPorId(idCate));
-        producto.setProveedor(proveedorService.buscarPorId(idProv));
+        producto.setProveedor(proveedorService.buscarPorId(idProvee));
         productoService.guardar(producto);
 
         msgFlash.addFlashAttribute("success", "Producto Guardado Correctamente.");
