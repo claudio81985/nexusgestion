@@ -5,7 +5,7 @@
 
 
 #sidebar-menu {
-    width: 250px;
+    width: 220px;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -21,7 +21,7 @@
 /* INVENTARIO */
 
 #content {
-    margin-left: 250px
+    margin-left: 220px
 }
 
 #top-panel {
