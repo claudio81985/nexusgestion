@@ -9,7 +9,6 @@ let stock = {};
 const stocks = [];
 
 $(document).ready(function () {
-
     $("#buscar_productos").autocomplete({
         minLength: 3,
         source: (request, response) => {
@@ -21,14 +20,15 @@ $(document).ready(function () {
                 },
                 success: (data) => {
                     response($.map(data, (item) => {
-
-                        stock = {
-                            id: item.id,
-                            stockGeneral: item.stockGeneral,
-                            stockSucursalUno: item.stockSucursalUno,
-                            stockSucursalDos: item.stockSucursalDos
-                        };
-                        stocks.push(stock);
+                        // Verificar el permiso del usuario y obtener el stock adecuado
+                        let stock;
+                        if (permisoUsuario === "sucursaluno") {
+                            stock = item.stockSucursalUno;
+                        } else if (permisoUsuario === "sucursaldos") {
+                            stock = item.stockSucursalDos;
+                        } else {
+                            stock = item.stockGeneral;
+                        }
 
                         return {
                             value: item.id,

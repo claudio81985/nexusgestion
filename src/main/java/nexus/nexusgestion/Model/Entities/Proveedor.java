@@ -24,26 +24,27 @@ public class Proveedor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "La Razon Social es Obligatoria...")
+    @NotBlank(message = "Campo obligatorio")
     @Size(max = 50)
     private String razon_soc;
 
-    @NotBlank(message = "El cuil es Obligatorio...")
+    @NotBlank(message = "Campo obligatorio")
     @Size(max = 11)
     private String cuil;
 
-    @NotBlank(message = "La direccion es Obligatoria...")
+    @NotBlank(message = "Campo obligatorio")
     @Size(max = 50)
     private String direccion;
 
     @Pattern(regexp = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", message = "Escribe nuevamente tu email")
     private String email;
 
-    @NotBlank(message = "La direccion es Obligatoria...")
+    @NotBlank(message = "Campo obligatorio")
+    @Size(max = 30)
     private String localidad;
 
     
-    @NotNull(message = "el telefono es obligatorio...")
+    @NotNull(message = "Campo obligatorio")
     @Size(max = 12)
     private String telefono;
 

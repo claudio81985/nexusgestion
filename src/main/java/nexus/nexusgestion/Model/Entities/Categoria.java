@@ -17,7 +17,7 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 20)
+    @Size(max = 40)
     @NotEmpty
     private String nombre;
 

@@ -19,37 +19,10 @@ VALUES
     ('4', 2, 'Aceites y lubricantes'),
     ('5', 1, 'Sistemas eléctricos'),
     ('6', 1, 'Neumáticos'),
-    ('7', 2, 'Accesorios exteriores'),
+    ('7', 2, 'Accesorios'),
     ('8', 1, 'Sistemas de escape'),
     ('9', 1, 'Transmisión'),
     ('10', 1, 'Refrigeración');
-
--- INSERT INTO categorias (id, activo, nombre) VALUES ('1', 1, 'Embragues');
--- INSERT INTO categorias (id, activo, nombre) VALUES ('2', 1, 'Frenos');
--- INSERT INTO categorias (id, activo, nombre) VALUES ('3', 1, 'Suspensiones');
--- INSERT INTO categorias (id, activo, nombre) VALUES ('4', 2, 'Aceites y lubricantes');
--- INSERT INTO categorias (id, activo, nombre) VALUES ('5', 1, 'Sistemas eléctricos');
--- INSERT INTO categorias (id, activo, nombre) VALUES ('6', 1, 'Neumáticos');
--- INSERT INTO categorias (id, activo, nombre) VALUES ('7', 2, 'Accesorios exteriores');
--- INSERT INTO categorias (id, activo, nombre) VALUES ('8', 1, 'Sistemas de escape');
--- INSERT INTO categorias (id, activo, nombre) VALUES ('9', 1, 'Transmisión');
--- INSERT INTO categorias (id, activo, nombre) VALUES ('10', 1, 'Refrigeración');
-
-
-
-/*Cargar Proveedores*/
-INSERT INTO proveedores (id, activo, cuil, direccion, email, localidad, razon_soc, telefono, id_provincias)
-VALUES
-    ('1', 1, '20343339990', 'mz 20 pc 11', 'proveedoruno@gmail.com', 'Resistencia', 'ProveedorUno', '2093330099', '2'),
-    ('2', 1, '20343339991', 'av. principal 123', 'proveedordos@gmail.com', 'Buenos Aires', 'ProveedorDos', '2093330098', '1'),
-    ('3', 2, '20343339992', 'calle 45 # 67-89', 'proveadortres@gmail.com', 'Medellin', 'ProveedorTres', '2093330097', '3'),
-    ('4', 1, '20343339993', 'ul. Libertatii 56', 'proveedorcuatro@gmail.com', 'Bucarest', 'ProveedorCuatro', '2093330096', '4'),
-    ('5', 2, '20343339994', 'via Roma 101', 'proveedorcinco@gmail.com', 'Roma', 'ProveedorCinco', '2093330095', '5'),
-    ('6', 1, '20343339995', 'Rue de la Paix 22', 'proveedorseis@gmail.com', 'París', 'ProveedorSeis', '2093330094', '6'),
-    ('7', 1, '20343339996', 'Main Street 789', 'proveedorsiete@gmail.com', 'Nueva York', 'ProveedorSiete', '2093330093', '7'),
-    ('8', 1, '20343339997', 'Mittelweg 10', 'proveedorocho@gmail.com', 'Hamburgo', 'ProveedorOcho', '2093330092', '8'),
-    ('9', 2, '20343339998', 'Rua Augusta 456', 'proveedornueve@gmail.com', 'Sao Paulo', 'ProveedorNueve', '2093330091', '9'),
-    ('10', 1, '20343339999', 'Carrer de Balmes 33', 'proveedordiez@gmail.com', 'Barcelona', 'ProveedorDiez', '2093330090', '10');
 
 
 /*Cargar Provincias*/
@@ -76,5 +49,27 @@ VALUES
     ('19', 'Santa Cruz'),
     ('20', 'Santa Fe'),
     ('21', 'Santiago del Estero'),
-    ('22', 'Tierra del Fuego, Antártida e Islas del Atlántico Sur'),
+    ('22', 'Tierra del Fuego'),
     ('23', 'Tucumán');
+
+
+
+/*Cargar Proveedores*/
+INSERT INTO proveedores (id, activo, cuil, direccion, email, localidad, razon_soc, telefono, id_provincias)
+VALUES
+    ('1', 1, '20343339990', 'mz 20 pc 11', 'proveedoruno@gmail.com', 'Resistencia', 'ProveedorUno', '2093330099', '2'),
+    ('2', 1, '20343339991', 'av. principal 123', 'proveedordos@gmail.com', 'Buenos Aires', 'ProveedorDos', '2093330098', '1'),
+    ('3', 2, '20343339992', 'calle 45 # 67-89', 'proveadortres@gmail.com', 'Medellin', 'ProveedorTres', '2093330097', '3'),
+    ('4', 1, '20343339993', 'ul. Libertatii 56', 'proveedorcuatro@gmail.com', 'Bucarest', 'ProveedorCuatro', '2093330096', '4'),
+    ('5', 2, '20343339994', 'via Roma 101', 'proveedorcinco@gmail.com', 'Roma', 'ProveedorCinco', '2093330095', '5'),
+    ('6', 1, '20343339995', 'Rue de la Paix 22', 'proveedorseis@gmail.com', 'París', 'ProveedorSeis', '2093330094', '6'),
+    ('7', 1, '20343339996', 'Main Street 789', 'proveedorsiete@gmail.com', 'Nueva York', 'ProveedorSiete', '2093330093', '7'),
+    ('8', 1, '20343339997', 'Mittelweg 10', 'proveedorocho@gmail.com', 'Hamburgo', 'ProveedorOcho', '2093330092', '8'),
+    ('9', 2, '20343339998', 'Rua Augusta 456', 'proveedornueve@gmail.com', 'Sao Paulo', 'ProveedorNueve', '2093330091', '9'),
+    ('10', 1, '20343339999', 'Carrer de Balmes 33', 'proveedordiez@gmail.com', 'Barcelona', 'ProveedorDiez', '2093330090', '10');
+
+
+
+INSERT INTO productos (id, activo, codigo_identificacion, descripcion, nombre_comun, nombre_tecnico, precio, stock_general, stock_sucursal_dos, stock_sucursal_uno, id_categoria, id_proveedor)
+VALUES
+    ('1', 1, '1234567890', 'p/ moto corven zanella 110cc', 'caño de escape bajo perfil', 'tubo de respiracion XSU12938', 12000, 21, 10, 11, 1);

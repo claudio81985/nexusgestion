@@ -28,7 +28,7 @@ import org.springframework.validation.BindingResult;
 @Controller
 @RequestMapping("/ventas")
 @SessionAttributes("venta")
-public class ventasFontanaController {
+public class ventasController {
 
     @Autowired
     IProductoService productoService;
