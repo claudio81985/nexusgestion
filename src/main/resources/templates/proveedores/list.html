@@ -11,65 +11,61 @@
 </head>
 
 <body>
-
   <div layout:fragment="contenido">
-    <div id="content" class="p-3">
-      <div id="top-panel" class="d-flex justify-content-between">
-        <form id="search-form" action="">
-          <h4>Buscador</h4>
-          <div id="search-bar" class="input-group">
-            <input class="form-control" type="search" placeholder="¿Qué estás buscando?">
-            <button type="submit" class="btn btn-primary">Buscar</button>
-          </div>
-        </form>
-        <div class="me-5">
-          <h4>Acciones</h4>
-          <a th:href="@{/proveedores/nuevo}" class="btn btn-success">Nuevo Proveedor</a>
+    <div id="top-panel" class="d-flex justify-content-between">
+      <form id="search-form" action="">
+        <h4>Buscador</h4>
+        <div id="search-bar" class="input-group">
+          <input class="form-control" type="search" placeholder="¿Qué estás buscando?">
+          <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
-      </div>
-
-      <h5 class="text-secondary">Listado de proveedores</h5>
-      <div id="tablaProveedores" class="table-container overflow-auto border rounded shadow">
-        <table class="table table-hover caption-top">
-          <thead class="bg-light">
-            <tr>
-              <th>Acción</th>
-              <th scope="col">CUIT/CUIL</th>
-              <th scope="col">Proveedor</th>
-              <th scope="col">Teléfono</th>
-              <th scope="col">Email</th>
-              <th scope="col">Provincia</th>
-              <th scope="col">Localidad</th>
-              <th scope="col">Dirección</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="p : ${proveedores}">
-              <th>
-                <button th:href="@{/proveedores/editar/} + ${p.id}" class="btn btn-primary btn-sm"
-                  data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar">
-                  <i class="bi bi-pencil-square"></i>
-                </button>
-                <button th:href="@{/proveedores/borrar/} + ${p.id}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
-                  data-bs-placement="bottom" title="Eliminar"
-                  onclick="return confirm('¿Estás seguro de deshabilitar el Registro?')">
-                  <i class="bi bi-trash3"></i>
-                </button>
-              </th>
-              <th th:text="${p.cuil}"></th>
-              <td th:text="${p.razon_soc}"></td>
-              <td th:text="${p.telefono}"></td>
-              <td th:text="${p.email}"></td>
-              <td th:text="${p.Provincias}"></td>
-              <td th:text="${p.localidad}"></td>
-              <td th:text="${p.direccion}"></td>
-            </tr>
-          </tbody>
-        </table>
+      </form>
+      <div class="me-5">
+        <h4>Acciones</h4>
+        <a th:href="@{/proveedores/nuevo}" class="btn btn-success">Nuevo Proveedor</a>
       </div>
     </div>
-  </div>
 
+    <h5 class="text-secondary">Listado de proveedores</h5>
+    <div id="tablaProveedores" class="table-container overflow-auto border rounded shadow">
+      <table class="table table-hover caption-top">
+        <thead class="bg-light">
+          <tr>
+            <th>Acción</th>
+            <th scope="col">CUIT/CUIL</th>
+            <th scope="col">Proveedor</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Email</th>
+            <th scope="col">Provincia</th>
+            <th scope="col">Localidad</th>
+            <th scope="col">Dirección</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="p : ${proveedores}">
+            <th>
+              <button th:href="@{/proveedores/editar/} + ${p.id}" class="btn btn-primary btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button th:href="@{/proveedores/borrar/} + ${p.id}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
+                data-bs-placement="bottom" title="Eliminar"
+                onclick="return confirm('¿Estás seguro de deshabilitar el Registro?')">
+                <i class="bi bi-trash3"></i>
+              </button>
+            </th>
+            <th th:text="${p.cuil}"></th>
+            <td th:text="${p.razon_soc}"></td>
+            <td th:text="${p.telefono}"></td>
+            <td th:text="${p.email}"></td>
+            <td th:text="${p.Provincias}"></td>
+            <td th:text="${p.localidad}"></td>
+            <td th:text="${p.direccion}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 
   <script th:fragment="js" th:src="@{/js/inventario.js}"></script>

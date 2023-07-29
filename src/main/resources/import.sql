@@ -14,7 +14,7 @@ INSERT INTO `nexusgestion_db`.`categorias` (`id`, `activo`, `nombre`) VALUES ('4
 
 
 /*Cargar Proveedores*/
-INSERT INTO `nexusgestion_db`.`proveedores` (`id`, `activo`, `cuil`, `direccion`, `email`, `localidad`, `razon_soc`, `telefono`, `id_provincias`) VALUES ('1', 1, '20318720993', 'avenida itala', 'proveedor@gmail.com', 'resistencia', 'Proveedor Uno', '3827002208', '2');
+INSERT INTO `nexusgestion_db`.`proveedores` (`id`, `activo`, `cuil`, `direccion`, `email`, `localidad`, `razon_soc`, `telefono`, `id_provincias`) VALUES ('1', 1, '23232323232', 'mz 20 pc 9', 'nexus.informatica.fna@gmail.com', 'fontana', 'nexus informatica', '3624027786', '4');
 
 
 

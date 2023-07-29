@@ -180,7 +180,7 @@ public class Producto {
 
     @Override
     public String toString() {
-        return id + " - " + descripcion + " - " + precio;
+        return id + " - " + descripcion;
     }
 
 }

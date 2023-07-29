@@ -1,3 +1,10 @@
+// Tooltip
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
+
 let stock = {};
 const stocks = [];
 
@@ -20,7 +27,7 @@ $(document).ready(function() {
 
                         return {
                             value: item.id,
-                            label: `${item.descripcion} - $${item.precio}`
+                            label: `[${item.codigoIdentificacion}] ${item.nombreComun} ${item.nombreTecnico} ${item.descripcion} - $${item.precio}`
                         }
                     }));
                 }
@@ -33,10 +40,12 @@ $(document).ready(function() {
 
             //Asignar valores a sus celdas
             let producto = ui.item.label;
-            let descripcion = producto.split('-')[0];
+            let descripcion = producto.split(']')[1].trim(); //let descripcion = producto.split('-')[0];
+            descripcion = descripcion.split('-')[0];
             let precio = producto.split('-')[1];
             precio = precio.split('$')[1];
             let id = ui.item.value;
+            let codigoIdentificacion = producto.split('[')[1].split(']')[0];
 
             console.log(`Producto seleccionado: ${producto}`);
 
@@ -48,6 +57,7 @@ $(document).ready(function() {
 
             //Reemplazar los valores de la linea auxiliar por los buscados...
             linea = linea.replace(/{ID}/g, id);
+            linea = linea.replace(/{CODIGO}/g, codigoIdentificacion);
             linea = linea.replace(/{DESCRIPCION}/g, descripcion);
             linea = linea.replace(/{PRECIO}/g, precio);
 

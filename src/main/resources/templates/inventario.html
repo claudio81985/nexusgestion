@@ -11,67 +11,62 @@
 </head>
 
 <body>
-
   <div layout:fragment="contenido">
-    <div id="content" class="p-3">
-      <div id="top-panel" class="d-flex justify-content-between">
-        <form id="search-form" action="">
-          <h4>Buscador</h4>
-          <div id="search-bar" class="input-group">
-            <input class="form-control" type="search" placeholder="¿Qué estás buscando?">
-            <button type="submit" class="btn btn-primary">Buscar</button>
-          </div>
-        </form>
-        <div>
-          <h4>Acciones</h4>
-          <a th:href="@{/productos/nuevo}" class="btn btn-success">Nuevo Artículo</a>
-          <a href="#" class="btn btn-warning">Nuevo movimiento</a>
+    <div id="top-panel" class="d-flex justify-content-between">
+      <form id="search-form" action="">
+        <h4>Buscador</h4>
+        <div id="search-bar" class="input-group">
+          <input class="form-control" type="search" placeholder="¿Qué estás buscando?">
+          <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
-      </div>
-
-      <h5 class="text-secondary">Listado de artículos</h5>
-      <div class="table-container overflow-auto border rounded shadow">
-        <table class="table table-hover caption-top">
-          <thead class="bg-light">
-            <tr>
-              <th>Acción</th>
-              <th scope="col">Código</th>
-              <th scope="col">Categoría</th>
-              <th scope="col">Artículo</th>
-              <th scope="col">Stock <span>Fontana</span></th>
-              <th scope="col">Stock <span>Sauzalito</span></th>
-              <th scope="col">Stock <span>General</span></th>
-              <th scope="col">Precio</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="p : ${productos}">
-              <th>
-                <button th:href="@{/productos/editar/} + ${p.id}" class="btn btn-primary btn-sm"
-                  data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar">
-                  <i class="bi bi-pencil-square"></i>
-                </button>
-                <button th:href="@{/productos/borrar/} + ${p.id}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
-                  data-bs-placement="bottom" title="Eliminar"
-                  onclick="return confirm('¿Estás seguro de deshabilitar el Registro?')">
-                  <i class="bi bi-trash3"></i>
-                </button>
-              </th>
-              <th th:text="${p.codigoIdentificacion}"></th>
-              <td th:text="${p.Categoria}">TUERCA</td>
-              <td th:text="${p.getNombreComun()} + ' ' + ${p.getNombreTecnico()} + ' ' + ${p.getDescripcion()}">
-              </td>
-              <td th:text="${p.stockSucursalUno}">93</td>
-              <td th:text="${p.stockSucursalDos}">21</td>
-              <td th:text="${p.stockGeneral}"></td>
-              <td th:text="${p.precio}">21</td>
-            </tr>
-          </tbody>
-        </table>
+      </form>
+      <div>
+        <h4>Acciones</h4>
+        <a th:href="@{/productos/nuevo}" class="btn btn-success">Nuevo Artículo</a>
+        <a href="#" class="btn btn-warning">Nuevo movimiento</a>
       </div>
     </div>
-  </div>
 
+    <h5 class="text-secondary">Listado de artículos</h5>
+    <div class="table-container overflow-auto border rounded shadow">
+      <table class="table table-hover caption-top">
+        <thead class="bg-light">
+          <tr>
+            <th>Acción</th>
+            <th scope="col">Código</th>
+            <th scope="col">Categoría</th>
+            <th scope="col">Artículo</th>
+            <th scope="col">Stock <span>Fontana</span></th>
+            <th scope="col">Stock <span>Sauzalito</span></th>
+            <th scope="col">Stock <span>General</span></th>
+            <th scope="col">Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="p : ${productos}">
+            <th>
+              <button th:href="@{/productos/editar/} + ${p.id}" class="btn btn-primary btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button th:href="@{/productos/borrar/} + ${p.id}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
+                data-bs-placement="bottom" title="Eliminar"
+                onclick="return confirm('¿Estás seguro de deshabilitar el Registro?')">
+                <i class="bi bi-trash3"></i>
+              </button>
+            </th>
+            <th th:text="${p.codigoIdentificacion}"></th>
+            <td th:text="${p.Categoria}"></td>
+            <td th:text="${p.getNombreComun()} + ' ' + ${p.getNombreTecnico()} + ' ' + ${p.getDescripcion()}"></td>
+            <td th:text="${p.stockSucursalUno}"></td>
+            <td th:text="${p.stockSucursalDos}"></td>
+            <td th:text="${p.stockGeneral}"></td>
+            <td th:text="${p.precio}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 
   <script th:fragment="js" th:src="@{/js/inventario.js}"></script>

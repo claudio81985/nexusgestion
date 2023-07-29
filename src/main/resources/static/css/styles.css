@@ -1,11 +1,15 @@
+:root {
+    --ancho-sidebar: 220px;
+}
+
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-
 #sidebar-menu {
-    width: 220px;
+    width: var(--ancho-sidebar);
     height: 100vh;
     position: fixed;
     top: 0;
@@ -21,7 +25,7 @@
 /* INVENTARIO */
 
 #content {
-    margin-left: 220px
+    margin-left: var(--ancho-sidebar);
 }
 
 #top-panel {
