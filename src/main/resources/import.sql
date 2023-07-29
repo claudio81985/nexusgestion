@@ -24,6 +24,18 @@ VALUES
     ('9', 1, 'Transmisión'),
     ('10', 1, 'Refrigeración');
 
+-- INSERT INTO categorias (id, activo, nombre) VALUES ('1', 1, 'Embragues');
+-- INSERT INTO categorias (id, activo, nombre) VALUES ('2', 1, 'Frenos');
+-- INSERT INTO categorias (id, activo, nombre) VALUES ('3', 1, 'Suspensiones');
+-- INSERT INTO categorias (id, activo, nombre) VALUES ('4', 2, 'Aceites y lubricantes');
+-- INSERT INTO categorias (id, activo, nombre) VALUES ('5', 1, 'Sistemas eléctricos');
+-- INSERT INTO categorias (id, activo, nombre) VALUES ('6', 1, 'Neumáticos');
+-- INSERT INTO categorias (id, activo, nombre) VALUES ('7', 2, 'Accesorios exteriores');
+-- INSERT INTO categorias (id, activo, nombre) VALUES ('8', 1, 'Sistemas de escape');
+-- INSERT INTO categorias (id, activo, nombre) VALUES ('9', 1, 'Transmisión');
+-- INSERT INTO categorias (id, activo, nombre) VALUES ('10', 1, 'Refrigeración');
+
+
 
 /*Cargar Proveedores*/
 INSERT INTO proveedores (id, activo, cuil, direccion, email, localidad, razon_soc, telefono, id_provincias)
