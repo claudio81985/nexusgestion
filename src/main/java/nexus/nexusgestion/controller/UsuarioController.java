@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 // import org.springframework.security.access.annotation.Secured;
 // import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -39,8 +40,8 @@ public class UsuarioController {
     @Autowired
     IPermisoService permisoService;
 
-    // @Autowired
-    // private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/listado")
     public String listado(Model model) {
@@ -62,28 +63,28 @@ public class UsuarioController {
         return "usuarios/form";
     }
 
-    // @PostMapping("/guardar")
-    // public String guardar(@Valid Usuario usuario, BindingResult result, @RequestParam("rol") Long idRol,
-    //         Model model, RedirectAttributes msgFlash, SessionStatus status) {
+    @PostMapping("/guardar")
+    public String guardar(@Valid Usuario usuario, BindingResult result, @RequestParam("rol") Long idRol,
+            Model model, RedirectAttributes msgFlash, SessionStatus status) {
 
-    //     // Verificar si hay errores
-    //     if (result.hasErrors()) {
-    //         model.addAttribute("danger", "Corrija los Errores...");
-    //         return "usuarios/form";
-    //     }
+        // Verificar si hay errores
+        if (result.hasErrors()) {
+            model.addAttribute("danger", "Corrija los Errores...");
+            return "usuarios/form";
+        }
 
-    //     usuario.setPermiso(permisoService.buscarPorId(idRol));
+        usuario.setPermiso(permisoService.buscarPorId(idRol));
         
-    //     //if(usuario.getId() == 0)
-    //         usuario.setClave(passwordEncoder.encode(usuario.getClave()));
+        //if(usuario.getId() == 0)
+            usuario.setClave(passwordEncoder.encode(usuario.getClave()));
         
-    //         usuarioService.guardar(usuario);
+            usuarioService.guardar(usuario);
 
-    //     msgFlash.addFlashAttribute("success", "Usuario Registrado Correctamente.");
-    //     status.setComplete();
+        msgFlash.addFlashAttribute("success", "Usuario Registrado Correctamente.");
+        status.setComplete();
 
-    //     return "redirect:/usuarios/listado";
-    // }
+        return "redirect:/usuarios/listado";
+    }
 
     @GetMapping("/borrar/{id}")
     public String deshabOrHabUsuario(@PathVariable("id") Long id, RedirectAttributes msgFlash) {

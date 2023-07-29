@@ -9,7 +9,7 @@
 
     <title th:text="${titulo}"></title>
 </head>
-
+ 
 <body>
 
     <div layout:fragment="contenido">
@@ -24,7 +24,8 @@
                 </form>
                 <div class="me-5">
                     <h4>Acciones</h4>
-                    <a th:href="@{/ventas/nuevo}" class="btn btn-success">Generar Venta</a>
+                    <span>Sucursal Fontana</span>
+                    <a th:href="@{/ventas/nuevo}" class="btn btn-success">Generar Venta </a>
                 </div>
             </div>
 
