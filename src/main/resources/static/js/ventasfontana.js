@@ -8,7 +8,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 let stock = {};
 const stocks = [];
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     $("#buscar_productos").autocomplete({
         minLength: 3,
@@ -22,7 +22,12 @@ $(document).ready(function() {
                 success: (data) => {
                     response($.map(data, (item) => {
 
-                        stock ={id: item.id, stock: item.stockSucursalUno};
+                        stock = {
+                            id: item.id,
+                            stockGeneral: item.stockGeneral,
+                            stockSucursalUno: item.stockSucursalUno,
+                            stockSucursalDos: item.stockSucursalDos
+                        };
                         stocks.push(stock);
 
                         return {
@@ -75,43 +80,50 @@ const lineasUtil = {
         let cantidad = parseInt($(`#cantidad_${id}`).val());
         $(`#cantidad_${id}`).val(++cantidad);
         this.calcularSubtotal(id, precio, cantidad);
-    } ,
-    calcularSubtotal : function (id, precio, cantidad) {
+    },
+    calcularSubtotal: function (id, precio, cantidad) {
         //$("#subtotal_" + id): forma antigua...
         let stk = stocks.find(i => i.id === id);// busca el stock que coincide con el id del producto
-        if(cantidad > stk.stock){
+        if (cantidad > stk.stockSucursalUno) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'No hay stock suficiente!'
+                text: 'No hay stock suficiente Sucursal Fontana!'
             });
             $(`#cantidad_${id}`).val(stock);
-        }else{
+        } else if (cantidad > stk.stockSucursalDos) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No hay stock suficiente Sucursal Sausalito!'
+            });
+            $(`#cantidad_${id}`).val(stock);
+        } else {
             $(`#subtotal_${id}`).html((parseFloat(precio) * parseInt(cantidad)).toFixed(2));
             this.calcularTotal();
         }
-       
-    } ,
+
+    },
     esRepetido: function (id) {
         let result = false;
-        $('input[name="item_id[]"]').each(function() {
-            if(parseInt(id) === parseInt($(this).val())) {
+        $('input[name="item_id[]"]').each(function () {
+            if (parseInt(id) === parseInt($(this).val())) {
                 result = true;
             }
         });
         return result;
     },
-    calcularTotal: function() {
+    calcularTotal: function () {
         let total = 0;
-        $(`span[id^="subtotal_"]`).each(function() {
+        $(`span[id^="subtotal_"]`).each(function () {
             total += parseFloat($(this).html());
         });
         $("#total").html("$" + parseFloat(total).toFixed(2));
     },
-    borrar : function (id) {
+    borrar: function (id) {
         $(`#fila_${id}`).remove();
         this.calcularTotal();
     }
-    
-    
+
+
 }

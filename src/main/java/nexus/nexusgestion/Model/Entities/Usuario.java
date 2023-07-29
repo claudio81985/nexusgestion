@@ -31,9 +31,7 @@ public class Usuario  {
     @Size(max = 70, min = 6, message = "La contraseña debe contener al menos 6 caracteres.")
     private String clave;
 
-    @Pattern(regexp = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", message="Escribe nuevamente tu email")
-    private String email;
-
+  
     @Column(name = "activo", columnDefinition = "boolean default 1")
     private Boolean activo;
 
@@ -91,18 +89,12 @@ public class Usuario  {
     }
 
    
-    public String getEmail() {
-        return email;
-    }
-
+   
     public void setPermiso(Permiso permiso) {
         this.permiso = permiso;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+   
     @Override
     public String toString() {
         return nombre +  permiso.getNombre();

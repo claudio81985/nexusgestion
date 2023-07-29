@@ -31,7 +31,7 @@
       <img th:src="@{/img/logo-texto.png}" alt="logo" class="w-100">
     </a>
     <hr>
-    <h5 class="text-center">¡Hola <span>Nexus</span>!</h5>
+    <h5 class="text-center">¡Hola <span sec:authentication="name"></span>!</h5>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">

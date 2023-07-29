@@ -1,57 +1,63 @@
 <!DOCTYPE html>
-<html lang="es"
-      xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:th="http://thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    >
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap 5.0.2 CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 
     <title th:text="${titulo}"></title>
 </head>
+
 <body class="vh-100 bg-dark">
 
-  <div layout:fragment="contenido">
-    <div class="d-flex justify-content-center align-items-center vh-100">
-        <div class="border border-gray rounded p-4 shadow bg-light">
-            <form action="">
-                <div class="text-center mb-2">
-                    <img th:src="@{/img/logo.png}" alt="logo" style="width: 100px;">
-                    <h3 class="fw-bold">Nexus Gestión</h3>
-                </div>
-                <div class="text-center ">
-                    <p>Ingresa tus datos para comenzar</p>
-                </div>
-                <div class="input-group mb-2">
-                    <label for="user" class="form-label w-100">Usuario</label>
-                    <input id="user" class="form-control" type="text" placeholder="pepito" autocomplete="off">
-                </div>
-                <div class="input-group mb-2">
-                    <label for="pass" class="form-label w-100">Contraseña</label>
-                    <input id="pass" class="form-control" type="password" placeholder="********" autocomplete="off">
-                </div>
-                <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-success">Ingresar</button>
-                </div>
-                <div class="text-center mt-4">
-                    <a class="text-decoration-none" href="#">Contactar al soporte</a>
-                </div>
-            </form>
+    <div layout:fragment="contenido">
+        <div class="d-flex justify-content-center align-items-center vh-100">
+            <div class="border border-gray rounded p-4 shadow bg-light">
+                <form th:action="@{/login}" method="post">
+                    <div class="text-center mb-2">
+                        <img th:src="@{/img/logo.png}" alt="logo" style="width: 100px;">
+                        <h3 class="fw-bold">Nexus Gestión</h3>
+                    </div>
+                    <div class="text-center ">
+                        <p>Ingresa tus datos para comenzar</p>
+                    </div>
+                    <div class="input-group mb-2">
+                        <label for="user" class="form-label w-100">Usuario</label>
+                        <input id="user" name="username" class="form-control" type="text" placeholder="pepito"
+                            autocomplete="off">
+                    </div>
+                    <div class="input-group mb-2">
+                        <label for="pass" class="form-label w-100">Contraseña</label>
+                        <input id="pass" name="password" class="form-control" type="password" placeholder="********"
+                            autocomplete="off">
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success">Ingresar</button>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a class="text-decoration-none" href="#">Contactar al soporte</a>
+                    </div>
+                </form>
+            </div>
         </div>
+        <footer class="text-white text-center">
+            <p class="m-0 p-0">Nexus Gestión 2023</p>
+            <p class="m-0 p-0">Todos los derechos reservados.</p>
+        </footer>
     </div>
-    <footer class="text-white text-center">
-        <p class="m-0 p-0">Nexus Gestión 2023</p>
-        <p class="m-0 p-0">Todos los derechos reservados.</p>
-    </footer>
-  </div>
+
 
     <!--bootstrap 5.0.2 JS CDN-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
