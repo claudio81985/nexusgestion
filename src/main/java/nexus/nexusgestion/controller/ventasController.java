@@ -129,4 +129,13 @@ public class ventasController {
         return "redirect:/ventas/listado";
     }
 
+    @GetMapping("/generar-numero-venta")
+    public String generarNumeroVenta(Model model) {
+        Long ultimoIdVenta = ventaService.obtenerUltimoIdVenta();
+        Long numeroVenta = (ultimoIdVenta != null) ? ultimoIdVenta + 1 : 1;
+        model.addAttribute("numeroVenta", numeroVenta);
+        return "ventas/form"; // Reemplaza "ventas/form" con la ruta de tu plantilla para crear una nueva venta
+    }
+
+
 }

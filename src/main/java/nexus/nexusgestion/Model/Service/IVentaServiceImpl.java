@@ -37,4 +37,12 @@ public class IVentaServiceImpl implements IVentaService {
         ventaRepository.save(venta);        
     }
 
+
+
+
+    @Override
+    public Long obtenerUltimoIdVenta() {
+        return ventaRepository.findMaxId();
+    }
+
 }
