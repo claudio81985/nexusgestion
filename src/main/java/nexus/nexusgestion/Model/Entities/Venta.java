@@ -53,7 +53,6 @@ public class Venta {
         activo = true;
         lineas = new ArrayList<>();
         fechaHora = LocalDateTime.now();
-        descripcion = "Ninguna";
     }
 
     public Long getId() {

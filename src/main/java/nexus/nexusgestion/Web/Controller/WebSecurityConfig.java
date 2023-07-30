@@ -1,6 +1,6 @@
 package nexus.nexusgestion.Web.Controller;
 
-
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,12 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager; */
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-    prePostEnabled = true,
-    securedEnabled = true
-)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig {
-    
+
     @Autowired
     DataSource dataSource;
 
@@ -33,55 +31,60 @@ public class WebSecurityConfig {
     BCryptPasswordEncoder getEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         return http.authorizeHttpRequests().antMatchers("/css/**", "/js/**", "/img/**")
-            .permitAll().anyRequest().authenticated()
-            .and()
-            .formLogin().loginPage("/login").permitAll()
-            .and()
-            .logout().permitAll()
-            .and()
-            .formLogin().loginPage("/login").failureUrl("/login?error").permitAll()
-            .and()
-            .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
-            .and()
-            .build();
+                .permitAll().anyRequest().authenticated()
+                .and()
+                .formLogin().loginPage("/login").permitAll()
+                .and()
+                .logout().permitAll()
+                .and()
+                .formLogin().loginPage("/login").failureUrl("/login?error").permitAll()
+                .and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
+                .and()
+                .build();
     }
 
-   /*  @Bean
-    public UserDetailsService userDetailsService () {
-
-        UserDetails user = User
-            .withDefaultPasswordEncoder()
-            .username("elian")
-            .password("1234")
-            .roles("USER")
-            .build();
-
-            UserDetails admin = User
-            .withDefaultPasswordEncoder()
-            .username("alexis")
-            .password("1234")
-            .roles("ADMIN")
-            .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
-    } */
+    /*
+     * @Bean
+     * public UserDetailsService userDetailsService () {
+     * 
+     * UserDetails user = User
+     * .withDefaultPasswordEncoder()
+     * .username("elian")
+     * .password("1234")
+     * .roles("USER")
+     * .build();
+     * 
+     * UserDetails admin = User
+     * .withDefaultPasswordEncoder()
+     * .username("alexis")
+     * .password("1234")
+     * .roles("ADMIN")
+     * .build();
+     * 
+     * return new InMemoryUserDetailsManager(user, admin);
+     * }
+     */
 
     @Autowired
     public void configGlobal(AuthenticationManagerBuilder builder) throws Exception {
 
-        //Autenticación con JDBC:
+        // Autenticación con JDBC:
         builder
-            .jdbcAuthentication()
-            .dataSource(dataSource)
-            .usersByUsernameQuery("select nombre, clave, activo from usuarios where nombre = ?")
-            .authoritiesByUsernameQuery("select u.nombre, p.nombre from permisos p "
-                + "inner join usuarios u on "
-                + "u.id_permiso = p.id where u.nombre = ?");
+                .jdbcAuthentication()
+                .dataSource(dataSource)
+                .usersByUsernameQuery("select nombre, clave, activo from usuarios where nombre = ?")
+                .authoritiesByUsernameQuery("select u.nombre, p.nombre from permisos p "
+                        + "inner join usuarios u on "
+                        + "u.id_permiso = p.id where u.nombre = ?");
     }
+
+
+    
 
 }

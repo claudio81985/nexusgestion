@@ -12,4 +12,7 @@ public interface IVentaService {
     public Venta buscarPorId(Long id);
     
     public void guardar(Venta venta);
+
+    Long obtenerUltimoIdVenta();
+    
 }

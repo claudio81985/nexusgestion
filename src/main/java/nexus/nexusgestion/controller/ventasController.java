@@ -2,9 +2,11 @@ package nexus.nexusgestion.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,8 @@ import nexus.nexusgestion.Model.Service.IVentaService;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
+import org.springframework.security.core.Authentication;
 
 @Controller
 @RequestMapping("/ventas")
@@ -50,7 +54,6 @@ public class ventasController {
 
         model.addAttribute("titulo", "Nueva Venta");
         model.addAttribute("venta", new Venta());
-        
 
         return "ventas/form";
     }
@@ -119,6 +122,16 @@ public class ventasController {
         return productoService.buscarPor(texto);
     }
 
+    @GetMapping(value = "/obtener-rol-usuario", produces = { "application/json" })
+    public @ResponseBody String obtenerRolUsuario() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String rolUsuario = authentication.getAuthorities().iterator().next().getAuthority();
+            return "{\"rol\":\"" + rolUsuario + "\"}";
+        }
+        return "{\"rol\":\"ROLE_DEFAULT\"}";
+    }
+
     @GetMapping("/borrar/{id}")
     public String deshabOrHabVenta(@PathVariable("id") Long id, RedirectAttributes msgFlash) {
 
@@ -128,6 +141,15 @@ public class ventasController {
         msgFlash.addFlashAttribute("warning", venta.isActivo() ? "Venta Habilitada" : "Venta Deshabilitada");
 
         return "redirect:/ventas/listado";
+    }
+
+    @GetMapping("/generar-numero-venta")
+    public String generarNumeroVenta(Model model) {
+        Long ultimoIdVenta = ventaService.obtenerUltimoIdVenta();
+        Long numeroVenta = (ultimoIdVenta != null) ? ultimoIdVenta + 1 : 1;
+        model.addAttribute("numeroVenta", numeroVenta);
+        return "ventas/form"; // Reemplaza "ventas/form" con la ruta de tu plantilla para crear una nueva
+                              // venta
     }
 
 }
