@@ -12,6 +12,7 @@ import nexus.nexusgestion.Model.Entities.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     
    
+   
 
     @Query("select u from Usuario u Where u.nombre like %:criterio%  and u.activo = true")
     List<Usuario> buscarPor(@Param("criterio") String criterio );

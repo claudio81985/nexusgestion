@@ -10,20 +10,19 @@ import org.springframework.transaction.annotation.Transactional;
 import nexus.nexusgestion.Model.Entities.Usuario;
 import nexus.nexusgestion.Model.Repository.UsuarioRepository;
 
-
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
-    
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
     
+
     @Override
     @Transactional(readOnly = true)
     public List<Usuario> buscarPor(String criterio) {
         return usuarioRepository.buscarPor(criterio);
     }
-
 
     @Override
     @Transactional(readOnly = true)
@@ -31,17 +30,17 @@ public class UsuarioServiceImpl implements IUsuarioService {
         return usuarioRepository.findById(id).orElse(null);
     }
 
-
     @Override
     @Transactional(readOnly = true)
     public List<Usuario> buscarTodos() {
         return usuarioRepository.buscarSoloHabilitados();
     }
 
-
     @Override
     @Transactional
     public void guardar(Usuario usuario) {
-      usuarioRepository.save(usuario);
+        usuarioRepository.save(usuario);
     }
+
+   
 }

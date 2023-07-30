@@ -50,6 +50,7 @@ public class ventasController {
 
         model.addAttribute("titulo", "Nueva Venta");
         model.addAttribute("venta", new Venta());
+        
 
         return "ventas/form";
     }

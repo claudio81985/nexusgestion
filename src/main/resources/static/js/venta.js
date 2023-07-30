@@ -1,14 +1,8 @@
-// Tooltip
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
-
-
 let stock = {};
 const stocks = [];
 
-$(document).ready(function () {
+$(document).ready(function() {
+
     $("#buscar_productos").autocomplete({
         minLength: 3,
         source: (request, response) => {
@@ -20,19 +14,13 @@ $(document).ready(function () {
                 },
                 success: (data) => {
                     response($.map(data, (item) => {
-                        // Verificar el permiso del usuario y obtener el stock adecuado
-                        let stock;
-                        if (permisoUsuario === "sucursaluno") {
-                            stock = item.stockSucursalUno;
-                        } else if (permisoUsuario === "sucursaldos") {
-                            stock = item.stockSucursalDos;
-                        } else {
-                            stock = item.stockGeneral;
-                        }
+
+                        stock ={id: item.id, stock: item.stock};
+                        stocks.push(stock);
 
                         return {
                             value: item.id,
-                            label: `[${item.codigoIdentificacion}] ${item.nombreComun} ${item.nombreTecnico} ${item.descripcion} - $${item.precio}`
+                            label: `${item.descripcion} - $${item.precio}`
                         }
                     }));
                 }
@@ -45,12 +33,10 @@ $(document).ready(function () {
 
             //Asignar valores a sus celdas
             let producto = ui.item.label;
-            let descripcion = producto.split(']')[1].trim(); //let descripcion = producto.split('-')[0];
-            descripcion = descripcion.split('-')[0];
+            let descripcion = producto.split('-')[0];
             let precio = producto.split('-')[1];
             precio = precio.split('$')[1];
             let id = ui.item.value;
-            let codigoIdentificacion = producto.split('[')[1].split(']')[0];
 
             console.log(`Producto seleccionado: ${producto}`);
 
@@ -62,7 +48,6 @@ $(document).ready(function () {
 
             //Reemplazar los valores de la linea auxiliar por los buscados...
             linea = linea.replace(/{ID}/g, id);
-            linea = linea.replace(/{CODIGO}/g, codigoIdentificacion);
             linea = linea.replace(/{DESCRIPCION}/g, descripcion);
             linea = linea.replace(/{PRECIO}/g, precio);
 
@@ -80,50 +65,43 @@ const lineasUtil = {
         let cantidad = parseInt($(`#cantidad_${id}`).val());
         $(`#cantidad_${id}`).val(++cantidad);
         this.calcularSubtotal(id, precio, cantidad);
-    },
-    calcularSubtotal: function (id, precio, cantidad) {
+    } ,
+    calcularSubtotal : function (id, precio, cantidad) {
         //$("#subtotal_" + id): forma antigua...
         let stk = stocks.find(i => i.id === id);// busca el stock que coincide con el id del producto
-        if (cantidad > stk.stockSucursalUno) {
+        if(cantidad > stk.stock){
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'No hay stock suficiente Sucursal Fontana!'
+                text: 'No hay stock suficiente!'
             });
             $(`#cantidad_${id}`).val(stock);
-        } else if (cantidad > stk.stockSucursalDos) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'No hay stock suficiente Sucursal Sausalito!'
-            });
-            $(`#cantidad_${id}`).val(stock);
-        } else {
+        }else{
             $(`#subtotal_${id}`).html((parseFloat(precio) * parseInt(cantidad)).toFixed(2));
             this.calcularTotal();
         }
-
-    },
+       
+    } ,
     esRepetido: function (id) {
         let result = false;
-        $('input[name="item_id[]"]').each(function () {
-            if (parseInt(id) === parseInt($(this).val())) {
+        $('input[name="item_id[]"]').each(function() {
+            if(parseInt(id) === parseInt($(this).val())) {
                 result = true;
             }
         });
         return result;
     },
-    calcularTotal: function () {
+    calcularTotal: function() {
         let total = 0;
-        $(`span[id^="subtotal_"]`).each(function () {
+        $(`span[id^="subtotal_"]`).each(function() {
             total += parseFloat($(this).html());
         });
         $("#total").html("$" + parseFloat(total).toFixed(2));
     },
-    borrar: function (id) {
+    borrar : function (id) {
         $(`#fila_${id}`).remove();
         this.calcularTotal();
     }
-
-
+    
+    
 }

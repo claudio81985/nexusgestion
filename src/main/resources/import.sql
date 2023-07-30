@@ -19,6 +19,7 @@ INSERT INTO `nexusgestion_db`.`categorias` (`id`, `activo`, `nombre`) VALUES ('4
 
 /*Cargar Proveedores*/
 INSERT INTO `nexusgestion_db`.`proveedores` (`id`, `activo`, `cuil`, `direccion`, `email`, `localidad`, `razon_soc`, `telefono`, `id_provincias`) VALUES ('1', 1, '20343339990', 'mz 20 pc 11', 'proveedoruno@gmail.com', 'Resistencia', 'ProveedorUno', '2093330099', '2');
+INSERT INTO `nexusgestion_db`.`proveedores` (`id`, `activo`, `cuil`, `direccion`, `email`, `localidad`, `razon_soc`, `telefono`, `id_provincias`) VALUES ('2', 1, '20343339990', 'mz 20 pc 11', 'proveedoruno@gmail.com', 'Resistencia', 'ProveedorUno', '2093330099', '2');
 
 /*Cargar Provincias*/
 -- INSERT INTO `nexusgestion_db`.`provincias` (`id`, `nombre`) VALUES ('1', 'Buenos Aires');
@@ -48,4 +49,8 @@ INSERT INTO `nexusgestion_db`.`provincias` (`id`, `nombre`) VALUES ('4', 'Mision
 INSERT INTO `nexusgestion_db`.`provincias` (`id`, `nombre`) VALUES ('5', 'Jujuy');
 INSERT INTO `nexusgestion_db`.`provincias` (`id`, `nombre`) VALUES ('6', 'Salta');
 
-INSERT INTO `nexusgestion_db`.`proveedores` (`id`, `activo`, `cuil`, `direccion`, `email`, `localidad`, `razon_soc`, `telefono`, `id_provincias`) VALUES ('1', '1', '2345344', 'nose', 'proveedor@gmail.com', 'Resistencia', 'Proveedor', '99887937', '1');
+
+INSERT INTO `nexusgestion_db`.`proveedores` (`id`, `activo`, `cuil`, `direccion`, `email`, `localidad`, `razon_soc`, `telefono`, `id_provincias`) VALUES ('1', '1', '12323432', 'mz 20 pc', 'proveedor@gmail.com', 'resietencia', 'proveedor', '1234534567', '1');
+
+/*Cargar Producto*/
+INSERT INTO `nexusgestion_db`.`productos` (`id`, `activo`, `codigo_identificacion`, `descripcion`, `nombre_comun`, `nombre_tecnico`, `precio`, `stock_general`, `stock_sucursal_dos`, `stock_sucursal_uno`, `id_categoria`, `id_proveedor`) VALUES ('1', 1, '1234567', 'para 125 cc', 'cable', 'cable universal', '2800', '8', '5', '3', '1', '1');

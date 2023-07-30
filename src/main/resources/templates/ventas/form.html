@@ -13,6 +13,7 @@
 <body>
     <div layout:fragment="contenido">
         <form id="formVenta" th:action="@{/ventas/guardar}" th:object="${venta}" method="post">
+           
             <div class="container border rounded shadow p-3 bg-light">
                 <div class="row">
                     <div class="col text-center">
@@ -22,8 +23,7 @@
                 <hr>
                 <div class="row">
                     <div class="col">
-                        <label th:field="*{fechaHora}"
-                            th:text='*{#temporals.format(fechaHora, "dd/MM/yyyy HH:mm")}'>
+                        <label th:field="*{fechaHora}" th:text='*{#temporals.format(fechaHora, "dd/MM/yyyy HH:mm")}'>
                         </label>
                     </div>
                 </div>
@@ -31,10 +31,9 @@
                     <div class="col-">
                         <h4>Buscador de productos</h4>
                         <div class="input-group">
-                            <input id="buscar_productos" class="form-control"
-                                type="search" placeholder="Busca por código, nombre o algún dato del producto."
-                            >
-                            <button type="submit" class="btn btn-primary">Buscar</button>
+                            <input id="buscar_productos" class="form-control" type="search"
+                                placeholder="Busca por código, nombre o algún dato del producto.">
+                            <button type="button" id="btnBuscar" class="btn btn-primary">Buscar</button>
                         </div>
                     </div>
                 </div>
@@ -72,19 +71,17 @@
                                         {PRECIO}
                                     </td>
                                     <td>
-                                        <input type="number" value="1" min="1" name="cantidad[]"
-                                            id="cantidad_{ID}" class="form-control" style="width:100px;"
-                                            onchange="lineasUtil.calcularSubtotal({ID}, {PRECIO}, this.value)"
-                                        >
+                                        <input type="number" value="1" min="1" name="cantidad[]" id="cantidad_{ID}"
+                                            class="form-control" style="width:100px;"
+                                            onchange="lineasUtil.calcularSubtotal({ID}, {PRECIO}, this.value)">
                                     </td>
                                     <td>
                                         <span id="subtotal_{ID}">0.00</span>
                                     </td>
                                     <td>
-                                        <button class="btn btn-danger btn-sm"
-                                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar"
-                                            onclick="lineasUtil.borrar({ID})"
-                                            >
+                                        <button class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" title="Eliminar"
+                                            onclick="lineasUtil.borrar({ID})">
                                             <i class="bi bi-trash3"></i>
                                         </button>
                                     </td>
@@ -96,9 +93,7 @@
                 <hr>
                 <div class="row">
                     <div class="col text-center">
-                        <button type="submit" class="btn btn-success"
-                            onclick="$('#formVenta').submit();"
-                            >
+                        <button type="submit" class="btn btn-success" onclick="$('#formVenta').submit();">
                             <i class="bi bi-check-square-fill"></i>
                             Guardar
                         </button>
@@ -225,11 +220,12 @@
                     </a>
                 </div>
             </div> -->
+
         </form>
     </div>
 
 
-    <script th:fragment="js" th:src="@{/js/ventas.js}"></script>
+    <script th:fragment="js" th:src="@{/js/venta.js}"></script>
 </body>
 
 </html>

@@ -45,10 +45,9 @@
         <tbody>
           <tr th:each="p : ${productos}">
             <th>
-              <button th:href="@{/productos/editar/} + ${p.id}" class="btn btn-primary btn-sm"
-                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar">
-                <i class="bi bi-pencil-square"></i>
-              </button>
+              <a th:href="@{/productos/editar/} + ${p.id}" class="btn btn-sm btn-warning" title="Editar">
+                <i class="bx bxs-edit bx-spin"></i>
+              </a>
               <button th:href="@{/productos/borrar/} + ${p.id}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" title="Eliminar"
                 onclick="return confirm('¿Estás seguro de deshabilitar el Registro?')">

@@ -32,6 +32,7 @@
     </a>
     <hr>
     <h5 class="text-center">¡Hola <span sec:authentication="name"></span>!</h5>
+     <span sec:authentication="principal.authorities"></span>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
@@ -82,8 +83,13 @@
         <li><a class="dropdown-item" href="#">Configuración</a></li>
         <li>
           <hr class="dropdown-divider">
-        </li>
-        <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+        </li> 
+        <form id="frmSAlir" th:action="@{/logout}" method="post">
+          <a  href="#" class="dropdown-item" onclick="$('#frmSAlir').submit();">
+              <i class="bi bi-person-fill-x"></i>
+              Cerrar Sesión
+          </a>
+      </form>       
       </ul>
     </div>
   </div>

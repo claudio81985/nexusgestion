@@ -14,4 +14,6 @@ public interface IUsuarioService {
     public List<Usuario> buscarPor(String criterio);
 
     public Usuario buscarPorId(Long id);
+
+   
 }
