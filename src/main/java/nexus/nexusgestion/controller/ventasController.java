@@ -80,6 +80,8 @@ public class ventasController {
         // Si no hay errores...
         LineaVenta linea;
         Producto producto;
+        String rolUsuario = obtenerRolUsuario();
+        // System.out.printf("####----- Rol de usuario = " + rolUsuario);
 
         // Cargar las lineas en la venta...
         for (int i = 0; i < itemIds.size() - 1; i++) {
@@ -102,9 +104,12 @@ public class ventasController {
             }
 
             // Actualizar stock de la sucursal y stock general:
-            producto.setStockSucursalUno(producto.getStockSucursalUno() - cant);
-            producto.setStockSucursalDos(producto.getStockSucursalDos() - cant);
-
+            if (rolUsuario.contains("ROLE_SUCURSALUNO")) {
+                producto.setStockSucursalUno(producto.getStockSucursalUno() - cant);
+            } else if (rolUsuario.contains("ROLE_SUCURSALDOS")) {
+                producto.setStockSucursalDos(producto.getStockSucursalDos() - cant);
+            }
+            
             venta.addLinea(linea);
 
         }
