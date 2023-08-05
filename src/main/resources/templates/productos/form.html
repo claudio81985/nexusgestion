@@ -54,15 +54,47 @@
                     </div>
                     <div class="col-4">
                         <label for="cate" class="form-label" style="width: 90%;">Categoría:</label>
-                        <a href="#" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="top"
-                            title="Agregar nueva categoría">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                class="bi bi-plus-square-fill" viewBox="0 0 16 16">
-                                <path
-                                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"
-                                />
-                            </svg>
-                        </a>
+                        <button class="btn m-0 p-0" data-bs-toggle="modal" data-bs-target="#modalNuevaCategoria">
+                            <a href="#" class="link-primary" 
+                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Agregar nueva categoría"
+                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"
+                                    />
+                                </svg>
+                            </a>
+                        </button>
+                        <div class="modal fade" id="modalNuevaCategoria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Nueva categoría</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="formModalNuevaCategoria" th:action="@{/categoria/guardar}" method="post">
+                                            <label for="nuevaCat" class="form-label">Nombre de la categoría:</label>
+                                            <input id="nuevaCat" type="text" class="form-control">
+                                            <hr>
+                                            <button type="button" class="btn btn-secondary" 
+                                                data-bs-dismiss="modal"
+                                                >
+                                                Cerrar
+                                            </button>
+                                            <button id="btnGuardarCategoria" type="button"
+                                                class="btn btn-primary" onclick="guardarCategoria()"
+                                                >
+                                                Guardar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                              
+                            </div>
+                          </div>
                         <select name="cate" id="cate" class="form-select">
                             <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c}"></option>
                         </select>
@@ -155,7 +187,8 @@
 
 
 
-    <script th:fragment="js" th:src="@{/js/inventario.js}"></script>
+    <script th:fragment="js" th:src="@{/js/layout.js}"></script>
+    
 </body>
 
 </html>
