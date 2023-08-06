@@ -10,7 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+// import javax.validation.constraints.NotNull;
+// import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -28,23 +29,24 @@ public class Proveedor {
     @Size(max = 50)
     private String razon_soc;
 
-    @NotBlank(message = "Campo obligatorio")
+    // @NotBlank(message = "Campo obligatorio")
     @Size(max = 11)
     private String cuil;
 
-    @NotBlank(message = "Campo obligatorio")
+    // @NotBlank(message = "Campo obligatorio")
     @Size(max = 50)
     private String direccion;
 
-    @Pattern(regexp = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", 
+    // @Null()
+    @Pattern(regexp = "^(|^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$)", 
         message = "Debes respetar el formato de correo: micorreo@ejemplo.com")
     private String email;
 
-    @NotBlank(message = "Campo obligatorio")
+    // @NotBlank(message = "Campo obligatorio")
     @Size(max = 30)
     private String localidad;
 
-    @NotNull(message = "Campo obligatorio")
+    // @NotNull(message = "Campo obligatorio")
     @Size(max = 12)
     private String telefono;
 
@@ -136,5 +138,6 @@ public class Proveedor {
     public void setProvincias(Provincias provincias) {
         this.provincias = provincias;
     }
+    
 
 }

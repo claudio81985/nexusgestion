@@ -49,6 +49,7 @@
                     <div class="col-3">
                         <label for="pro" class="form-label">Provincia:</label>
                         <select name="pro" id="pro" class="form-select">
+                            <option disabled selected>Elije una provincia</option>
                             <option th:each="p : ${provincias}" th:value="${p.id}" th:text="${p}"></option>
                         </select>
                     </div>
@@ -79,7 +80,7 @@
                     </div>
                     <div class="col">
                         <label for="email" class="form-label">Correo Electrónico (e-mail):</label>
-                        <input id="email" type="email" class="form-control" placeholder="micorreo@ejemplo.com"
+                        <input id="email" type="text" class="form-control" placeholder="micorreo@ejemplo.com"
                             autocomplete="off" th:field="*{email}" th:errorClass="'form-control alert-warning'" />
                         <small class="form-label text-danger" th:errors="*{email}"></small>
                     </div>
@@ -106,7 +107,7 @@
     </div>
 
 
-    <script th:fragment="js" th:src="@{/js/inventario.js}"></script>
+    <script th:fragment="js" th:src="@{/js/proveedores.js}"></script>
 </body>
 
 </html>

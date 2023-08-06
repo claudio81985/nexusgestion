@@ -2,6 +2,7 @@ package nexus.nexusgestion.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import nexus.nexusgestion.Model.Entities.Categoria;
+// import nexus.nexusgestion.Model.Entities.Categoria;
 import nexus.nexusgestion.Model.Entities.Proveedor;
 import nexus.nexusgestion.Model.Entities.Provincias;
 import nexus.nexusgestion.Model.Service.IProveedorService;
@@ -56,13 +57,20 @@ public class ProveedorController {
     }
 
     @PostMapping("/guardar")
-    public String guardar(@Valid Proveedor proveedor, BindingResult result, @RequestParam("pro") Long idPro,
-            Model model, RedirectAttributes msgFlash, SessionStatus status) {
+    public String guardar(@Valid Proveedor proveedor, BindingResult result,
+            @RequestParam(value = "pro", required = false) Long idPro,
+            Model model, RedirectAttributes msgFlash, SessionStatus status, HttpServletRequest request) {
 
         // Verificar si hay errores
         if (result.hasErrors()) {
             model.addAttribute("danger", "Revise los datos ingresados y/o campos incompletos.");
             return "proveedores/form";
+        }
+
+        // Verificar si el parámetro 'pro' está presente en la solicitud
+        if (idPro == null) {
+            // Si no está presente, asignar el valor predeterminado (ID 24)
+            idPro = 24L; // El sufijo 'L' indica que es un valor de tipo Long
         }
 
         proveedor.setProvincias(provinciasService.buscarPorId(idPro));
@@ -80,11 +88,10 @@ public class ProveedorController {
         Proveedor proveedor = proveedorService.buscarPorId(id);
         proveedor.setActivo(!proveedor.isActivo());
         proveedorService.guardar(proveedor);
-        
+
         msgFlash.addFlashAttribute("warning", proveedor.isActivo()
-            ? "Proveedor Habilitado"
-            : "Se eliminó el proveedor: " + proveedor.getRazon_soc()
-        );
+                ? "Proveedor Habilitado"
+                : "Se eliminó el proveedor: " + proveedor.getRazon_soc());
 
         return "redirect:/proveedores/listado";
     }
@@ -101,7 +108,7 @@ public class ProveedorController {
 
     }
 
-   @ModelAttribute("provincias")
+    @ModelAttribute("provincias")
     public List<Provincias> getProvincias() {
         return provinciasService.buscarTodo();
     }
