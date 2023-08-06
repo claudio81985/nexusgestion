@@ -44,15 +44,15 @@
         <tbody>
           <tr th:each="p : ${proveedores}">
             <th>
-              <button th:href="@{/proveedores/editar/} + ${p.id}" class="btn btn-primary btn-sm"
+              <a th:href="@{/proveedores/editar/} + ${p.id}" class="btn btn-primary btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar">
                 <i class="bi bi-pencil-square"></i>
-              </button>
-              <button th:href="@{/proveedores/borrar/} + ${p.id}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
+              </a>
+              <a th:href="@{/proveedores/borrar/} + ${p.id}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" title="Eliminar"
                 onclick="return confirm('¿Estás seguro de deshabilitar el Registro?')">
                 <i class="bi bi-trash3"></i>
-              </button>
+              </a>
             </th>
             <th th:text="${p.cuil}"></th>
             <td th:text="${p.razon_soc}"></td>

@@ -87,9 +87,11 @@ public class productoController {
         Producto producto = productoService.buscarPorId(id);
         producto.setActivo(!producto.isActivo());
         productoService.guardar(producto);
-        msgFlash.addFlashAttribute("warning", producto.isActivo() ? "Producto Habilitado" : "Producto Deshabilitado");
+        msgFlash.addFlashAttribute("warning", producto.isActivo()
+            ? "Producto Habilitado"
+            : "Se eliminó el producto: " + producto.getCodigoIdentificacion() + " " + producto.getNombreComun());
 
-        return "redirect:/productos/listado";
+        return "redirect:/inventario";
     }
 
     @GetMapping("/editar/{id}")

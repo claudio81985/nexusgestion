@@ -80,9 +80,11 @@ public class ProveedorController {
         Proveedor proveedor = proveedorService.buscarPorId(id);
         proveedor.setActivo(!proveedor.isActivo());
         proveedorService.guardar(proveedor);
-        ;
-        msgFlash.addFlashAttribute("warning",
-                proveedor.isActivo() ? "Proveedor Habilitado" : "Proveedor Deshabilitado");
+        
+        msgFlash.addFlashAttribute("warning", proveedor.isActivo()
+            ? "Proveedor Habilitado"
+            : "Se eliminó el proveedor: " + proveedor.getRazon_soc()
+        );
 
         return "redirect:/proveedores/listado";
     }

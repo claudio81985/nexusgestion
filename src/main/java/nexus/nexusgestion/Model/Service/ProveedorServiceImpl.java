@@ -20,7 +20,7 @@ public class ProveedorServiceImpl implements IProveedorService {
     @Override
     @Transactional(readOnly = true)
     public List<Proveedor> buscarTodo() {
-        return proveedorRepo.findAll();
+        return proveedorRepo.buscarSoloHabilitados();
     }
 
     @Override
