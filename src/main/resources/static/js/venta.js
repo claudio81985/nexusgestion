@@ -5,17 +5,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 });
 
 
-// Confirmación de eliminación de venta
-const btnEliminarVenta = document.getElementById("btnEliminarVenta");
-const confirmacion = () => confirm("¿Seguro que quieres eliminar la venta?");
-btnEliminarVenta.addEventListener('click', function(event) {
-    if (confirmacion()) {
-        console.log("Venta eliminada");
-    } else {
-        console.log("Eliminación cancelada");
-    }
-});
-
 
 // let stock = {};
 const stocks = [];

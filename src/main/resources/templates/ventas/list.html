@@ -46,9 +46,13 @@
                     <tr th:each="v : ${ventas}">
                         <td>
                             <a th:href="@{/ventas/borrar/} + ${v.id}" 
-                                class="btn btn-danger btn-sm" id="btnEliminarVenta"
-                                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar"
-                                >
+                                class="btn btn-danger btn-sm"
+                                id="btnEliminarVenta"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="bottom"
+                                title="Eliminar"
+                                onclick="return confirm('¿Seguro que quieres elminar la venta?')"
+                            >
                                 <i class="bi bi-trash3"></i>
                             </a>
                         </td>
