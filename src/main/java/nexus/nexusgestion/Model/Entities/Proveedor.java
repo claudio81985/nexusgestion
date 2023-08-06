@@ -36,14 +36,14 @@ public class Proveedor {
     @Size(max = 50)
     private String direccion;
 
-    @Pattern(regexp = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", message = "Escribe nuevamente tu email")
+    @Pattern(regexp = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", 
+        message = "Debes respetar el formato de correo: micorreo@ejemplo.com")
     private String email;
 
     @NotBlank(message = "Campo obligatorio")
     @Size(max = 30)
     private String localidad;
 
-    
     @NotNull(message = "Campo obligatorio")
     @Size(max = 12)
     private String telefono;
@@ -51,7 +51,7 @@ public class Proveedor {
     @Column(name = "activo", columnDefinition = "boolean default 1")
     private boolean activo;
 
-     @JsonIgnore
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_provincias", referencedColumnName = "id")
     private Provincias provincias;
@@ -124,7 +124,6 @@ public class Proveedor {
         this.activo = activo;
     }
 
-    
     @Override
     public String toString() {
         return razon_soc;

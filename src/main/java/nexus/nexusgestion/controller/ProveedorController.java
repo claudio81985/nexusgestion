@@ -61,14 +61,14 @@ public class ProveedorController {
 
         // Verificar si hay errores
         if (result.hasErrors()) {
-            model.addAttribute("danger", "Corrija los Errores...");
+            model.addAttribute("danger", "Revise los datos ingresados y/o campos incompletos.");
             return "proveedores/form";
         }
 
         proveedor.setProvincias(provinciasService.buscarPorId(idPro));
         proveedorService.guardar(proveedor);
 
-        msgFlash.addFlashAttribute("success", "Proveedor Guardado Correctamente.");
+        msgFlash.addFlashAttribute("success", "Se guardaron los datos correctamente.");
         status.setComplete();
 
         return "redirect:/proveedores/listado";
