@@ -141,9 +141,12 @@ public class ventasController {
     public String deshabOrHabVenta(@PathVariable("id") Long id, RedirectAttributes msgFlash) {
 
         Venta venta = ventaService.buscarPorId(id);
+        System.out.printf("#### ----- " + venta.getId() + " ----- ####");
         venta.setActivo(!venta.isActivo());
         ventaService.guardar(venta);
-        msgFlash.addFlashAttribute("warning", venta.isActivo() ? "Venta Habilitada" : "Venta Deshabilitada");
+        msgFlash.addFlashAttribute("warning", venta.isActivo()
+            ? "Venta Habilitada"
+            : "Se eliminó la venta #" + venta.getId());
 
         return "redirect:/ventas/listado";
     }

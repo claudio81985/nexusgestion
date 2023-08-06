@@ -45,12 +45,12 @@
                 <tbody>
                     <tr th:each="v : ${ventas}">
                         <td>
-                            <button th:href="@{/ventas/borrar/} + ${v.id}" class="btn btn-danger btn-sm"
+                            <a th:href="@{/ventas/borrar/} + ${v.id}" 
+                                class="btn btn-danger btn-sm" id="btnEliminarVenta"
                                 data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar"
-                                onclick="return confirm('¿Estás seguro de deshabilitar el Registro?')"
                                 >
                                 <i class="bi bi-trash3"></i>
-                            </button>
+                            </a>
                         </td>
                         <td th:text="${v.id}"></td>
                         <td th:text="${v.Usuario}"></td>

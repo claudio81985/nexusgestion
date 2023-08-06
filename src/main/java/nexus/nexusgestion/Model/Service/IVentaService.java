@@ -14,5 +14,7 @@ public interface IVentaService {
     public void guardar(Venta venta);
 
     Long obtenerUltimoIdVenta();
+
+    public Object buscarSoloHabilitados();
     
 }

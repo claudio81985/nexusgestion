@@ -26,7 +26,7 @@ public class IVentaServiceImpl implements IVentaService {
     @Transactional
     public List<Venta> buscarTodo() {
 
-        return ventaRepository.findAll();
+        return ventaRepository.buscarSoloHabilitados();
     }
 
     @Override
@@ -64,5 +64,12 @@ public class IVentaServiceImpl implements IVentaService {
         // un valor predeterminado o manejar el caso según tus necesidades.
         return "ROLE_DEFAULT"; // Por ejemplo, un rol predeterminado si no hay autenticación
     }
+
+    @Override
+    public Object buscarSoloHabilitados() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarSoloHabilitados'");
+    }
+
 
 }
