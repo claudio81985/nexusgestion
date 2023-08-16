@@ -51,7 +51,7 @@
       </li>
       <li>
         <a th:href="@{/compras}"
-          th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/compras' ? ' active' : ''))}">
+          th:class="${#strings.concat('nav-link link-dark disabled', (#request.requestURI == '/compras' ? ' active' : ''))}">
           <i class="bi bi-cart3"></i>
           Compras
         </a>

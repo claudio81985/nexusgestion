@@ -4,7 +4,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
 });
 
-
+let permisoUsuario;
 let stock = {};
 let listaProductos;
 const lineasUtil = {
@@ -24,20 +24,20 @@ const lineasUtil = {
         console.log(`Contenido de 'stk'=${stk}`);
         console.log(`stk.stockSucursalUno = ${stk.stockSucursalUno}`);
         console.log(`stk.stockSucursalDos = ${stk.stockSucursalDos}`);
-        if (cantidad > stk.stockSucursalUno) {
+        if (permisoUsuario === "ROLE_SUCURSALUNO" && cantidad > stk.stockSucursalUno) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No hay stock suficiente Sucursal Sauzalito!'
+            });
+            $(`#cantidad_${id}`).val(stk.stockSucursalUno);
+        } else if (permisoUsuario === "ROLE_SUCURSALDOS" && cantidad > stk.stockSucursalDos) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'No hay stock suficiente Sucursal Fontana!'
             });
-            $(`#cantidad_${id}`).val(stock);
-        } else if (cantidad > stk.stockSucursalDos) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'No hay stock suficiente Sucursal Sausalito!'
-            });
-            $(`#cantidad_${id}`).val(stock);
+            $(`#cantidad_${id}`).val(stk.stockSucursalDos);
         } else {
             console.log(`#subtotal_${id}`)
             console.log(`Precio = ${precio}`)
@@ -84,7 +84,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 // Aquí puedes utilizar el rol del usuario para manejar el stock adecuado
-                let permisoUsuario = data.rol;
+                permisoUsuario = data.rol;
                 console.log(data);
 
                 $("#buscar_productos").autocomplete({
