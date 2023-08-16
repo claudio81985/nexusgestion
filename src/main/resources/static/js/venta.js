@@ -43,7 +43,7 @@ const lineasUtil = {
             console.log(`Precio = ${precio}`)
             console.log(`Cantidad = ${cantidad}`)
             $(`#subtotal_${id}`).html((parseFloat(precio) * parseInt(cantidad)).toFixed(2));
-            // this.calcularTotal();
+            this.calcularTotal();
         }
 
     },
