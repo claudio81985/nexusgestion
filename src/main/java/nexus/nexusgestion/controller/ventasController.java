@@ -123,9 +123,20 @@ public class ventasController {
     }
 
     @GetMapping(value = "/buscar-productos/{criterio}", produces = { "application/json" })
-    public @ResponseBody List<Producto> buscarProductos(@PathVariable("criterio") String texto) {
-        return productoService.buscarPor(texto);
+    @ResponseBody
+    public List<Producto> buscarProductos(@PathVariable("criterio") String texto) {
+        System.out.println("Recibiendo solicitud de búsqueda con criterio: " + texto);
+        
+        List<Producto> productos = productoService.buscarPor(texto);
+        
+        System.out.println("Productos encontrados:");
+        for (Producto producto : productos) {
+            System.out.println("ID: " + producto.getId() + ", Nombre: " + producto.getDescripcion()); // Ajusta esto según la estructura de tu Producto
+        }
+        
+        return productos;
     }
+
 
     @GetMapping(value = "/obtener-rol-usuario", produces = { "application/json" })
     public @ResponseBody String obtenerRolUsuario() {

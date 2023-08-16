@@ -5,9 +5,76 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 });
 
 
+let stock = {};
+let listaProductos;
+const lineasUtil = {
+        
+    incrementarCantidad: function (id, precio) {
+        let cantidad = parseInt($(`#cantidad_${id}`).val());
+        console.log(`Cantidad = ${cantidad}`);
+        $(`#cantidad_${id}`).val(++cantidad);
+        this.calcularSubtotal(id, precio, cantidad);
+    },
 
-// let stock = {};
-const stocks = [];
+
+    calcularSubtotal: function (id, precio, cantidad) {
+        //$("#subtotal_" + id): forma antigua...
+        console.log(`Contenido de 'id'=${id}`);
+        let stk = listaProductos.find(i => i.id === id);// busca el stock que coincide con el id del producto
+        console.log(`Contenido de 'stk'=${stk}`);
+        console.log(`stk.stockSucursalUno = ${stk.stockSucursalUno}`);
+        console.log(`stk.stockSucursalDos = ${stk.stockSucursalDos}`);
+        if (cantidad > stk.stockSucursalUno) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No hay stock suficiente Sucursal Fontana!'
+            });
+            $(`#cantidad_${id}`).val(stock);
+        } else if (cantidad > stk.stockSucursalDos) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No hay stock suficiente Sucursal Sausalito!'
+            });
+            $(`#cantidad_${id}`).val(stock);
+        } else {
+            console.log(`#subtotal_${id}`)
+            console.log(`Precio = ${precio}`)
+            console.log(`Cantidad = ${cantidad}`)
+            $(`#subtotal_${id}`).html((parseFloat(precio) * parseInt(cantidad)).toFixed(2));
+            // this.calcularTotal();
+        }
+
+    },
+
+
+    esRepetido: function (id) {
+        let result = false;
+        $('input[name="item_id[]"]').each(function () {
+            if (parseInt(id) === parseInt($(this).val())) {
+                result = true;
+            }
+        });
+        return result;
+    },
+
+
+    calcularTotal: function () {
+        let total = 0;
+        $(`span[id^="subtotal_"]`).each(function () {
+            total += parseFloat($(this).html());
+        });
+        $("#total").html("$" + parseFloat(total).toFixed(2));
+    },
+
+
+    borrar: function (id) {
+        $(`#fila_${id}`).remove();
+        this.calcularTotal();
+    },
+
+};
 
 $(document).ready(function () {
     // Función para obtener el rol del usuario
@@ -18,6 +85,7 @@ $(document).ready(function () {
             success: function (data) {
                 // Aquí puedes utilizar el rol del usuario para manejar el stock adecuado
                 let permisoUsuario = data.rol;
+                console.log(data);
 
                 $("#buscar_productos").autocomplete({
                     minLength: 3,
@@ -29,14 +97,16 @@ $(document).ready(function () {
                                 term: request.term
                             },
                             success: (data) => {
+                                console.log("Datos recibidos:", data);
+                                listaProductos = data;
                                 response($.map(data, (item) => {
                                     // Verificar el permiso del usuario y obtener el stock adecuado
                                     if (permisoUsuario === "ROLE_SUCURSALUNO") {
-                                        let stock = item.stockSucursalUno;
+                                        stock = item.stockSucursalUno;
                                     } else if (permisoUsuario === "ROLE_SUCURSALDOS") {
-                                        let stock = item.stockSucursalDos;
+                                        stock = item.stockSucursalDos;
                                     } else {
-                                        let stock = item.stockGeneral;
+                                        stock = item.stockGeneral;
                                     }
 
                                     return {
@@ -76,6 +146,8 @@ $(document).ready(function () {
 
                         $("#tabla_productos tbody").append(linea);
 
+                        console.log(`id del producto antes de calcularSubtotal ${id}`);
+                        console.log(`precio del producto antes de calcularSubtotal ${precio}`);
                         lineasUtil.calcularSubtotal(id, precio, 1);
                     }
                 });
@@ -90,56 +162,6 @@ $(document).ready(function () {
     obtenerRolUsuario();
 
     //Clase de utilidades de Lineas de Ventas
-    const lineasUtil = {
-        
-        incrementarCantidad: function (id, precio) {
-            let cantidad = parseInt($(`#cantidad_${id}`).val());
-            $(`#cantidad_${id}`).val(++cantidad);
-            this.calcularSubtotal(id, precio, cantidad);
-        },
-        calcularSubtotal: function (id, precio, cantidad) {
-            //$("#subtotal_" + id): forma antigua...
-            let stk = stocks.find(i => i.id === id);// busca el stock que coincide con el id del producto
-            if (cantidad > stk.stockSucursalUno) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'No hay stock suficiente Sucursal Fontana!'
-                });
-                $(`#cantidad_${id}`).val(stock);
-            } else if (cantidad > stk.stockSucursalDos) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'No hay stock suficiente Sucursal Sausalito!'
-                });
-                $(`#cantidad_${id}`).val(stock);
-            } else {
-                $(`#subtotal_${id}`).html((parseFloat(precio) * parseInt(cantidad)).toFixed(2));
-                this.calcularTotal();
-            }
 
-        },
-        esRepetido: function (id) {
-            let result = false;
-            $('input[name="item_id[]"]').each(function () {
-                if (parseInt(id) === parseInt($(this).val())) {
-                    result = true;
-                }
-            });
-            return result;
-        },
-        calcularTotal: function () {
-            let total = 0;
-            $(`span[id^="subtotal_"]`).each(function () {
-                total += parseFloat($(this).html());
-            });
-            $("#total").html("$" + parseFloat(total).toFixed(2));
-        },
-        borrar: function (id) {
-            $(`#fila_${id}`).remove();
-            this.calcularTotal();
-        },
-
-    };
+    // console.log(lineasUtil);
 });
