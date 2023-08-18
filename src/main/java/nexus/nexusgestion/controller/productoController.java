@@ -135,6 +135,45 @@ public class productoController {
 
     }
 
+    @GetMapping("/moverProducto")
+    public String mover(Model model) {
+
+        model.addAttribute("titulo", "Mover Producto");
+        model.addAttribute("productos", productoService.buscarTodo());
+
+        return "productos/moverProducto";
+
+    }
+
+    @PostMapping("/intercambiar-stock")
+    public String intercambiarStock(@RequestParam("codigoIdentificacion") String codigoIdentificacion,
+            @RequestParam("cantidad") int cantidad,
+            @RequestParam("origen") String origen,
+            RedirectAttributes msgFlash) {
+        Producto producto = productoService.buscarPorCodigoIdentificacion(codigoIdentificacion);
+
+        if (producto != null) {
+            try {
+                if ("sucursalUno".equals(origen)) {
+                    productoService.intercambiarStockSucursales(producto, cantidad, 0);
+                } else if ("sucursalDos".equals(origen)) {
+                    productoService.intercambiarStockSucursales(producto, 0, cantidad);
+                }
+
+                productoService.guardar(producto);
+                msgFlash.addFlashAttribute("success", "Stock de sucursales intercambiado correctamente.");
+            } catch (IllegalArgumentException e) {
+                msgFlash.addFlashAttribute("warning", e.getMessage());
+            } catch (IllegalStateException e) {
+                msgFlash.addFlashAttribute("danger", e.getMessage());
+            }
+        } else {
+            msgFlash.addFlashAttribute("danger", "Producto no encontrado.");
+        }
+
+        return "redirect:/inventario";
+    }
+
     @ModelAttribute("categorias")
     public List<Categoria> getCategorias() {
         return categoriaService.buscarTodo();

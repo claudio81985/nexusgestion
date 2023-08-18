@@ -18,4 +18,7 @@ public interface IProductoService {
 
     public void aumentarPreciosPorProveedor(Long proveedorId, BigDecimal aumentoPorcentaje);
     
+    public void intercambiarStockSucursales(Producto producto, int cantidadDesde, int cantidadHacia);
+
+    public Producto buscarPorCodigoIdentificacion(String codigoIdentificacion);
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${titulo}"></title>
+</head>
+
+<body>
+    <div layout:fragment="contenido">
+       
+        <form th:action="@{/productos/intercambiar-stock}" method="post">
+            <label for="codigoIdentificacion">Código de Identificación:</label>
+            <input type="text" id="codigoIdentificacion" name="codigoIdentificacion" required>
+            
+            <label for="cantidad">Cantidad a Intercambiar:</label>
+            <input type="number" id="cantidad" name="cantidad" required>
+            
+            <label for="origen">Origen (Sucursal Actual):</label>
+            <select id="origen" name="origen">
+                <option value="sucursalUno">Sucursal Uno</option>
+                <option value="sucursalDos">Sucursal Dos</option>
+            </select>
+            
+            <button type="submit">Intercambiar Stock de Sucursales</button>
+            <a th:href="@{/inventario}">Cancelar</a>
+        </form>
+        
+        
+
+    </div>
+
+    <script th:fragment="js" th:src="@{/js/layout.js}"></script>
+
+</body>
+
+</html>
