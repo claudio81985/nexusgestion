@@ -165,7 +165,7 @@
                     </div>
                     <div class="col-3">
                         <label for="precioCompra" class="form-label">Precio Compra</label>
-                        <input id="precioCompra" class="form-control" min="0"
+                        <input id="precioCompra" type="number" class="form-control" min="0"
                             th:field="*{precioCompra}" th:errorClass="'form-control alert-warning'"
                         />
                         <small class="form-label text-danger" th:errors="*{precioCompra}"></small>

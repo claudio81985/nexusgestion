@@ -20,8 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import nexus.nexusgestion.Model.Entities.LineaVenta;
 import nexus.nexusgestion.Model.Entities.Producto;
+import nexus.nexusgestion.Model.Entities.Usuario;
 import nexus.nexusgestion.Model.Entities.Venta;
 import nexus.nexusgestion.Model.Service.IProductoService;
+import nexus.nexusgestion.Model.Service.IUsuarioService;
 import nexus.nexusgestion.Model.Service.IVentaService;
 
 import org.springframework.ui.Model;
@@ -39,6 +41,9 @@ public class ventasController {
 
     @Autowired
     IVentaService ventaService;
+
+    @Autowired
+    IUsuarioService usuarioService;
 
     @GetMapping("/listado")
     public String listado(Model model) {
@@ -113,6 +118,11 @@ public class ventasController {
             venta.addLinea(linea);
 
         }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombreUsuario = authentication.getName();
+        Usuario usuario = usuarioService.buscarPorNombre(nombreUsuario);
+        venta.setUsuario(usuario);
 
         // Guardar la venta...
         ventaService.guardar(venta);

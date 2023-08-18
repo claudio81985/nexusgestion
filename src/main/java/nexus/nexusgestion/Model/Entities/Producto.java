@@ -59,6 +59,10 @@ public class Producto {
 
     private int stockGeneral;
 
+    @NotNull(message = "El precio es requerido.")
+    @NumberFormat(pattern = "#,##0.00", style = Style.CURRENCY)
+    private BigDecimal precioCompra;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categoria", referencedColumnName = "id")
@@ -181,6 +185,14 @@ public class Producto {
     @Override
     public String toString() {
         return id + " - " + descripcion;
+    }
+
+    public BigDecimal getPrecioCompra() {
+        return precioCompra;
+    }
+
+    public void setPrecioCompra(BigDecimal precioCompra) {
+        this.precioCompra = precioCompra;
     }
 
 }
