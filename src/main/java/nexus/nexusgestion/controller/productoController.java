@@ -1,5 +1,6 @@
 package nexus.nexusgestion.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -24,13 +25,14 @@ import nexus.nexusgestion.Model.Entities.Proveedor;
 import nexus.nexusgestion.Model.Service.ICategoriaService;
 import nexus.nexusgestion.Model.Service.IProductoService;
 import nexus.nexusgestion.Model.Service.IProveedorService;
+import nexus.nexusgestion.Model.Service.ProveedorSinProductosException;
 
 @Controller
 @RequestMapping("/productos")
 @SessionAttributes("producto")
 public class productoController {
 
-     @Autowired
+    @Autowired
     IProductoService productoService;
 
     @Autowired
@@ -39,7 +41,7 @@ public class productoController {
     @Autowired
     IProveedorService proveedorService;
 
-     @GetMapping("/listado")
+    @GetMapping("/listado")
     public String listado(Model model) {
 
         model.addAttribute("titulo", "Listado de Productos");
@@ -88,8 +90,8 @@ public class productoController {
         producto.setActivo(!producto.isActivo());
         productoService.guardar(producto);
         msgFlash.addFlashAttribute("warning", producto.isActivo()
-            ? "Producto Habilitado"
-            : "Se eliminó el producto: " + producto.getCodigoIdentificacion() + " " + producto.getNombreComun());
+                ? "Producto Habilitado"
+                : "Se eliminó el producto: " + producto.getCodigoIdentificacion() + " " + producto.getNombreComun());
 
         return "redirect:/inventario";
     }
@@ -105,6 +107,34 @@ public class productoController {
         return "productos/form";
     }
 
+    @PostMapping("/aumentar-precios")
+    public String aumentarPrecios(@RequestParam("proveedorId") Long proveedorId,
+            @RequestParam("aumentoPorcentaje") BigDecimal aumentoPorcentaje,
+            RedirectAttributes msgFlash) {
+
+        try {
+            productoService.aumentarPreciosPorProveedor(proveedorId, aumentoPorcentaje);
+            msgFlash.addFlashAttribute("success", "Precios aumentados correctamente.");
+        } catch (ProveedorSinProductosException e) {
+            msgFlash.addFlashAttribute("warning", e.getMessage());
+        } catch (Exception e) {
+            msgFlash.addFlashAttribute("danger", "Error al aumentar precios.");
+        }
+
+        return "redirect:/inventario";
+    }
+
+    @GetMapping("/aumentar")
+    public String auemetar(Model model) {
+
+        model.addAttribute("titulo", "Incrementar Precio");
+        model.addAttribute("productos", productoService.buscarTodo());
+        model.addAttribute("proveedores", proveedorService.buscarTodo());
+
+        return "productos/aumentar";
+
+    }
+
     @ModelAttribute("categorias")
     public List<Categoria> getCategorias() {
         return categoriaService.buscarTodo();
@@ -115,7 +145,4 @@ public class productoController {
         return proveedorService.buscarTodo();
     }
 
-   
 }
- 
-

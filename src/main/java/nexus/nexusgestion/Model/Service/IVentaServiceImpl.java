@@ -13,8 +13,6 @@ import nexus.nexusgestion.Model.Repository.IVentaRepositoy;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
 public class IVentaServiceImpl implements IVentaService {

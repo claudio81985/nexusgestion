@@ -1,5 +1,6 @@
 package nexus.nexusgestion.Model.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,22 @@ public class ProductoServiceImpl implements IProductoService{
     @Transactional
     public void guardar(Producto producto) {
        productoRepo.save(producto);
+    }
+
+    @Override
+    public void aumentarPreciosPorProveedor(Long proveedorId, BigDecimal aumentoPorcentaje) {
+        List<Producto> productos = productoRepo.findByProveedorId(proveedorId);
+        
+        if (productos.isEmpty()) {
+            throw new ProveedorSinProductosException("El proveedor no tiene productos asignados.");
+        }
+    
+        for (Producto producto : productos) {
+            BigDecimal aumento = producto.getPrecio().multiply(aumentoPorcentaje.divide(new BigDecimal(100)));
+            producto.setPrecio(producto.getPrecio().add(aumento));
+        }
+    
+        productoRepo.saveAll(productos);
     }
     
 

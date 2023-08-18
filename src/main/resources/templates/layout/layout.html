@@ -63,13 +63,13 @@
           Proveedores
         </a>
       </li>
-      <!-- <li>
-        <a href="/sucursales"
-          th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/sucursales' ? ' active' : ''))}">
-          <i class="bi bi-shop"></i>
-          Sucursales
-        </a>
-      </li> -->
+      <li>
+        <a th:href="@{/productos/aumentar}"
+        th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/aumentar' ? ' active' : ''))}">
+        <i class="bi bi-truck"></i>
+       Aumentar Precio
+      </a>
+      </li>
     </ul>
     <hr>
     <div class="dropdown">
