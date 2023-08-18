@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${titulo}"></title>
+</head>
+ 
+<body>
+    <div layout:fragment="contenido">
+        <div id="top-panel" class="d-flex justify-content-between">
+            <form id="search-form" action="">
+                <h4>Buscador</h4>
+                <div id="search-bar" class="input-group">
+                    <input class="form-control" type="search" placeholder="¿Qué estás buscando?">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </form>
+            <div class="me-5">
+                <h4>Acciones</h4>
+                <a th:href="@{/compras/nuevo}" class="btn btn-success">
+                    
+                    Nueva Compra
+                </a>
+            </div>
+        </div>
+
+        <h5 class="text-secondary">Listado de Compras</h5>
+        <div id="tablaProveedores" class="table-container overflow-auto border rounded shadow">
+            <table class="table table-hover caption-top">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Acción</th>
+                        <th scope="col"># Compra</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Fecha y Hora</th>
+                        <th scope="col">Items vendidos</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c : ${compras}">
+                        <td>
+                            <a th:href="@{/compras/borrar/} + ${c.id}" 
+                                class="btn btn-danger btn-sm"
+                                id="btnEliminarCompra"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="bottom"
+                                title="Eliminar"
+                                onclick="return confirm('¿Seguro que quieres elminar la compra?')"
+                            >
+                                <i class="bi bi-trash3"></i>
+                            </a>
+                        </td>
+                        <td th:text="${c.id}"></td>
+                        <td th:text="${c.usuario?.nombre}"></td>
+                        <td th:text='*{#temporals.format(c.fechaHora, "dd/MM/yyyy HH:mm")}'></td>
+                        <td th:text="${c.calcularCantidad}"></td>
+                        <td th:text="${c.calcularTotal}" class="money"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script th:fragment="js" th:src="@{/js/compra.js}"></script>
+</body>
+
+</html>

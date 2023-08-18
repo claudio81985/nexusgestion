@@ -2,6 +2,8 @@ package nexus.nexusgestion.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 // import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +24,12 @@ import nexus.nexusgestion.Model.Entities.Compra;
 import nexus.nexusgestion.Model.Entities.LineaCompra;
 import nexus.nexusgestion.Model.Entities.Producto;
 import nexus.nexusgestion.Model.Entities.Proveedor;
+import nexus.nexusgestion.Model.Entities.Usuario;
 import nexus.nexusgestion.Model.Service.ICategoriaService;
 import nexus.nexusgestion.Model.Service.ICompraService;
 import nexus.nexusgestion.Model.Service.IProductoService;
 import nexus.nexusgestion.Model.Service.IProveedorService;
+import nexus.nexusgestion.Model.Service.IUsuarioService;
 
 import javax.validation.Valid;
 
@@ -46,6 +50,9 @@ public class CompraController {
 
     @Autowired
     ICategoriaService categoriaService;
+
+    @Autowired
+    IUsuarioService usuarioService;
 
     @GetMapping("/listado")
     public String listado(Model model) {
@@ -71,7 +78,6 @@ public class CompraController {
     public String guardar(@Valid Compra compra, BindingResult result,
             @RequestParam(name = "item_id[]") List<String> itemIds,
             @RequestParam(name = "cantidad[]") List<String> cantidades,
-            @RequestParam("prov") Long idProv,@RequestParam("cat") Long idCat,
             Model model, RedirectAttributes flash, SessionStatus status) {
 
         // Verificar los errores:
@@ -80,18 +86,20 @@ public class CompraController {
             return "compras/form";
         }
 
-        // Verificar si hay productos en la venta...
+        // Verificar si hay productos en la compra...
         if (itemIds == null || itemIds.size() == 1) {
             model.addAttribute("titulo", "Nueva Compra");
-            model.addAttribute("warning", "Añadir productos a la Compra...");
+            model.addAttribute("warning", "Añadir productos a la compra...");
             return "compras/form";
         }
 
         // Si no hay errores...
         LineaCompra linea;
         Producto producto;
+        String rolUsuario = obtenerRolUsuario();
+        // System.out.printf("####----- Rol de usuario = " + rolUsuario);
 
-        // Cargar las lineas en la venta...
+        // Cargar las lineas en la compra...
         for (int i = 0; i < itemIds.size() - 1; i++) {
 
             linea = new LineaCompra();
@@ -104,26 +112,27 @@ public class CompraController {
             linea.setPrecioActual(producto.getPrecio());
             linea.setCantidad(cant);
 
-            // No tendría que llegar acá...
-            if (cant > producto.getStockSucursalUno() || cant > producto.getStockSucursalDos()) {
-                model.addAttribute("titulo", "Nueva Venta");
-                model.addAttribute("danger", "No hay stock suficiente...");
-                return "ventas/form";
-            }
+           
 
             // Actualizar stock de la sucursal y stock general:
-            producto.setStockSucursalUno(producto.getStockSucursalUno() + cant);
-            producto.setStockSucursalDos(producto.getStockSucursalDos() + cant);
+            if (rolUsuario.contains("ROLE_SUCURSALUNO")) {
+                producto.setStockSucursalUno(producto.getStockSucursalUno() + cant);
+            } else if (rolUsuario.contains("ROLE_SUCURSALDOS")) {
+                producto.setStockSucursalDos(producto.getStockSucursalDos() + cant);
+            }
 
             compra.addLinea(linea);
 
         }
-        compra.setProveedor(proveedorService.buscarPorId(idProv));
-        compra.setCategoria(categoriaService.buscarPorId(idCat));
-        // Guardar la venta...
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombreUsuario = authentication.getName();
+        Usuario usuario = usuarioService.buscarPorNombre(nombreUsuario);
+        compra.setUsuario(usuario);
+
+        // Guardar la compra...
         compraService.guardar(compra);
         status.setComplete();
-        flash.addFlashAttribute("success", "Compra registrada...");
+        flash.addFlashAttribute("success", "Registrado con exito...");
 
         return "redirect:/compras/listado";
     }
@@ -163,6 +172,16 @@ public class CompraController {
     @ModelAttribute("categorias")
     public List<Categoria> getCategorias() {
         return categoriaService.buscarTodo();
+    }
+
+    @GetMapping(value = "/obtener-rol-usuario", produces = { "application/json" })
+    public @ResponseBody String obtenerRolUsuario() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String rolUsuario = authentication.getAuthorities().iterator().next().getAuthority();
+            return "{\"rol\":\"" + rolUsuario + "\"}";
+        }
+        return "{\"rol\":\"ROLE_DEFAULT\"}";
     }
 
 }
