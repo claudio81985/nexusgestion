@@ -9,7 +9,7 @@
 
     <title th:text="${titulo}"></title>
 </head>
- 
+
 <body>
     <div layout:fragment="contenido">
         <div id="top-panel" class="d-flex justify-content-between">
@@ -23,7 +23,7 @@
             <div class="me-5">
                 <h4>Acciones</h4>
                 <a th:href="@{/ventas/nuevo}" class="btn btn-success">
-                    
+
                     Nueva venta
                 </a>
             </div>
@@ -40,19 +40,16 @@
                         <th scope="col">Fecha y Hora</th>
                         <th scope="col">Items vendidos</th>
                         <th scope="col">Total</th>
+                        <th scope="col">ver Detalle</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="v : ${ventas}">
                         <td>
-                            <a th:href="@{/ventas/borrar/} + ${v.id}" 
-                                class="btn btn-danger btn-sm"
-                                id="btnEliminarVenta"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="bottom"
-                                title="Eliminar"
-                                onclick="return confirm('¿Seguro que quieres elminar la venta?')"
-                            >
+                            <a th:href="@{/ventas/borrar/} + ${v.id}" class="btn btn-danger btn-sm"
+                                id="btnEliminarVenta" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                title="Eliminar" onclick="return confirm('¿Seguro que quieres elminar la venta?')">
                                 <i class="bi bi-trash3"></i>
                             </a>
                         </td>
@@ -61,6 +58,13 @@
                         <td th:text='*{#temporals.format(v.fechaHora, "dd/MM/yyyy HH:mm")}'></td>
                         <td th:text="${v.calcularCantidad}"></td>
                         <td th:text="${v.calcularTotal}" class="money"></td>
+                        <td>                            
+                            <a th:href="@{/ventas/detalle/{id}(id=${v.id})}" class="btn btn-sm btn-warning" title="Ver detalles">
+                                <i class="bi bi-eye-fill"></i>
+                            </a>
+                            
+                            
+                        </td>
                     </tr>
                 </tbody>
             </table>
