@@ -39,9 +39,17 @@
                             </svg>
                         </a>
 
-                        <select name="provee" id="provee" class="form-select">
+                        <!-- <select name="provee" id="provee" class="form-select">
                             <option th:each="p : ${proveedores}" th:value="${p.id}" th:text="${p}"></option>
+                        </select> -->
+                        <select name="provee" id="provee" class="form-select">
+                            <option th:each="proveedor : ${proveedores}" th:value="${proveedor.id}"
+                                    th:text="${proveedor.razon_soc}" th:selected="${proveedor.id == producto.proveedor.id}"></option>
                         </select>
+                        
+                        
+                        
+                        
                     </div>
                     <div class="col-2">
                         <label for="cod" class="form-label">Código del artículo:</label>
