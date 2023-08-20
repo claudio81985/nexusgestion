@@ -1,10 +1,3 @@
-// Tooltip
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
-
-
 // BUSQUEDA DE ARTICULOS
 document.addEventListener("DOMContentLoaded", function () {
   const searchBar = document.getElementById("search-bar");

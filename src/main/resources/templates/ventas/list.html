@@ -57,7 +57,7 @@
                             </a>
                         </td>
                         <td th:text="${v.id}"></td>
-                        <td th:text="${v.Usuario}"></td>
+                        <td th:text="${v.usuario?.nombre}"></td>
                         <td th:text='*{#temporals.format(v.fechaHora, "dd/MM/yyyy HH:mm")}'></td>
                         <td th:text="${v.calcularCantidad}"></td>
                         <td th:text="${v.calcularTotal}" class="money"></td>
@@ -67,8 +67,6 @@
         </div>
     </div>
 
-
-    <script th:fragment="js" th:src="@{/js/venta.js}"></script>
 </body>
 
 </html>

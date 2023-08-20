@@ -63,7 +63,7 @@
             <td th:text="${p.stockSucursalUno}"></td>
             <td th:text="${p.stockSucursalDos}"></td>
             <td th:text="${p.stockGeneral}"></td>
-            <td th:text="${p.precio}"></td>
+            <td th:text="${p.precio}" class="money"></td>
           </tr>
         </tbody>
       </table>
@@ -71,7 +71,8 @@
   </div>
 
 
-  <script th:fragment="js" th:src="@{/js/inventario.js}"></script>
+  
+  <script layout:fragment="js" th:src="@{/js/inventario.js}"></script>
 </body>
 
 </html>

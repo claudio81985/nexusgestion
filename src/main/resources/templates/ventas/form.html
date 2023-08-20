@@ -58,7 +58,7 @@
                     <div class="col-3">
                         <div class="">
                             <h4>Total</h4>
-                            <span  id="total" class="badge bg-success fs-3 money" style="width:200px">0.00</span>
+                            <span  id="total" class="badge bg-success fs-3" style="width:200px">0</span>
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                                     <tr>
                                         <th>Código</th>
                                         <th>Artículo</th>
-                                        <th class="money">Precio</th>
+                                        <th>Precio</th>
                                         <th>Cantidad</th>
                                         <th>Subtotal</th>
                                         <th>Acción</th>
@@ -104,7 +104,7 @@
                                         <td>
                                             {DESCRIPCION}
                                         </td>
-                                        <td>
+                                        <td class="">
                                             {PRECIO}
                                         </td>
                                         <td>
@@ -114,7 +114,7 @@
                                             >
                                         </td>
                                         <td>
-                                            <span id="subtotal_{ID}">0.00</span>
+                                            <span id="subtotal_{ID}" class=""></span>
                                         </td>
                                         <td>
                                             <button class="btn btn-danger btn-sm"
@@ -261,7 +261,7 @@
     </div>
 
 
-    <script th:fragment="js" th:src="@{/js/venta.js}"></script>
+    <script layout:fragment="js" th:src="@{/js/ventaForm.js}"></script>
 </body>
 
 </html>

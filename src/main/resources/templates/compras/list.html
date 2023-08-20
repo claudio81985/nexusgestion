@@ -23,7 +23,6 @@
             <div class="me-5">
                 <h4>Acciones</h4>
                 <a th:href="@{/compras/nuevo}" class="btn btn-success">
-                    
                     Nueva Compra
                 </a>
             </div>
@@ -38,7 +37,7 @@
                         <th scope="col"># Compra</th>
                         <th scope="col">Usuario</th>
                         <th scope="col">Fecha y Hora</th>
-                        <th scope="col">Items vendidos</th>
+                        <th scope="col">Items comprados</th>
                         <th scope="col">Total</th>
                     </tr>
                 </thead>
@@ -68,7 +67,7 @@
     </div>
 
 
-    <script th:fragment="js" th:src="@{/js/compra.js}"></script>
+    <script layout:fragment="js" th:src="@{/js/compra.js}"></script>
 </body>
 
 </html>
