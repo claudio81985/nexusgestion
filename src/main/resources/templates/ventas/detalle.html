@@ -37,8 +37,7 @@
                     <tr th:each="linea : ${venta.lineas}">
                         <td th:text="${linea.producto.descripcion}"></td>
                         <td th:text="${linea.cantidad}"></td>
-                        <!-- <td th:text="${#numbers.formatDecimal(linea.precioActual, 0, 0)}"></td>
-                        <td th:text="${#numbers.formatDecimal(linea.calcularSubtotal(), 0, 0)}"></td> -->
+                       
                         
                     </tr>
                 </tbody>

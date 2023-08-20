@@ -32,7 +32,7 @@
     </a>
     <hr>
     <h5 class="text-center">¡Hola <span sec:authentication="name"></span>!</h5>
-     <span sec:authentication="principal.authorities"></span>
+    <span sec:authentication="principal.authorities"></span>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
@@ -65,10 +65,17 @@
       </li>
       <li>
         <a th:href="@{/productos/aumentar}"
-        th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/aumentar' ? ' active' : ''))}">
-        <i class="bi bi-truck"></i>
-       Aumentar Precio
-      </a>
+          th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/aumentar' ? ' active' : ''))}">
+          <i class="bi bi-truck"></i>
+          Aumentar Precio
+        </a>
+      </li>
+      <li>
+        <a th:href="@{/usuarios/listado}"
+          th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/usuarios' ? ' active' : ''))}">
+          <i class="bi bi-truck"></i>
+          Usuario
+        </a>
       </li>
     </ul>
     <hr>
@@ -80,16 +87,20 @@
       </a>
       <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
         <li><a class="dropdown-item" href="#">Perfil</a></li>
-        <li><a class="dropdown-item" href="#">Configuración</a></li>
+        <li><a th:href="@{/usuarios/nuevaClave}" class="dropdown-item">
+            <i class="bi bi-gear"></i>
+            Configuración
+          </a>
+        </li>
         <li>
           <hr class="dropdown-divider">
-        </li> 
+        </li>
         <form id="frmSAlir" th:action="@{/logout}" method="post">
-          <a  href="#" class="dropdown-item" onclick="$('#frmSAlir').submit();">
-              <i class="bi bi-person-fill-x"></i>
-              Cerrar Sesión
+          <a href="#" class="dropdown-item" onclick="$('#frmSAlir').submit();">
+            <i class="bi bi-person-fill-x"></i>
+            Cerrar Sesión
           </a>
-      </form>       
+        </form>
       </ul>
     </div>
   </div>
@@ -112,7 +123,7 @@
     </div>
 
     <!--Lo que se reemplazara por el contenido de otras paginas-->
-    <div layout:fragment="contenido">...</div>  
+    <div layout:fragment="contenido">...</div>
   </div>
 
 

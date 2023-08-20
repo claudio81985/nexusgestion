@@ -140,10 +140,7 @@ public class ventasController {
         System.out.println("Productos encontrados:");
         for (Producto producto : productos) {
             System.out.println("ID: " + producto.getId() + ", Nombre: " + producto.getDescripcion()); // Ajusta esto
-                                                                                                      // según la
-                                                                                                      // estructura de
-                                                                                                      // tu Producto
-        }
+          }
 
         return productos;
     }

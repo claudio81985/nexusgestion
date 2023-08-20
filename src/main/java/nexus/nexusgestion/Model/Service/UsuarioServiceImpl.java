@@ -16,8 +16,6 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    
-
     @Override
     @Transactional(readOnly = true)
     public List<Usuario> buscarPor(String criterio) {
@@ -43,9 +41,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public Usuario buscarPorNombre(String nombreUsuario) {
-        return usuarioRepository.findByNombre(nombreUsuario);
-    }
+@Transactional(readOnly = true)
+public Usuario buscarPorNombre(String nombreUsuario) {
+    return usuarioRepository.findByNombre(nombreUsuario);
+}
 
-   
+
 }
