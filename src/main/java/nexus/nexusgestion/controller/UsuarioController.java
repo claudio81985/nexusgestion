@@ -1,8 +1,6 @@
 package nexus.nexusgestion.controller;
 
-
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,7 +33,7 @@ import javax.validation.Valid;
 public class UsuarioController {
 
     @Autowired
-     IUsuarioService usuarioService;
+    IUsuarioService usuarioService;
 
     @Autowired
     IPermisoService permisoService;
@@ -67,18 +65,31 @@ public class UsuarioController {
     public String guardar(@Valid Usuario usuario, BindingResult result, @RequestParam("rol") Long idRol,
             Model model, RedirectAttributes msgFlash, SessionStatus status) {
 
-        // Verificar si hay errores
+        // Verificar si hay errores de validación
         if (result.hasErrors()) {
             model.addAttribute("danger", "Corrija los Errores...");
             return "usuarios/form";
         }
 
-        usuario.setPermiso(permisoService.buscarPorId(idRol));
-        
-        //if(usuario.getId() == 0)
+        if (usuario.getId() == null) {
+
             usuario.setClave(passwordEncoder.encode(usuario.getClave()));
-        
-            usuarioService.guardar(usuario);
+        } else {
+
+            Usuario usuarioExistente = usuarioService.buscarPorId(usuario.getId());
+            if (usuarioExistente != null) {
+
+                usuarioExistente.setNombre(usuario.getNombre());
+
+                usuario = usuarioExistente;
+            } else {
+                model.addAttribute("danger", "Usuario no encontrado");
+                return "usuarios/form";
+            }
+        }
+
+        usuario.setPermiso(permisoService.buscarPorId(idRol));
+        usuarioService.guardar(usuario);
 
         msgFlash.addFlashAttribute("success", "Usuario Registrado Correctamente.");
         status.setComplete();

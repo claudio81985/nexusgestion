@@ -2,7 +2,11 @@ package nexus.nexusgestion.Model.Service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +44,24 @@ public class CompraServiceImpl implements ICompraService{
     @Transactional
     public void guardar(Compra compra) {
         compraRepository.save(compra);
+    }
+
+    private String obtenerRolUsuarioDesdeSesion(HttpServletRequest request) {
+        // Obtener el objeto Authentication del contexto de seguridad
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Verificar si el usuario está autenticado y obtener su rol
+        if (authentication != null && authentication.isAuthenticated()) {
+            // Aquí asumimos que el rol del usuario está almacenado en forma de
+            // GrantedAuthority
+            // Puedes adaptar esta lógica según cómo hayas configurado Spring Security
+            String rolUsuario = authentication.getAuthorities().iterator().next().getAuthority();
+            return rolUsuario;
+        }
+
+        // Si el usuario no está autenticado o no tiene un rol válido, puedes devolver
+        // un valor predeterminado o manejar el caso según tus necesidades.
+        return "ROLE_DEFAULT"; // Por ejemplo, un rol predeterminado si no hay autenticación
     }
     
 }

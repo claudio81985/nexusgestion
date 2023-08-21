@@ -23,7 +23,7 @@ public class Usuario  {
     private Long id;
 
     @Size(max = 30, min = 5)
-    //@NotEmpty(message = "El nombre de ususario es requerido...")
+    @Column(name = "nombre", unique = true)
     @Pattern(regexp = "[a-zA-ZÀ-ÖØ-öø-ÿ]+\\.?(( |\\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\\.?)*", message="Escribe nuevamente tu nombre")
     private String nombre;
 

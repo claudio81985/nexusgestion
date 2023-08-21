@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import nexus.nexusgestion.Model.Entities.Categoria;
 import nexus.nexusgestion.Model.Entities.Compra;
 import nexus.nexusgestion.Model.Entities.LineaCompra;

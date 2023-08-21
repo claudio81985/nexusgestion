@@ -73,7 +73,7 @@ $(document).ready(function () {
   // Función para obtener el rol del usuario
   function obtenerRolUsuario() {
     $.ajax({
-      url: "/ventas/obtener-rol-usuario",
+      url: "/compras/obtener-rol-usuario",
       dataType: "json",
       success: function (data) {
         permisoUsuario = data.rol;
@@ -83,7 +83,7 @@ $(document).ready(function () {
           minLength: 3,
           source: (request, response) => {
             $.ajax({
-              url: `/ventas/buscar-productos/${request.term}`,
+              url: `/compras/buscar-productos/${request.term}`,
               dataType: "json",
               data: {
                 term: request.term,

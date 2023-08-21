@@ -1,5 +1,6 @@
 package nexus.nexusgestion.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -24,13 +25,14 @@ import nexus.nexusgestion.Model.Entities.Proveedor;
 import nexus.nexusgestion.Model.Service.ICategoriaService;
 import nexus.nexusgestion.Model.Service.IProductoService;
 import nexus.nexusgestion.Model.Service.IProveedorService;
+import nexus.nexusgestion.Model.Service.ProveedorSinProductosException;
 
 @Controller
 @RequestMapping("/productos")
 @SessionAttributes("producto")
 public class productoController {
 
-     @Autowired
+    @Autowired
     IProductoService productoService;
 
     @Autowired
@@ -39,7 +41,7 @@ public class productoController {
     @Autowired
     IProveedorService proveedorService;
 
-     @GetMapping("/listado")
+    @GetMapping("/listado")
     public String listado(Model model) {
 
         model.addAttribute("titulo", "Listado de Productos");
@@ -88,8 +90,8 @@ public class productoController {
         producto.setActivo(!producto.isActivo());
         productoService.guardar(producto);
         msgFlash.addFlashAttribute("warning", producto.isActivo()
-            ? "Producto Habilitado"
-            : "Se eliminó el producto: " + producto.getCodigoIdentificacion() + " " + producto.getNombreComun());
+                ? "Producto Habilitado"
+                : "Se eliminó el producto: " + producto.getCodigoIdentificacion() + " " + producto.getNombreComun());
 
         return "redirect:/inventario";
     }
@@ -105,6 +107,73 @@ public class productoController {
         return "productos/form";
     }
 
+    @PostMapping("/aumentar-precios")
+    public String aumentarPrecios(@RequestParam("proveedorId") Long proveedorId,
+            @RequestParam("aumentoPorcentaje") BigDecimal aumentoPorcentaje,
+            RedirectAttributes msgFlash) {
+
+        try {
+            productoService.aumentarPreciosPorProveedor(proveedorId, aumentoPorcentaje);
+            msgFlash.addFlashAttribute("success", "Precios aumentados correctamente.");
+        } catch (ProveedorSinProductosException e) {
+            msgFlash.addFlashAttribute("warning", e.getMessage());
+        } catch (Exception e) {
+            msgFlash.addFlashAttribute("danger", "Error al aumentar precios.");
+        }
+
+        return "redirect:/inventario";
+    }
+
+    @GetMapping("/aumentar")
+    public String auemetar(Model model) {
+
+        model.addAttribute("titulo", "Incrementar Precio");
+        model.addAttribute("productos", productoService.buscarTodo());
+        model.addAttribute("proveedores", proveedorService.buscarTodo());
+
+        return "productos/aumentar";
+
+    }
+
+    @GetMapping("/moverProducto")
+    public String mover(Model model) {
+
+        model.addAttribute("titulo", "Mover Producto");
+        model.addAttribute("productos", productoService.buscarTodo());
+
+        return "productos/moverProducto";
+
+    }
+
+    @PostMapping("/intercambiar-stock")
+    public String intercambiarStock(@RequestParam("codigoIdentificacion") String codigoIdentificacion,
+            @RequestParam("cantidad") int cantidad,
+            @RequestParam("origen") String origen,
+            RedirectAttributes msgFlash) {
+        Producto producto = productoService.buscarPorCodigoIdentificacion(codigoIdentificacion);
+
+        if (producto != null) {
+            try {
+                if ("sucursalUno".equals(origen)) {
+                    productoService.intercambiarStockSucursales(producto, cantidad, 0);
+                } else if ("sucursalDos".equals(origen)) {
+                    productoService.intercambiarStockSucursales(producto, 0, cantidad);
+                }
+
+                productoService.guardar(producto);
+                msgFlash.addFlashAttribute("success", "Stock de sucursales intercambiado correctamente.");
+            } catch (IllegalArgumentException e) {
+                msgFlash.addFlashAttribute("warning", e.getMessage());
+            } catch (IllegalStateException e) {
+                msgFlash.addFlashAttribute("danger", e.getMessage());
+            }
+        } else {
+            msgFlash.addFlashAttribute("danger", "Producto no encontrado.");
+        }
+
+        return "redirect:/inventario";
+    }
+
     @ModelAttribute("categorias")
     public List<Categoria> getCategorias() {
         return categoriaService.buscarTodo();
@@ -115,7 +184,4 @@ public class productoController {
         return proveedorService.buscarTodo();
     }
 
-   
 }
- 
-

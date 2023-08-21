@@ -182,17 +182,24 @@ public class Producto {
         this.stockGeneral = stockSucursalUno + stockSucursalDos;
     }
 
-    @Override
-    public String toString() {
-        return id + " - " + descripcion;
-    }
-
+    
     public BigDecimal getPrecioCompra() {
         return precioCompra;
     }
 
     public void setPrecioCompra(BigDecimal precioCompra) {
         this.precioCompra = precioCompra;
+    }
+
+    public void intercambiarStockSucursales() {
+        int temp = stockSucursalUno;
+        stockSucursalUno = stockSucursalDos;
+        stockSucursalDos = temp;
+    }
+
+    @Override
+    public String toString() {
+        return id + " - " + descripcion;
     }
 
 }

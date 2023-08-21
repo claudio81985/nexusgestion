@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${titulo}"></title>
+</head>
+
+<body>
+    <div layout:fragment="contenido">
+
+        <div class="venta-details" th:if="${venta != null}">
+            <h2>Detalle de Venta</h2>
+            <div class="venta-info">
+                <p><strong>Número de Factura:</strong> <span th:text="${venta.nroFactura}"></span></p>
+            <p><strong>Fecha y Hora:</strong> <span th:text="${#temporals.format(venta.fechaHora, 'dd/MM/yyyy HH:mm')}"></span></p>
+            <p><strong>Descripción:</strong> <span th:text="${venta.descripcion}"></span></p>
+            <p><strong>Usuario:</strong> <span th:if="${venta.usuario != null}" th:text="${venta.usuario.nombre}"></span>
+            </p>
+        </div>
+            </div>
+            <h3>Líneas de Venta</h3>
+            <table class="lineas-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="linea : ${venta.lineas}">
+                        <td th:text="${linea.producto.descripcion}"></td>
+                        <td th:text="${linea.cantidad}"></td>
+                       
+                        
+                    </tr>
+                </tbody>
+            </table>
+            <p class="venta-total"><strong>Total:</strong> <span
+                    th:text="${venta.calcularTotal()}"></span></p>
+        </div>
+        <div class="venta-not-available" th:unless="${venta != null}">
+            <p>La venta no está disponible.</p>
+
+
+        </div>
+    </div>
+
+    <script th:fragment="js" th:src="@{/js/inventario.js}"></script>
+</body>
+
+</html>

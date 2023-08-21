@@ -2,7 +2,6 @@ package nexus.nexusgestion.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +46,9 @@ public class ventasController {
 
     @GetMapping("/listado")
     public String listado(Model model) {
-
         model.addAttribute("titulo", "Listado de Ventas");
-        model.addAttribute("ventas", ventaService.buscarTodo());
-
+        List<Venta> ventas = ventaService.buscarTodo();
+        model.addAttribute("ventas", ventas);
         return "ventas/list";
     }
 
@@ -114,7 +112,7 @@ public class ventasController {
             } else if (rolUsuario.contains("ROLE_SUCURSALDOS")) {
                 producto.setStockSucursalDos(producto.getStockSucursalDos() - cant);
             }
-            
+
             venta.addLinea(linea);
 
         }
@@ -136,17 +134,16 @@ public class ventasController {
     @ResponseBody
     public List<Producto> buscarProductos(@PathVariable("criterio") String texto) {
         System.out.println("Recibiendo solicitud de búsqueda con criterio: " + texto);
-        
+
         List<Producto> productos = productoService.buscarPor(texto);
-        
+
         System.out.println("Productos encontrados:");
         for (Producto producto : productos) {
-            System.out.println("ID: " + producto.getId() + ", Nombre: " + producto.getDescripcion()); // Ajusta esto según la estructura de tu Producto
-        }
-        
+            System.out.println("ID: " + producto.getId() + ", Nombre: " + producto.getDescripcion()); // Ajusta esto
+          }
+
         return productos;
     }
-
 
     @GetMapping(value = "/obtener-rol-usuario", produces = { "application/json" })
     public @ResponseBody String obtenerRolUsuario() {
@@ -166,8 +163,8 @@ public class ventasController {
         venta.setActivo(!venta.isActivo());
         ventaService.guardar(venta);
         msgFlash.addFlashAttribute("warning", venta.isActivo()
-            ? "Venta Habilitada"
-            : "Se eliminó la venta #" + venta.getId());
+                ? "Venta Habilitada"
+                : "Se eliminó la venta #" + venta.getId());
 
         return "redirect:/ventas/listado";
     }
@@ -177,8 +174,22 @@ public class ventasController {
         Long ultimoIdVenta = ventaService.obtenerUltimoIdVenta();
         Long numeroVenta = (ultimoIdVenta != null) ? ultimoIdVenta + 1 : 1;
         model.addAttribute("numeroVenta", numeroVenta);
-        return "ventas/form"; // Reemplaza "ventas/form" con la ruta de tu plantilla para crear una nueva
-                              // venta
+        return "ventas/form"; 
+        
     }
+
+    @GetMapping("/detalle/{id}")
+    public String detalleVenta(@PathVariable Long id, Model model) {
+        Venta venta = ventaService.buscarPorId(id);
+
+        if (venta == null) {
+            return "redirect:/ventas/listado"; 
+        }
+
+        model.addAttribute("titulo", "Detalle de Venta #" + id);
+        model.addAttribute("venta", venta);
+        return "ventas/detalle"; 
+    }
+
 
 }

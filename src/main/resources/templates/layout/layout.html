@@ -49,7 +49,7 @@
       </a>
       <hr />
       <h5 class="text-center">
-        ¡Hola <span sec:authentication="name"></span>!
+        ¡Hola <span sec:authentication="name" class="text-capitalize"></span>!
       </h5>
       <span sec:authentication="principal.authorities"></span>
       <hr />
@@ -57,7 +57,7 @@
         <li class="nav-item">
           <a
             th:href="@{/ventas/listado}"
-            th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/ventas/listado' ? ' active' : ''))}"
+            th:class="${#strings.concat('nav-link link-dark', (#strings.startsWith(#httpServletRequest.requestURI, '/ventas/') ? ' active' : ''))}"
           >
             <i class="bi bi-receipt"></i>
             Ventas
@@ -66,7 +66,7 @@
         <li>
           <a
             th:href="@{/inventario}"
-            th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/inventario' ? ' active' : ''))}"
+            th:class="${#strings.concat('nav-link link-dark', (#strings.startsWith(#httpServletRequest.requestURI, '/inventario') ? ' active' : ''))}"
           >
             <i class="bi bi-boxes"></i>
             Inventario
@@ -75,8 +75,7 @@
         <li>
           <a
             th:href="@{/compras/listado}"
-            th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/compras/listado' ? ' active' : ''))}"
-          >
+            th:class="${#strings.concat('nav-link link-dark', (#strings.startsWith(#httpServletRequest.requestURI, '/compras/') ? ' active' : ''))}"          >
             <i class="bi bi-cart3"></i>
             Compras
           </a>
@@ -84,10 +83,28 @@
         <li>
           <a
             th:href="@{/proveedores/listado}"
-            th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/proveedores/listado' ? ' active' : ''))}"
-          >
+            th:class="${#strings.concat('nav-link link-dark', (#strings.startsWith(#httpServletRequest.requestURI, '/proveedores/') ? ' active' : ''))}"
+            >
             <i class="bi bi-truck"></i>
             Proveedores
+          </a>
+        </li>
+        <li>
+          <a
+            th:href="@{/productos/aumentar}"
+            th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/aumentar' ? ' active' : ''))}"
+          >
+            <i class="bi bi-truck"></i>
+            Aumentar Precio
+          </a>
+        </li>
+        <li>
+          <a
+            th:href="@{/usuarios/listado}"
+            th:class="${#strings.concat('nav-link link-dark', (#strings.startsWith(#httpServletRequest.requestURI, '/usuarios/') ? ' active' : ''))}"
+          >
+            <i class="bi bi-people"></i>
+            Usuarios
           </a>
         </li>
       </ul>
@@ -114,7 +131,12 @@
           aria-labelledby="dropdownUser2"
         >
           <li><a class="dropdown-item" href="#">Perfil</a></li>
-          <li><a class="dropdown-item" href="#">Configuración</a></li>
+          <li>
+            <a th:href="@{/usuarios/nuevaClave}" class="dropdown-item">
+              <i class="bi bi-gear"></i>
+              Configuración
+            </a>
+          </li>
           <li>
             <hr class="dropdown-divider" />
           </li>
@@ -180,7 +202,6 @@
       <div layout:fragment="contenido">...</div>
     </div>
 
-
     <!--JQuery-->
     <script
       src="https://code.jquery.com/jquery-3.6.1.js"
@@ -206,7 +227,6 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
-
 
     <script layout:fragment="js"></script>
     <script th:src="@{/js/layout.js}"></script>

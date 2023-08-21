@@ -1,4 +1,4 @@
-// BUSQUEDA DE COMPRA
+// BUSQUEDA DE VENTA
 document.addEventListener("DOMContentLoaded", function () {
     const searchBar = document.getElementById("search-bar");
     const searchInput = searchBar.querySelector("input");
@@ -8,16 +8,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const searchTerm = this.value.trim().toLowerCase();
 
         tableRows.forEach(function (row) {
-            const purchaseNumber = row.cells[1].innerText.toLowerCase(); // Número de compra
-            const userName = row.cells[2].innerText.toLowerCase(); // Nombre de usuario
+            const articleName = row.cells[3].innerText.toLowerCase();
+            const articleCode = row.cells[1].innerText.toLowerCase();
+            const userName = row.cells[2].innerText.toLowerCase(); // Nueva línea para obtener el nombre de usuario
             const showRow =
-                purchaseNumber.includes(searchTerm) || // Buscar por número de compra
-                userName.includes(searchTerm); // Buscar por nombre de usuario
+                articleName.includes(searchTerm) ||
+                articleCode.includes(searchTerm) ||
+                userName.includes(searchTerm); // Agregar comparación del nombre de usuario
             row.style.display = showRow ? "" : "none";
         });
     });
 });
-
 
   
   
