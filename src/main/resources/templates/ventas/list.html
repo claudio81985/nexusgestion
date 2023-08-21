@@ -1,77 +1,94 @@
 <!DOCTYPE html>
-<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html
+  lang="es"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title th:text="${titulo}"></title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div layout:fragment="contenido">
-        <div id="top-panel" class="d-flex justify-content-between">
-            <form id="search-form" action="">
-                <h4>Buscador</h4>
-                <div id="search-bar" class="input-group">
-                    <input class="form-control" type="search" placeholder="¿Qué estás buscando?">
-                    <button type="submit" class="btn btn-primary">Buscar</button>
-                </div>
-            </form>
-            <div class="me-5">
-                <h4>Acciones</h4>
-                <a th:href="@{/ventas/nuevo}" class="btn btn-success">
+      <div id="top-panel" class="d-flex justify-content-between">
+        <form id="search-form" action="">
+          <h4>Buscador</h4>
+          <div id="search-bar" class="input-group">
+            <input
+              class="form-control"
+              type="search"
+              placeholder="¿Qué estás buscando?"
+            />
+            <button type="submit" class="btn btn-primary">Buscar</button>
+          </div>
+        </form>
+        <div class="me-5">
+          <h4>Acciones</h4>
+          <a th:href="@{/ventas/nuevo}" class="btn btn-success">
+            Nueva venta
+          </a>
+        </div>
+      </div>
 
-                    Nueva venta
+      <h5 class="text-secondary">Listado de Ventas</h5>
+      <div
+        id="tablaProveedores"
+        class="table-container overflow-auto border rounded shadow"
+      >
+        <table class="table table-hover caption-top">
+          <thead class="bg-light">
+            <tr>
+              <th>Acción</th>
+              <th scope="col"># Venta</th>
+              <th scope="col">Usuario</th>
+              <th scope="col">Fecha y Hora</th>
+              <th scope="col">Items vendidos</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="v : ${ventas}">
+              <td>
+                <a
+                  th:href="@{/ventas/borrar/} + ${v.id}"
+                  class="btn btn-sm btn-danger"
+                  id="btnEliminarVenta"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Eliminar"
+                  onclick="return confirm('¿Seguro que quieres elminar la venta?')"
+                >
+                  <i class="bi bi-trash3"></i>
                 </a>
-            </div>
-        </div>
-
-        <h5 class="text-secondary">Listado de Ventas</h5>
-        <div id="tablaProveedores" class="table-container overflow-auto border rounded shadow">
-            <table class="table table-hover caption-top">
-                <thead class="bg-light">
-                    <tr>
-                        <th>Acción</th>
-                        <th scope="col"># Venta</th>
-                        <th scope="col">Usuario</th>
-                        <th scope="col">Fecha y Hora</th>
-                        <th scope="col">Items vendidos</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">ver Detalle</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="v : ${ventas}">
-                        <td>
-                            <a th:href="@{/ventas/borrar/} + ${v.id}" class="btn btn-danger btn-sm"
-                                id="btnEliminarVenta" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                title="Eliminar" onclick="return confirm('¿Seguro que quieres elminar la venta?')">
-                                <i class="bi bi-trash3"></i>
-                            </a>
-                        </td>
-                        <td th:text="${v.id}"></td>
-                        <td th:text="${v.usuario?.nombre}"></td>
-                        <td th:text='*{#temporals.format(v.fechaHora, "dd/MM/yyyy HH:mm")}'></td>
-                        <td th:text="${v.calcularCantidad}"></td>
-                        <td th:text="${v.calcularTotal}" class="money"></td>
-                        <td>                            
-                            <a th:href="@{/ventas/detalle/{id}(id=${v.id})}" class="btn btn-sm btn-warning" title="Ver detalles">
-                                <i class="bi bi-eye-fill"></i>
-                            </a>
-                            
-                            
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                <a
+                  th:href="@{/ventas/detalle/{id}(id=${v.id})}"
+                  class="btn btn-sm btn-warning"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Ver detalle"
+                >
+                  <i class="bi bi-eye-fill"></i>
+                </a>
+              </td>
+              <td th:text="${v.id}"></td>
+              <td th:text="${v.usuario?.nombre}"></td>
+              <td
+                th:text='*{#temporals.format(v.fechaHora, "dd/MM/yyyy HH:mm")}'
+              ></td>
+              <td th:text="${v.calcularCantidad}"></td>
+              <td th:text="${v.calcularTotal}" class="money"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <script layout:fragment="js" th:src="@{/js/venta.js}"></script>
-</body>
-
+  </body>
 </html>
