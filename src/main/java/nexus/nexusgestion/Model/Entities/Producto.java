@@ -16,8 +16,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -32,19 +34,18 @@ public class Producto {
     private String codigoIdentificacion;
 
     @Size(max = 50)
-    @NotBlank(message = "La descripcion es requerida.")
     private String descripcion;
 
     @Size(max = 30)
-    @NotBlank(message = "La descripcion es requerida.")
+    @NotBlank(message = "Este campo es obligatorio.")
     private String nombreComun;
 
     @Size(max = 30)
-    @NotBlank(message = "La descripcion es requerida.")
+    @NotBlank(message = "Este campo es obligatorio.")
     private String nombreTecnico;
 
-    @NotNull(message = "El precio es requerido.")
-    @NumberFormat(pattern = "#,##0.00", style = Style.CURRENCY)
+    @NotNull(message = "Este campo es obligatorio.")
+    @Positive(message = "El precio debe ser un valor positivo.")
     private BigDecimal precio;
 
     @Column(name = "activo", columnDefinition = "boolean default 1")
@@ -60,7 +61,7 @@ public class Producto {
     private int stockGeneral;
 
     @NotNull(message = "El precio es requerido.")
-    @NumberFormat(pattern = "#,##0.00", style = Style.CURRENCY)
+    @Positive(message = "El precio debe ser un valor positivo.")
     private BigDecimal precioCompra;
 
     @JsonIgnore
@@ -196,6 +197,8 @@ public class Producto {
         stockSucursalUno = stockSucursalDos;
         stockSucursalDos = temp;
     }
+
+    
 
     @Override
     public String toString() {
