@@ -25,7 +25,7 @@
               type="search"
               placeholder="¿Qué estás buscando?"
             />
-            <button type="submit" class="btn btn-primary">Buscar</button>
+            <button type="submit" class="btn btn-secondary">Buscar</button>
           </div>
         </form>
         <div class="me-5">
@@ -56,6 +56,15 @@
             <tr th:each="v : ${ventas}">
               <td>
                 <a
+                  th:href="@{/ventas/detalle/{id}(id=${v.id})}"
+                  class="btn btn-sm btn-warning"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Ver detalle"
+                >
+                  <i class="bi bi-eye-fill"></i>
+                </a>
+                <a
                   th:href="@{/ventas/borrar/} + ${v.id}"
                   class="btn btn-sm btn-danger"
                   id="btnEliminarVenta"
@@ -65,15 +74,6 @@
                   onclick="return confirm('¿Seguro que quieres elminar la venta?')"
                 >
                   <i class="bi bi-trash3"></i>
-                </a>
-                <a
-                  th:href="@{/ventas/detalle/{id}(id=${v.id})}"
-                  class="btn btn-sm btn-warning"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="bottom"
-                  title="Ver detalle"
-                >
-                  <i class="bi bi-eye-fill"></i>
                 </a>
               </td>
               <td th:text="${v.id}"></td>

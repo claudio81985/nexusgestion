@@ -27,7 +27,7 @@
 
                             <div class="form">
                                 <label for="cla" class="form-label">Contraseña</label>
-                                <input id="cla" type="text" class="form-control" th:field="*{clave}"
+                                <input id="cla" type="password" class="form-control" th:field="*{clave}"
                                     th:errorClass="'form-control alert-warning'" />
                                 <small class="form-label text-danger" th:errors="*{clave}"></small>
                             </div>
@@ -50,12 +50,7 @@
                     </form>
 
                 </div>
-
-
             </div>
-
-            <script th:fragment="js"></script>
-
 </body>
 
 </html>

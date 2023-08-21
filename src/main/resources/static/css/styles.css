@@ -22,7 +22,7 @@
 
 
 
-/* INVENTARIO */
+/* CONTENIDO PRINCIPAL */
 
 #content {
     margin-left: var(--ancho-sidebar);
@@ -44,4 +44,11 @@
 .table-container table thead {
     position: sticky;
     top:0;
+}
+
+
+
+/* COLOR PILDORAS ACTIVAS */
+.nav-pills .nav-link.active {
+    background-color: gray;
 }
