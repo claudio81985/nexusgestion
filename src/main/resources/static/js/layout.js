@@ -1,18 +1,25 @@
 
 // Tooltip
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+return new bootstrap.Tooltip(tooltipTriggerEl)
+});
+
+// Delay de los mensaje en pantalla
+setInterval("cerrar()", 2000);
+
+const cerrar = () => {
+    $(".alert").delay(500).slideUp(500, () => {
+    $(this).hide();
     });
+}
 
-    // Delay de los mensaje en pantalla
-    setInterval("cerrar()", 2000);
 
-    const cerrar = () => {
-        $(".alert").delay(500).slideUp(500, () => {
-        $(this).hide();
-        });
-    }
+// POPOVER
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl)
+})
 
 
 // Formato moneda a pesos argentinos
