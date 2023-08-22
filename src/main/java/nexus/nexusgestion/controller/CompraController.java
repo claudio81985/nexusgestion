@@ -24,6 +24,7 @@ import nexus.nexusgestion.Model.Entities.LineaCompra;
 import nexus.nexusgestion.Model.Entities.Producto;
 import nexus.nexusgestion.Model.Entities.Proveedor;
 import nexus.nexusgestion.Model.Entities.Usuario;
+import nexus.nexusgestion.Model.Entities.Venta;
 import nexus.nexusgestion.Model.Service.ICategoriaService;
 import nexus.nexusgestion.Model.Service.ICompraService;
 import nexus.nexusgestion.Model.Service.IProductoService;
@@ -181,6 +182,20 @@ public class CompraController {
             return "{\"rol\":\"" + rolUsuario + "\"}";
         }
         return "{\"rol\":\"ROLE_DEFAULT\"}";
+    }
+
+    
+    @GetMapping("/detalle/{id}")
+    public String detalleCompra(@PathVariable Long id, Model model) {
+       Compra compra = compraService.buscarPorId(id);
+
+        if (compra == null) {
+            return "redirect:/ventas/listado"; 
+        }
+
+        model.addAttribute("titulo", "Detalle de compra #" + id);
+        model.addAttribute("compra", compra);
+        return "compras/detalle"; 
     }
 
 }

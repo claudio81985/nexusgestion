@@ -15,33 +15,12 @@ const lineasUtil = {
     console.log(`Contenido de 'stk'=${stk}`);
     console.log(`stk.stockSucursalUno = ${stk.stockSucursalUno}`);
     console.log(`stk.stockSucursalDos = ${stk.stockSucursalDos}`);
-    if (
-      permisoUsuario === "ROLE_SUCURSALUNO" &&
-      cantidad > stk.stockSucursalUno
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No hay stock suficiente Sucursal Sauzalito!",
-      });
-      $(`#cantidad_${id}`).val(stk.stockSucursalUno);
-    } else if (
-      permisoUsuario === "ROLE_SUCURSALDOS" &&
-      cantidad > stk.stockSucursalDos
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No hay stock suficiente Sucursal Fontana!",
-      });
-      $(`#cantidad_${id}`).val(stk.stockSucursalDos);
-    } else {
-      console.log(`Cantidad = ${cantidad}`);
+   
+    console.log(`Cantidad = ${cantidad}`);
       $(`#subtotal_${id}`).html(
         (parseFloat(precio) * parseInt(cantidad)).toFixed(2)
       );
       this.calcularTotal();
-    }
   },
 
   esRepetido: function (id) {

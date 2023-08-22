@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${titulo}"></title>
+</head>
+
+<body>
+    <div layout:fragment="contenido">
+
+        <div class="compra-details" th:if="${compra != null}">
+            <h2>Detalle de Compra</h2>
+            <div class="compra-info">
+                
+            <p><strong>Fecha y Hora:</strong> <span th:text="${#temporals.format(compra.fechaHora, 'dd/MM/yyyy HH:mm')}"></span></p>
+            <p><strong>Descripción:</strong> <span th:text="${compra.descripcion}"></span></p>
+            <p><strong>Usuario:</strong> <span th:if="${compra.usuario != null}" th:text="${compra.usuario.nombre}"></span>
+            </p>
+        </div>
+            </div>
+            <h3>Líneas de Compra</h3>
+            <table class="lineas-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="linea : ${compra.lineas}">
+                        <td th:text="${linea.producto.descripcion}"></td>
+                        <td th:text="${linea.cantidad}"></td>
+                       
+                        
+                    </tr>
+                </tbody>
+            </table>
+            <p class="compra-total"><strong>Total:</strong> <span
+                    th:text="${compra.calcularTotal()}"></span></p>
+        </div>
+        <div class="compra-not-available" th:unless="${compra != null}">
+            <p>el detalle no está disponible.</p>
+
+
+        </div>
+    </div>
+
+    <script th:fragment="js" th:src="@{/js/inventario.js}"></script>
+</body>
+
+</html>
