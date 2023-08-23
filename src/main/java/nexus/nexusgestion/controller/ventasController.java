@@ -27,12 +27,13 @@ import nexus.nexusgestion.Model.Service.IVentaService;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 
 @Controller
 @RequestMapping("/ventas")
 @SessionAttributes("venta")
+
 public class ventasController {
 
     @Autowired
@@ -44,6 +45,7 @@ public class ventasController {
     @Autowired
     IUsuarioService usuarioService;
 
+    
     @GetMapping("/listado")
     public String listado(Model model) {
         model.addAttribute("titulo", "Listado de Ventas");
@@ -52,6 +54,7 @@ public class ventasController {
         return "ventas/list";
     }
 
+   
     @GetMapping("/nuevo")
     public String nuevaVenta(Model model) {
 
@@ -61,6 +64,7 @@ public class ventasController {
         return "ventas/form";
     }
 
+    
     @PostMapping("/guardar")
     public String guardar(@Valid Venta venta, BindingResult result,
             @RequestParam(name = "item_id[]") List<String> itemIds,
@@ -140,7 +144,7 @@ public class ventasController {
         System.out.println("Productos encontrados:");
         for (Producto producto : productos) {
             System.out.println("ID: " + producto.getId() + ", Nombre: " + producto.getDescripcion()); // Ajusta esto
-          }
+        }
 
         return productos;
     }
@@ -155,6 +159,7 @@ public class ventasController {
         return "{\"rol\":\"ROLE_DEFAULT\"}";
     }
 
+    @Secured({"ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO"})
     @GetMapping("/borrar/{id}")
     public String deshabOrHabVenta(@PathVariable("id") Long id, RedirectAttributes msgFlash) {
 
@@ -174,8 +179,8 @@ public class ventasController {
         Long ultimoIdVenta = ventaService.obtenerUltimoIdVenta();
         Long numeroVenta = (ultimoIdVenta != null) ? ultimoIdVenta + 1 : 1;
         model.addAttribute("numeroVenta", numeroVenta);
-        return "ventas/form"; 
-        
+        return "ventas/form";
+
     }
 
     @GetMapping("/detalle/{id}")
@@ -183,13 +188,12 @@ public class ventasController {
         Venta venta = ventaService.buscarPorId(id);
 
         if (venta == null) {
-            return "redirect:/ventas/listado"; 
+            return "redirect:/ventas/listado";
         }
 
         model.addAttribute("titulo", "Detalle de Venta #" + id);
         model.addAttribute("venta", venta);
-        return "ventas/detalle"; 
+        return "ventas/detalle";
     }
-
 
 }

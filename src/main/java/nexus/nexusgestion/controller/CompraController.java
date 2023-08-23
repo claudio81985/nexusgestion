@@ -2,6 +2,7 @@ package nexus.nexusgestion.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 // import org.springframework.security.access.annotation.Secured;
@@ -62,6 +63,7 @@ public class CompraController {
         return "compras/list";
     }
 
+   
     @GetMapping("/nuevo")
     public String nuevaCompra(Model model) {
 
@@ -72,7 +74,7 @@ public class CompraController {
 
         return "compras/form";
     }
-
+  
     @PostMapping("/guardar")
     public String guardar(@Valid Compra compra, BindingResult result,
             @RequestParam(name = "item_id[]") List<String> itemIds,
@@ -136,6 +138,7 @@ public class CompraController {
         return "redirect:/compras/listado";
     }
 
+    @Secured({"ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO"})
     @GetMapping("/borrar/{id}")
     public String deshabOrHabCompra(@PathVariable("id") Long id, RedirectAttributes msgFlash) {
 
@@ -147,6 +150,7 @@ public class CompraController {
         return "redirect:/compras/listado";
     }
 
+    @Secured({"ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO"})
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable("id") Long id, Model model) {
 
@@ -181,6 +185,20 @@ public class CompraController {
             return "{\"rol\":\"" + rolUsuario + "\"}";
         }
         return "{\"rol\":\"ROLE_DEFAULT\"}";
+    }
+
+    
+    @GetMapping("/detalle/{id}")
+    public String detalleCompra(@PathVariable Long id, Model model) {
+       Compra compra = compraService.buscarPorId(id);
+
+        if (compra == null) {
+            return "redirect:/ventas/listado"; 
+        }
+
+        model.addAttribute("titulo", "Detalle de compra #" + id);
+        model.addAttribute("compra", compra);
+        return "compras/detalle"; 
     }
 
 }

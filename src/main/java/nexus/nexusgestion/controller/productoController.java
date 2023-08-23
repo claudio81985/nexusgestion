@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +31,9 @@ import nexus.nexusgestion.Model.Service.ProveedorSinProductosException;
 @Controller
 @RequestMapping("/productos")
 @SessionAttributes("producto")
+
+@Secured({ "ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO" })
+
 public class productoController {
 
     @Autowired
@@ -62,6 +66,7 @@ public class productoController {
         return "productos/form";
     }
 
+    
     @PostMapping("/guardar")
     public String guardar(@Valid Producto producto, BindingResult result, @RequestParam("cate") Long idCate,
             @RequestParam("provee") Long idProvee,
@@ -83,6 +88,7 @@ public class productoController {
         return "redirect:/inventario";
     }
 
+    
     @GetMapping("/borrar/{id}")
     public String deshabOrHabProducto(@PathVariable("id") Long id, RedirectAttributes msgFlash) {
 
@@ -96,6 +102,7 @@ public class productoController {
         return "redirect:/inventario";
     }
 
+
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable("id") Long id, Model model) {
 
@@ -106,7 +113,7 @@ public class productoController {
 
         return "productos/form";
     }
-
+     @Secured({"ROLE_SUPERUSUARIO, ROLE_SUCURSALUNO, ROLE_SUCURSALDOS"})
     @PostMapping("/aumentar-precios")
     public String aumentarPrecios(@RequestParam("proveedorId") Long proveedorId,
             @RequestParam("aumentoPorcentaje") BigDecimal aumentoPorcentaje,
@@ -123,6 +130,7 @@ public class productoController {
 
         return "redirect:/inventario";
     }
+    
 
     @GetMapping("/aumentar")
     public String auemetar(Model model) {
@@ -135,6 +143,7 @@ public class productoController {
 
     }
 
+    
     @GetMapping("/moverProducto")
     public String mover(Model model) {
 
@@ -145,6 +154,7 @@ public class productoController {
 
     }
 
+    
     @PostMapping("/intercambiar-stock")
     public String intercambiarStock(@RequestParam("codigoIdentificacion") String codigoIdentificacion,
             @RequestParam("cantidad") int cantidad,

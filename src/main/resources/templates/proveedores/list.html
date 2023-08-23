@@ -20,9 +20,9 @@
           <button type="submit" class="btn btn-secondary">Buscar</button>
         </div>
       </form>
-      <div class="me-5">
+      <div  class="me-5">
         <h4>Acciones</h4>
-        <a th:href="@{/proveedores/nuevo}" class="btn btn-success">Nuevo Proveedor</a>
+        <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}" th:href="@{/proveedores/nuevo}" class="btn btn-success">Nuevo Proveedor</a>
       </div>
     </div>
 
@@ -31,7 +31,7 @@
       <table class="table table-hover caption-top">
         <thead class="bg-light">
           <tr>
-            <th>Acción</th>
+            <th >Acción</th>
             <th scope="col">CUIT/CUIL</th>
             <th scope="col">Proveedor</th>
             <th scope="col">Teléfono</th>
@@ -44,11 +44,11 @@
         <tbody>
           <tr th:each="p : ${proveedores}">
             <th>
-              <a th:href="@{/proveedores/editar/} + ${p.id}" class="btn btn-primary btn-sm"
+              <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}" th:href="@{/proveedores/editar/} + ${p.id}" class="btn btn-primary btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar">
                 <i class="bi bi-pencil-square"></i>
               </a>
-              <a th:href="@{/proveedores/borrar/} + ${p.id}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
+              <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}" th:href="@{/proveedores/borrar/} + ${p.id}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" title="Eliminar"
                 onclick="return confirm('¿Estás seguro de deshabilitar el Registro?')">
                 <i class="bi bi-trash3"></i>
