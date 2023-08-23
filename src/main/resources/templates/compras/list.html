@@ -20,7 +20,7 @@
                     <button type="submit" class="btn btn-secondary">Buscar</button>
                 </div>
             </form>
-            <div class="me-5">
+            <div sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS') or hasRole('EMPLEADO')}"class="me-5">
                 <h4>Acciones</h4>
                 <a th:href="@{/compras/nuevo}" class="btn btn-success">
                     Nueva Compra
@@ -48,7 +48,8 @@
                                 data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ver detalle">
                                 <i class="bi bi-eye-fill"></i>
                             </a>
-                            <a th:href="@{/compras/borrar/} + ${c.id}" class="btn btn-danger btn-sm"
+                            <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}"
+                             th:href="@{/compras/borrar/} + ${c.id}" class="btn btn-danger btn-sm"
                                 id="btnEliminarCompra" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                 title="Eliminar" onclick="return confirm('¿Seguro que quieres elminar la compra?')">
                                 <i class="bi bi-trash3"></i>

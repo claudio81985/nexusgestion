@@ -64,7 +64,7 @@
                 >
                   <i class="bi bi-eye-fill"></i>
                 </a>
-                <a
+                <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}"
                   th:href="@{/ventas/borrar/} + ${v.id}"
                   class="btn btn-sm btn-danger"
                   id="btnEliminarVenta"

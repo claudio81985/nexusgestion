@@ -2,6 +2,7 @@ package nexus.nexusgestion.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 // import org.springframework.security.access.annotation.Secured;
@@ -24,7 +25,6 @@ import nexus.nexusgestion.Model.Entities.LineaCompra;
 import nexus.nexusgestion.Model.Entities.Producto;
 import nexus.nexusgestion.Model.Entities.Proveedor;
 import nexus.nexusgestion.Model.Entities.Usuario;
-import nexus.nexusgestion.Model.Entities.Venta;
 import nexus.nexusgestion.Model.Service.ICategoriaService;
 import nexus.nexusgestion.Model.Service.ICompraService;
 import nexus.nexusgestion.Model.Service.IProductoService;
@@ -63,6 +63,7 @@ public class CompraController {
         return "compras/list";
     }
 
+   
     @GetMapping("/nuevo")
     public String nuevaCompra(Model model) {
 
@@ -73,7 +74,7 @@ public class CompraController {
 
         return "compras/form";
     }
-
+  
     @PostMapping("/guardar")
     public String guardar(@Valid Compra compra, BindingResult result,
             @RequestParam(name = "item_id[]") List<String> itemIds,
@@ -137,6 +138,7 @@ public class CompraController {
         return "redirect:/compras/listado";
     }
 
+    @Secured({"ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO"})
     @GetMapping("/borrar/{id}")
     public String deshabOrHabCompra(@PathVariable("id") Long id, RedirectAttributes msgFlash) {
 
@@ -148,6 +150,7 @@ public class CompraController {
         return "redirect:/compras/listado";
     }
 
+    @Secured({"ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO"})
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable("id") Long id, Model model) {
 

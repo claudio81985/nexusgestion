@@ -23,7 +23,7 @@
             <input type="number" id="aumentoPorcentaje" name="aumentoPorcentaje" step="0.01" required>
 
             <button type="submit">Aplicar Aumento</button>
-            <a th:href="@{/inventario}">Cancelar</a>
+            <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}" th:href="@{/inventario}">Cancelar</a>
         </form>
 
         

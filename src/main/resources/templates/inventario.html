@@ -29,12 +29,12 @@
             <button type="submit" class="btn btn-secondary">Buscar</button>
           </div>
         </form>
-        <div>
+        <div sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}" >
           <h4>Acciones</h4>
-          <a th:href="@{/productos/nuevo}" class="btn btn-success"
+          <a  th:href="@{/productos/nuevo}" class="btn btn-success"
             >Nuevo producto</a
           >
-          <a
+          <a 
             th:href="@{/productos/moverProducto}"
             class="btn btn-warning float end"
             >Nuevo movimiento</a
@@ -63,7 +63,7 @@
               th:class="${p.stockSucursalUno == 0 or p.stockSucursalDos == 0} ? 'table-danger' : (${10 > p.stockSucursalUno or 10 > p.stockSucursalDos} ? 'table-warning' : '')"
               >
               <th>
-                <a
+                <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}"
                   th:href="@{/productos/editar/} + ${p.id}"
                   class="btn btn-primary btn-sm mb-1"
                   data-bs-toggle="tooltip"
@@ -72,7 +72,7 @@
                 >
                   <i class="bi bi-pencil-square"></i>
                 </a>
-                <a
+                <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}"
                   th:href="@{/productos/borrar/} + ${p.id}"
                   class="btn btn-danger btn-sm"
                   data-bs-toggle="tooltip"

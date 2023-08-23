@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 // import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +30,7 @@ import nexus.nexusgestion.Model.Service.IProvinciasService;
 @Controller
 @RequestMapping("/proveedores")
 @SessionAttributes("proveedor")
-// @Secured({"ROLE_ADMIN", "ROLE_USER"})
+@Secured({"ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO"})
 public class ProveedorController {
 
     @Autowired
@@ -47,6 +48,7 @@ public class ProveedorController {
         return "proveedores/list";
     }
 
+  
     @GetMapping("/nuevo")
     public String nuevo(Model model) {
 
@@ -56,6 +58,7 @@ public class ProveedorController {
         return "proveedores/form";
     }
 
+    
     @PostMapping("/guardar")
     public String guardar(@Valid Proveedor proveedor, BindingResult result,
             @RequestParam(value = "pro", required = false) Long idPro,
@@ -82,6 +85,8 @@ public class ProveedorController {
         return "redirect:/proveedores/listado";
     }
 
+  
+   
     @GetMapping("/borrar/{id}")
     public String deshabOrHabProducto(@PathVariable("id") Long id, RedirectAttributes msgFlash) {
 
@@ -96,6 +101,7 @@ public class ProveedorController {
         return "redirect:/proveedores/listado";
     }
 
+   
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable("id") Long id, Model model) {
 

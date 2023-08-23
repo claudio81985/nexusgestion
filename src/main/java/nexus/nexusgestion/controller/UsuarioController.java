@@ -3,6 +3,7 @@ package nexus.nexusgestion.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 // import org.springframework.security.access.annotation.Secured;
 // import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +30,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/usuarios")
 @SessionAttributes("usuario")
-// @Secured({"ROLE_ADMIN", "ROLE_USER"})
+@Secured({"ROLE_SUPERUSUARIO"})
 public class UsuarioController {
 
     @Autowired

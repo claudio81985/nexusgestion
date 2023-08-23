@@ -6,6 +6,7 @@ package nexus.nexusgestion.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +25,8 @@ import nexus.nexusgestion.Model.Service.IProductoService;
 @Controller
 @RequestMapping("/categorias")
 @SessionAttributes("categoria")
-// @Secured({ "ROLE_ADMIN", "ROLE_USER" })
+@Secured({"ROLE_SUPERUSUARIO, ROLE_SUCURSALUNO, ROLE_SUCURSALDOS"})
+
 public class CategoriaController {
 
     @Autowired
