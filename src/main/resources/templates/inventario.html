@@ -26,19 +26,39 @@
               type="search"
               placeholder="¿Qué estás buscando?"
             />
-            <button type="submit" class="btn btn-secondary">Buscar</button>
+            <button type="submit" class="btn btn-secondary btn-acciones-principales">Buscar</button>
           </div>
         </form>
-        <div sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}" >
+        <div sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}">
           <h4>Acciones</h4>
-          <a  th:href="@{/productos/nuevo}" class="btn btn-success"
-            >Nuevo producto</a
+          <a 
+            th:href="@{/productos/nuevo}"
+            class="btn btn-secondary btn-acciones-principales"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"  
+            title="Agregar producto"
           >
+            <i class="bi bi-plus-circle fs-5"></i>
+          </a>
           <a 
             th:href="@{/productos/moverProducto}"
-            class="btn btn-warning float end"
-            >Nuevo movimiento</a
+            class="btn btn-secondary btn-acciones-principales ms-3"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"  
+            title="Nuevo movimiento"
           >
+            <i class="bi bi-arrow-left-right fs-5"></i>
+          </a
+          >
+          <a sec:authorize="${hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS') or hasRole('SUPERUSUARIO')}" 
+            th:href="@{/productos/aumentar}"
+            class="btn btn-secondary btn-acciones-principales ms-3 me-4"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"  
+            title="Modificar precio"
+          >
+            <i class="bi bi-currency-dollar fs-5"></i>
+          </a>
         </div>
       </div>
 
@@ -47,9 +67,9 @@
         <table class="table table-hover caption-top">
           <thead class="bg-light">
             <tr class="text-uppercase">
-              <th>Aviso</th>
-              <th scope="col">Código</th>
-              <th scope="col">Categoría</th>
+              <th sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}">Accion</th>
+              <th scope="col">Codigo</th>
+              <th scope="col">Categoria</th>
               <th scope="col">Producto</th>
               <th scope="col">Stock Sauzalito</th>
               <th scope="col">Stock Fontana</th>
@@ -62,19 +82,19 @@
               th:each="p : ${productos}"
               th:class="${p.stockSucursalUno == 0 or p.stockSucursalDos == 0} ? 'table-danger' : (${10 > p.stockSucursalUno or 10 > p.stockSucursalDos} ? 'table-warning' : '')"
               >
-              <th>
-                <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}"
+              <th sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}">
+                <a 
                   th:href="@{/productos/editar/} + ${p.id}"
-                  class="btn btn-primary btn-sm mb-1"
+                  class="btn btn-primary btn-sm btn-accion"
                   data-bs-toggle="tooltip"
                   data-bs-placement="bottom"
-                  title="Editar"
+                  title="Modificar"
                 >
                   <i class="bi bi-pencil-square"></i>
                 </a>
-                <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}"
+                <a
                   th:href="@{/productos/borrar/} + ${p.id}"
-                  class="btn btn-danger btn-sm"
+                  class="btn btn-danger btn-sm btn-accion"
                   data-bs-toggle="tooltip"
                   data-bs-placement="bottom"
                   title="Eliminar"

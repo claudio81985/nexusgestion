@@ -24,6 +24,17 @@
       >
         <div class="container border rounded shadow p-3 bg-light">
           <div class="row">
+            <div class="col-1">
+              <a
+                  th:href="@{/ventas/listado}"
+                  class="btn btn-secondary btn-acciones-principales"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="right"
+                  title="Volver"
+              >
+                <i class="bi bi-chevron-left"></i>
+              </a>
+            </div>
             <div class="col text-center">
               <h3>REGISTRO DE VENTA</h3>
             </div>
@@ -31,23 +42,14 @@
           <hr />
           <div class="row">
             <div class="col">
-              <label
-                th:field="*{fechaHora}"
-                th:text='*{#temporals.format(fechaHora, "dd/MM/yyyy HH:mm")}'
-                class="badge bg-secondary fs-6"
-              >
-              </label>
+              <div class="badge badge-info fs-6">
+                # <span id="numeroVentaSpan"></span>
+              </div>
             </div>
             <div class="col text-end">
-              <!-- <span class="badge bg-secondary"
-                            th:text="${ventas.id}"
-                            >
-                        </span> -->
-              <div class="badge bg-secondary fs-6">
-                <i class="bi bi-hash"></i>
-                <span class="badge bg-secondary" th:text="${numeroVenta}">
-                </span>
-              </div>
+              <label th:field="*{fechaHora}" class="badge badge-info fs-6">
+                <span id="clockDate"></span> <span id="clockTime"></span>
+              </label>
             </div>
           </div>
           <br />
@@ -59,7 +61,7 @@
                   class="form-control"
                   name=""
                   id="notasVenta"
-                  placeholder="Información adicional u anotaciones de la venta."
+                  placeholder="Información adicional, observaciones u anotaciones de la venta. (opcional)"
                   maxlength="120"
                   th:field="*{descripcion}"
                 ></textarea>
@@ -87,9 +89,9 @@
                   id="buscar_productos"
                   class="form-control"
                   type="search"
-                  placeholder="Busca por código, nombre o algún dato del producto."
+                  placeholder="Debes ingresar al menos 3 caracteres: Busca por código, nombre o alguna característica del producto."
                 />
-                <button type="button" id="btnBuscar" class="btn btn-primary">
+                <button type="button" id="btnBuscar" class="btn btn-secondary btn-acciones-principales">
                   Buscar
                 </button>
               </div>
