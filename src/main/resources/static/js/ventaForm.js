@@ -154,3 +154,55 @@ $(document).ready(function () {
   // Llamar a la función para obtener el rol del usuario al cargar la página
   obtenerRolUsuario();
 });
+
+
+$(document).ready(function () {
+  // Encuentra el elemento span por su id
+  var numeroVentaSpan = document.getElementById('numeroVentaSpan');
+    
+  // Realiza una petición AJAX para obtener el último número de venta
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/ventas/generar-numero-venta', true);
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+              var response = JSON.parse(xhr.responseText);
+              // Actualiza el contenido del span con el nuevo número de venta
+              numeroVentaSpan.textContent = response.numeroVenta;
+          } else {
+              console.error('Error al obtener el número de venta');
+          }
+      }
+  };
+  xhr.send();
+});
+
+$(document).ready(function () {
+  function updateClock() {
+    const now = new Date();
+    const clockDateElement = document.getElementById('clockDate');
+    const clockTimeElement = document.getElementById('clockTime');
+
+    const formattedDate = now.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+
+    const formattedTime = now.toLocaleTimeString('es-ES', {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+
+    clockDateElement.textContent = formattedDate;
+    clockTimeElement.textContent = formattedTime;
+  }
+
+  // Llama a la función para actualizar el reloj inicialmente
+  updateClock();
+
+  // Actualiza el reloj cada segundo (1000 milisegundos)
+  setInterval(updateClock, 1000);
+});

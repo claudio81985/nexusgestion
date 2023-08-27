@@ -2,6 +2,7 @@ package nexus.nexusgestion.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,7 +37,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/compras")
 @SessionAttributes("compra")
-// @Secured({ "ROLE_ADMIN", "ROLE_USER" })
+@Secured({"ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO"})
 public class CompraController {
 
     @Autowired
@@ -138,7 +139,7 @@ public class CompraController {
         return "redirect:/compras/listado";
     }
 
-    @Secured({"ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO"})
+
     @GetMapping("/borrar/{id}")
     public String deshabOrHabCompra(@PathVariable("id") Long id, RedirectAttributes msgFlash) {
 
@@ -150,7 +151,7 @@ public class CompraController {
         return "redirect:/compras/listado";
     }
 
-    @Secured({"ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO"})
+    
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable("id") Long id, Model model) {
 
@@ -199,6 +200,15 @@ public class CompraController {
         model.addAttribute("titulo", "Detalle de compra #" + id);
         model.addAttribute("compra", compra);
         return "compras/detalle"; 
+    }
+
+
+    @GetMapping("/generar-numero-compra")
+    public ResponseEntity<?> generarNumeroCompra() {
+        Long ultimoIdCompra = compraService.obtenerUltimoIdCompra();
+        Long numeroCompra = (ultimoIdCompra != null) ? ultimoIdCompra + 1 : 1;
+        
+        return ResponseEntity.ok("{\"numeroCompra\":" + numeroCompra + "}");
     }
 
 }

@@ -25,13 +25,21 @@
               type="search"
               placeholder="¿Qué estás buscando?"
             />
-            <button type="submit" class="btn btn-secondary">Buscar</button>
+            <button type="submit" class="btn btn-secondary btn-acciones-principales">
+              Buscar
+            </button>
           </div>
         </form>
         <div class="me-5">
           <h4>Acciones</h4>
-          <a th:href="@{/ventas/nuevo}" class="btn btn-success">
-            Nueva venta
+          <a
+            th:href="@{/ventas/nuevo}"
+            class="btn btn-secondary btn-acciones-principales"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"  
+            title="Nueva venta"
+          >
+            <i class="bi bi-plus-circle fs-5"></i>
           </a>
         </div>
       </div>
@@ -43,8 +51,8 @@
       >
         <table class="table table-hover caption-top">
           <thead class="bg-light">
-            <tr>
-              <th>Acción</th>
+            <tr class="text-uppercase">
+              <th>Accion</th>
               <th scope="col"># Venta</th>
               <th scope="col">Usuario</th>
               <th scope="col">Fecha y Hora</th>
@@ -57,7 +65,7 @@
               <td>
                 <a
                   th:href="@{/ventas/detalle/{id}(id=${v.id})}"
-                  class="btn btn-sm btn-warning"
+                  class="btn btn-sm btn-warning btn-accion"
                   data-bs-toggle="tooltip"
                   data-bs-placement="bottom"
                   title="Ver detalle"
@@ -66,7 +74,7 @@
                 </a>
                 <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}"
                   th:href="@{/ventas/borrar/} + ${v.id}"
-                  class="btn btn-sm btn-danger"
+                  class="btn btn-sm btn-danger btn-accion"
                   id="btnEliminarVenta"
                   data-bs-toggle="tooltip"
                   data-bs-placement="bottom"

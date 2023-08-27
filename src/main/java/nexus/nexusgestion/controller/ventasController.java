@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -175,12 +176,11 @@ public class ventasController {
     }
 
     @GetMapping("/generar-numero-venta")
-    public String generarNumeroVenta(Model model) {
+    public ResponseEntity<?> generarNumeroVenta() {
         Long ultimoIdVenta = ventaService.obtenerUltimoIdVenta();
         Long numeroVenta = (ultimoIdVenta != null) ? ultimoIdVenta + 1 : 1;
-        model.addAttribute("numeroVenta", numeroVenta);
-        return "ventas/form";
-
+        
+        return ResponseEntity.ok("{\"numeroVenta\":" + numeroVenta + "}");
     }
 
     @GetMapping("/detalle/{id}")

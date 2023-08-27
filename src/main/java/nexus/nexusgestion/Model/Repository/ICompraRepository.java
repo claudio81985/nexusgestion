@@ -16,5 +16,9 @@ public interface ICompraRepository extends JpaRepository<Compra, Long> {
     
     @Query("select c from Compra c Where c.activo = true")
     List<Compra> buscarSoloHabilitados( );
+
+
+    @Query("SELECT MAX(c.id) FROM Compra c")
+    Long findMaxId();
     
 }

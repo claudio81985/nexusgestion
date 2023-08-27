@@ -27,7 +27,7 @@ public class LineaCompra {
     @Min(value = 1)
     private int cantidad;
 
-    @NumberFormat(pattern = "#,##0.00", style = Style.CURRENCY)
+    // @NumberFormat(pattern = "#,##0.00", style = Style.CURRENCY)
     private BigDecimal precioActual;
 
     @OneToOne(fetch = FetchType.LAZY)

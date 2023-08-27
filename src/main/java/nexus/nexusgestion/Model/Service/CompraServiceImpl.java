@@ -46,6 +46,12 @@ public class CompraServiceImpl implements ICompraService{
         compraRepository.save(compra);
     }
 
+
+    @Override
+    public Long obtenerUltimoIdCompra() {
+        return compraRepository.findMaxId();
+    }
+
     private String obtenerRolUsuarioDesdeSesion(HttpServletRequest request) {
         // Obtener el objeto Authentication del contexto de seguridad
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

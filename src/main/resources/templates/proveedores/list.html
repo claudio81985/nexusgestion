@@ -17,20 +17,28 @@
         <h4>Buscador</h4>
         <div id="search-bar" class="input-group">
           <input class="form-control" type="search" placeholder="¿Qué estás buscando?">
-          <button type="submit" class="btn btn-secondary">Buscar</button>
+          <button type="submit" class="btn btn-secondary btn-acciones-principales">Buscar</button>
         </div>
       </form>
       <div  class="me-5">
         <h4>Acciones</h4>
-        <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}" th:href="@{/proveedores/nuevo}" class="btn btn-success">Nuevo Proveedor</a>
+        <a
+          th:href="@{/proveedores/nuevo}"
+          class="btn btn-secondary btn-acciones-principales"
+          data-bs-toggle="tooltip"
+          data-bs-placement="bottom"  
+          title="Nuevo proveedor"
+        >
+          <i class="bi bi-plus-circle fs-5"></i>
+        </a>
       </div>
     </div>
 
-    <h5 class="text-secondary">Listado de proveedores</h5>
+    <h5 class="text-secondary">Listado de Proveedores</h5>
     <div id="tablaProveedores" class="table-container overflow-auto border rounded shadow">
       <table class="table table-hover caption-top">
         <thead class="bg-light">
-          <tr>
+          <tr class="text-uppercase">
             <th >Acción</th>
             <th scope="col">CUIT/CUIL</th>
             <th scope="col">Proveedor</th>
@@ -44,13 +52,25 @@
         <tbody>
           <tr th:each="p : ${proveedores}">
             <th>
-              <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}" th:href="@{/proveedores/editar/} + ${p.id}" class="btn btn-primary btn-sm"
-                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editar">
+              <a 
+                sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}"
+                th:href="@{/proveedores/editar/} + ${p.id}" 
+                class="btn btn-primary btn-sm btn-accion"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="Modificar"
+              >
                 <i class="bi bi-pencil-square"></i>
               </a>
-              <a sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}" th:href="@{/proveedores/borrar/} + ${p.id}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
-                data-bs-placement="bottom" title="Eliminar"
-                onclick="return confirm('¿Estás seguro de deshabilitar el Registro?')">
+              <a 
+                sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}"
+                th:href="@{/proveedores/borrar/} + ${p.id}" 
+                class="btn btn-danger btn-sm btn-accion"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="Eliminar"
+                onclick="return confirm('¿Estás seguro de deshabilitar el Registro?')"
+              >
                 <i class="bi bi-trash3"></i>
               </a>
             </th>

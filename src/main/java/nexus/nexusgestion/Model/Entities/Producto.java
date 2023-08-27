@@ -198,6 +198,9 @@ public class Producto {
         stockSucursalDos = temp;
     }
 
+    public String getNombreCompleto() {
+        return this.nombreComun + " " + this.nombreTecnico + " " + this.descripcion;
+    }
     
 
     @Override

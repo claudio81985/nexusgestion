@@ -13,5 +13,7 @@ public interface ICompraService {
     public List<Compra> buscarPor(String criterio);
     
     public void guardar(Compra compra);
+
+    public Long obtenerUltimoIdCompra();
     
 }

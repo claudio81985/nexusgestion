@@ -12,47 +12,77 @@
 
 <body>
     <div layout:fragment="contenido">
-
-        <div class="venta-details" th:if="${venta != null}">
-            <h2>Detalle de Venta</h2>
-            <div class="venta-info">
-                <p><strong>Número de Factura:</strong> <span th:text="${venta.nroFactura}"></span></p>
-            <p><strong>Fecha y Hora:</strong> <span th:text="${#temporals.format(venta.fechaHora, 'dd/MM/yyyy HH:mm')}"></span></p>
-            <p><strong>Descripción:</strong> <span th:text="${venta.descripcion}"></span></p>
-            <p><strong>Usuario:</strong> <span th:if="${venta.usuario != null}" th:text="${venta.usuario.nombre}"></span>
-            </p>
-        </div>
+        <div th:if="${venta != null}" class="container border rounded shadow p-3 bg-light">
+            <div class="row">
+                <div class="col-1">
+                    <a
+                    th:href="@{/ventas/listado}"
+                    class="btn btn-secondary btn-acciones-principales"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="right"
+                    title="Volver"
+                    >
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </div>
+                <div class="col-10 text-center text-uppercase">
+                    <h3 class="text-center">Detalle de Venta</h3>
+                </div>
             </div>
-            <h3>Líneas de Venta</h3>
-            <table class="lineas-table">
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Precio</th>
-                        <th>Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="linea : ${venta.lineas}">
-                        <td th:text="${linea.producto.descripcion}"></td>
-                        <td th:text="${linea.cantidad}"></td>
-                       
-                        
-                    </tr>
-                </tbody>
-            </table>
-            <p class="venta-total"><strong>Total:</strong> <span
-                    th:text="${venta.calcularTotal()}"></span></p>
+            <div class="row mt-2">
+                <div class="col">
+                    <div>
+                        <p class="d-inline fw-bold">Número de venta: </p>
+                        <span th:text="${venta.getId}"></span>
+                    </div>
+                    <div>
+                        <p class="d-inline fw-bold">Fecha y Hora: </p>
+                        <span th:text="${#temporals.format(venta.fechaHora, 'dd/MM/yyyy - HH:mm')}"></span>
+                    </div>
+                    <div>
+                        <p class="d-inline fw-bold">Usuario: </p>
+                        <span th:if="${venta.usuario != null}" th:text="${venta.getUsuario.getNombre}"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="fw-bold fs-3 text-end">
+                        Total:
+                        <span th:text="${venta.calcularTotal()}" class="badge bg-success money"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <h5 class="text-secondary">Items</h5>
+                    <div class="table-container detalleVenta overflow-auto border rounded">
+                        <table class="table table-hover caption-top">
+                            <thead class="bg-light">
+                            <tr class="text-uppercase">
+                                <th scope="col">codigo</th>
+                                <th scope="col">producto</th>
+                                <th scope="col">cantidad</th>
+                                <th scope="col">precio</th>
+                                <th scope="col">subtotal</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${venta.lineas}">
+                                <td th:text="${item.producto.getCodigoIdentificacion}" class="fw-bold"></td>
+                                <td th:text="${item.producto.getNombreCompleto}"></td>
+                                <td th:text="${item.getCantidad}"></td>
+                                <td th:text="${item.getPrecioActual}" class="money"></td>
+                                <td th:text="${item.calcularSubtotal}" class="money"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="venta-not-available" th:unless="${venta != null}">
             <p>La venta no está disponible.</p>
-
-
         </div>
     </div>
-
-    <script th:fragment="js" th:src="@{/js/inventario.js}"></script>
 </body>
 
 </html>

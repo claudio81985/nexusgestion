@@ -24,15 +24,20 @@
 </head>
 
 <body class="vh-100">
-  <div id="sidebar-menu" class="d-flex flex-column flex-shrink-0 p-3 bg-light shadow">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+  <div 
+    id="sidebar-menu" 
+    class="d-flex flex-column flex-shrink-0 p-3 bg-light shadow"
+  >
+    <a 
+      href="/inventario"
+      class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+    >
       <img th:src="@{/img/logo-texto.png}" alt="logo" class="w-100" />
     </a>
     <hr />
     <h5 class="text-center">
       ¡Hola <span sec:authentication="name" class="text-capitalize"></span>!
     </h5>
-    <span sec:authentication="principal.authorities"></span>
     <hr />
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
@@ -45,32 +50,31 @@
       </li>
       <li>
         <a th:href="@{/inventario}"
-          th:class="${#strings.concat('nav-link link-dark', (#strings.startsWith(#httpServletRequest.requestURI, '/inventario') ? ' active' : ''))}">
-          <i class="bi bi-boxes"></i>
+        th:class="${#strings.concat('nav-link link-dark', 
+        (#strings.equals(#httpServletRequest.requestURI, '/inventario') or #strings.equals(#httpServletRequest.requestURI, '/') ? ' active' : ''))}">          <i class="bi bi-boxes"></i>
           Inventario
         </a>
       </li>
       <li>
-        <a th:href="@{/compras/listado}"
-          th:class="${#strings.concat('nav-link link-dark', (#strings.startsWith(#httpServletRequest.requestURI, '/compras/') ? ' active' : ''))}">
+        <a 
+          th:href="@{/compras/listado}"
+          th:class="${#strings.concat('nav-link link-dark', 
+                     (#strings.startsWith(#httpServletRequest.requestURI, '/compras/') ? ' active' : ''),
+                     (#authorization.expression('hasRole(''EMPLEADO'')') ? ' disabled' : ''))}"
+        >
           <i class="bi bi-cart3"></i>
           Compras
         </a>
       </li>
       <li >
-        <a sec:authorize="${hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS') or hasRole('SUPERUSUARIO')}"
+        <a
           th:href="@{/proveedores/listado}"
-          th:class="${#strings.concat('nav-link link-dark', (#strings.startsWith(#httpServletRequest.requestURI, '/proveedores/') ? ' active' : ''))}">
+          th:class="${#strings.concat('nav-link link-dark', 
+                     (#strings.startsWith(#httpServletRequest.requestURI, '/proveedores') ? ' active' : ''),
+                     (#authorization.expression('hasRole(''EMPLEADO'')') ? ' disabled' : ''))}"
+        >
           <i class="bi bi-truck"></i>
           Proveedores
-        </a>
-      </li>
-      <li >
-        <a sec:authorize="${hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS') or hasRole('SUPERUSUARIO')}" 
-        th:href="@{/productos/aumentar}"
-          th:class="${#strings.concat('nav-link link-dark', (#request.requestURI == '/aumentar' ? ' active' : ''))}">
-          <i class="bi bi-truck"></i>
-          Aumentar Precio
         </a>
       </li>
       <li sec:authorize="${hasRole('SUPERUSUARIO')}">
@@ -89,7 +93,6 @@
         <strong>Cuenta</strong>
       </a>
       <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-        <li><a class="dropdown-item" href="#">Perfil</a></li>
         <li>
           <a th:href="@{/usuarios/nuevaClave}" class="dropdown-item">
             <i class="bi bi-gear"></i>

@@ -1,5 +1,6 @@
 :root {
     --ancho-sidebar: 220px;
+    --azul-primary: #0d6efd;
 }
 
 * {
@@ -47,8 +48,41 @@
 }
 
 
+tr .table-danger {
+    background: rgb(231, 0, 0);
+}
+
+
+.detalleVenta {
+    height: 65vh;
+}
+
+
 
 /* COLOR PILDORAS ACTIVAS */
 .nav-pills .nav-link.active {
     background-color: gray;
+}
+
+
+.btn-accion {
+    margin: 2px;
+}
+
+
+.btn-acciones-principales:hover {
+    border-color: var(--azul-primary);
+    background: var(--azul-primary);
+}
+
+
+
+.nav-link:hover {
+    background: rgb(212, 212, 212);
+}
+
+
+.badge-info {
+    background: rgb(199, 199, 199);
+    color: rgb(70, 70, 70);
 }

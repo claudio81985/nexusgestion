@@ -12,8 +12,80 @@
 
 <body>
     <div layout:fragment="contenido">
+        <div th:if="${compra != null}" class="container border rounded shadow p-3 bg-light">
+            <div class="row">
+                <div class="col-1">
+                    <a
+                    th:href="@{/compras/listado}"
+                    class="btn btn-secondary btn-acciones-principales"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="right"
+                    title="Volver"
+                    >
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </div>
+                <div class="col-10 text-center text-uppercase">
+                    <h3 class="text-center">Detalle de Compra</h3>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <div>
+                        <p class="d-inline fw-bold">Número de compra: </p>
+                        <span th:text="${compra.getId}"></span>
+                    </div>
+                    <div>
+                        <p class="d-inline fw-bold">Fecha y Hora: </p>
+                        <span th:text="${#temporals.format(compra.fechaHora, 'dd/MM/yyyy - HH:mm')}"></span>
+                    </div>
+                    <div>
+                        <p class="d-inline fw-bold">Usuario: </p>
+                        <span th:if="${compra.usuario != null}" th:text="${compra.getUsuario.getNombre}"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="fw-bold fs-3 text-end">
+                        Total:
+                        <span th:text="${compra.calcularTotal()}" class="badge bg-success money"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <h5 class="text-secondary">Items</h5>
+                    <div class="table-container detalleVenta overflow-auto border rounded">
+                        <table class="table table-hover caption-top">
+                            <thead class="bg-light">
+                            <tr class="text-uppercase">
+                                <th scope="col">codigo</th>
+                                <th scope="col">producto</th>
+                                <th scope="col">cantidad</th>
+                                <th scope="col">precio</th>
+                                <th scope="col">subtotal</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${compra.lineas}">
+                                <td th:text="${item.producto.getCodigoIdentificacion}" class="fw-bold"></td>
+                                <td th:text="${item.producto.getNombreCompleto}"></td>
+                                <td th:text="${item.getCantidad}"></td>
+                                <td th:text="${item.getPrecioActual}" class="money"></td>
+                                <td th:text="${item.calcularSubtotal}" class="money"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="compra-not-available" th:unless="${compra != null}">
+            <p>el detalle no está disponible.</p>
+        </div>
 
-        <div class="compra-details" th:if="${compra != null}">
+
+        <!-- asdfasdfasdfasdfadf -->
+        <!-- <div class="compra-details" th:if="${compra != null}">
             <h2>Detalle de Compra</h2>
             <div class="compra-info">
                 
@@ -44,12 +116,8 @@
             </table>
             <p class="compra-total"><strong>Total:</strong> <span
                     th:text="${compra.calcularTotal()}"></span></p>
-        </div>
-        <div class="compra-not-available" th:unless="${compra != null}">
-            <p>el detalle no está disponible.</p>
-
-
-        </div>
+        </div> -->
+        
     </div>
 
     <script th:fragment="js" th:src="@{/js/inventario.js}"></script>
