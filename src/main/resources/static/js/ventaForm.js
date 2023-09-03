@@ -11,18 +11,19 @@ const lineasUtil = {
 
   calcularSubtotal: function (id, precio, cantidad) {
     console.log(`Contenido de 'id'=${id}`);
-    let stk = listaProductos.find((i) => i.id === id); // busca el stock que coincide con el id del producto
+    let stk = listaProductos.find((i) => i.id === id); // Busca el stock que coincide con el id del producto
     console.log(`Contenido de 'stk'=${stk}`);
     console.log(`stk.stockSucursalUno = ${stk.stockSucursalUno}`);
     console.log(`stk.stockSucursalDos = ${stk.stockSucursalDos}`);
+    
     if (
-      permisoUsuario === "ROLE_SUCURSALUNO" &&
+      (permisoUsuario === "ROLE_SUCURSALUNO" || permisoUsuario === "ROLE_EMPLEADO") &&
       cantidad > stk.stockSucursalUno
     ) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No hay stock suficiente Sucursal Sauzalito!",
+        text: "No hay stock suficiente en Sucursal Sauzalito!",
       });
       $(`#cantidad_${id}`).val(stk.stockSucursalUno);
     } else if (
@@ -32,7 +33,7 @@ const lineasUtil = {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No hay stock suficiente Sucursal Fontana!",
+        text: "No hay stock suficiente en Sucursal Fontana!",
       });
       $(`#cantidad_${id}`).val(stk.stockSucursalDos);
     } else {
@@ -43,6 +44,7 @@ const lineasUtil = {
       this.calcularTotal();
     }
   },
+  
 
   esRepetido: function (id) {
     let result = false;
@@ -59,7 +61,7 @@ const lineasUtil = {
     $(`span[id^="subtotal_"]`).each(function () {
       total += parseFloat($(this).html());
     });
-    console.log("Total = ",total);
+    console.log("Total = ", total);
     $("#total").html("$" + parseFloat(total).toFixed(2));
   },
 
@@ -93,7 +95,7 @@ $(document).ready(function () {
                 listaProductos = data;
                 response(
                   $.map(data, (item) => {
-                    if (permisoUsuario === "ROLE_SUCURSALUNO") {
+                    if (permisoUsuario === "ROLE_SUCURSALUNO" || permisoUsuario === "ROLE_EMPLEADO") {
                       stock = item.stockSucursalUno;
                     } else if (permisoUsuario === "ROLE_SUCURSALDOS") {
                       stock = item.stockSucursalDos;
@@ -159,20 +161,20 @@ $(document).ready(function () {
 $(document).ready(function () {
   // Encuentra el elemento span por su id
   var numeroVentaSpan = document.getElementById('numeroVentaSpan');
-    
+
   // Realiza una petición AJAX para obtener el último número de venta
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/ventas/generar-numero-venta', true);
   xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-              var response = JSON.parse(xhr.responseText);
-              // Actualiza el contenido del span con el nuevo número de venta
-              numeroVentaSpan.textContent = response.numeroVenta;
-          } else {
-              console.error('Error al obtener el número de venta');
-          }
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        // Actualiza el contenido del span con el nuevo número de venta
+        numeroVentaSpan.textContent = response.numeroVenta;
+      } else {
+        console.error('Error al obtener el número de venta');
       }
+    }
   };
   xhr.send();
 });
@@ -184,16 +186,16 @@ $(document).ready(function () {
     const clockTimeElement = document.getElementById('clockTime');
 
     const formattedDate = now.toLocaleDateString('es-ES', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
     });
 
     const formattedTime = now.toLocaleTimeString('es-ES', {
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
     });
 
     clockDateElement.textContent = formattedDate;

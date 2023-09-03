@@ -113,7 +113,7 @@ public class productoController {
 
         return "productos/form";
     }
-     @Secured({"ROLE_SUPERUSUARIO, ROLE_SUCURSALUNO, ROLE_SUCURSALDOS"})
+   
     @PostMapping("/aumentar-precios")
     public String aumentarPrecios(@RequestParam("proveedorId") Long proveedorId,
             @RequestParam("aumentoPorcentaje") BigDecimal aumentoPorcentaje,
