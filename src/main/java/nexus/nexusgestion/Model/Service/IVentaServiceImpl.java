@@ -13,7 +13,6 @@ import nexus.nexusgestion.Model.Repository.IVentaRepositoy;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
-
 @Service
 public class IVentaServiceImpl implements IVentaService {
 
@@ -51,8 +50,6 @@ public class IVentaServiceImpl implements IVentaService {
 
         // Verificar si el usuario está autenticado y obtener su rol
         if (authentication != null && authentication.isAuthenticated()) {
-            // Aquí asumimos que el rol del usuario está almacenado en forma de
-            // GrantedAuthority
             // Puedes adaptar esta lógica según cómo hayas configurado Spring Security
             String rolUsuario = authentication.getAuthorities().iterator().next().getAuthority();
             return rolUsuario;
@@ -68,6 +65,5 @@ public class IVentaServiceImpl implements IVentaService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'buscarSoloHabilitados'");
     }
-
 
 }

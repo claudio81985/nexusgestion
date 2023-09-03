@@ -2,8 +2,6 @@ package nexus.nexusgestion.Model.Entities;
 
 import java.math.BigDecimal;
 
-import org.springframework.format.annotation.NumberFormat;
-import org.springframework.format.annotation.NumberFormat.Style;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;

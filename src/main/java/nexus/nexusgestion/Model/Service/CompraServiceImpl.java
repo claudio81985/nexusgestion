@@ -13,10 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import nexus.nexusgestion.Model.Entities.Compra;
 import nexus.nexusgestion.Model.Repository.ICompraRepository;
 
-
-
 @Service
-public class CompraServiceImpl implements ICompraService{
+public class CompraServiceImpl implements ICompraService {
 
     @Autowired
     ICompraRepository compraRepository;
@@ -35,7 +33,7 @@ public class CompraServiceImpl implements ICompraService{
     @Override
     @Transactional(readOnly = true)
     public List<Compra> buscarPor(String criterio) {
-       
+
         return compraRepository.buscarPor(criterio);
 
     }
@@ -45,7 +43,6 @@ public class CompraServiceImpl implements ICompraService{
     public void guardar(Compra compra) {
         compraRepository.save(compra);
     }
-
 
     @Override
     public Long obtenerUltimoIdCompra() {
@@ -58,8 +55,6 @@ public class CompraServiceImpl implements ICompraService{
 
         // Verificar si el usuario está autenticado y obtener su rol
         if (authentication != null && authentication.isAuthenticated()) {
-            // Aquí asumimos que el rol del usuario está almacenado en forma de
-            // GrantedAuthority
             // Puedes adaptar esta lógica según cómo hayas configurado Spring Security
             String rolUsuario = authentication.getAuthorities().iterator().next().getAuthority();
             return rolUsuario;
@@ -69,5 +64,5 @@ public class CompraServiceImpl implements ICompraService{
         // un valor predeterminado o manejar el caso según tus necesidades.
         return "ROLE_DEFAULT"; // Por ejemplo, un rol predeterminado si no hay autenticación
     }
-    
+
 }
