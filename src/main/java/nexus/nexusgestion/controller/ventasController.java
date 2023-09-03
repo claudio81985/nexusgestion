@@ -85,9 +85,7 @@ public class ventasController {
         // Si no hay errores...
         LineaVenta linea;
         Producto producto;
-        // String rolUsuario = obtenerRolUsuario();
         Long sucursalUsuario = obtenerSucursalUsuario();
-        // System.out.printf("####----- Rol de usuario = " + rolUsuario);
 
         // Cargar las lineas en la venta...
         for (int i = 0; i < itemIds.size() - 1; i++) {
@@ -162,11 +160,6 @@ public class ventasController {
 
     @GetMapping(value = "/obtener-sucursal-usuario", produces = { "application/json" })
     public @ResponseBody Long obtenerSucursalUsuario() {
-        // Aquí debes obtener la sucursal asignada al usuario desde tu lógica de negocio
-        // Por ejemplo, podrías acceder a una base de datos o a cualquier otra fuente de datos.
-        
-        // Supongamos que obtienes la sucursal y la almacenas en una variable llamada "sucursalUsuario".
-        
         Long sucursalUsuario = usuarioService.obtenerSucursalAsignada(); // Reemplaza con la lógica para obtener la sucursal real
         
         return sucursalUsuario;

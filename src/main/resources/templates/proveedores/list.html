@@ -53,7 +53,7 @@
           <tr th:each="p : ${proveedores}">
             <th>
               <a 
-                sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}"
+                sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('ADMINISTRADOR')}"
                 th:href="@{/proveedores/editar/} + ${p.id}" 
                 class="btn btn-primary btn-sm btn-accion"
                 data-bs-toggle="tooltip"
@@ -63,7 +63,7 @@
                 <i class="bi bi-pencil-square"></i>
               </a>
               <a 
-                sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}"
+                sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('ADMINISTRADOR')}"
                 th:href="@{/proveedores/borrar/} + ${p.id}" 
                 class="btn btn-danger btn-sm btn-accion"
                 data-bs-toggle="tooltip"

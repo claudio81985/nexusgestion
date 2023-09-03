@@ -32,7 +32,7 @@ import nexus.nexusgestion.Model.Service.ProveedorSinProductosException;
 @RequestMapping("/productos")
 @SessionAttributes("producto")
 
-@Secured({ "ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO" })
+@Secured({ "ROLE_ADMINISTRADOR", "ROLE_SUPERUSUARIO" })
 
 public class productoController {
 

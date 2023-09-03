@@ -29,7 +29,7 @@
             <button type="submit" class="btn btn-secondary btn-acciones-principales">Buscar</button>
           </div>
         </form>
-        <div sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}">
+        <div sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('ADMINISTRADOR')}">
           <h4>Acciones</h4>
           <a 
             th:href="@{/productos/nuevo}"
@@ -50,7 +50,7 @@
             <i class="bi bi-arrow-left-right fs-5"></i>
           </a
           >
-          <a sec:authorize="${hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS') or hasRole('SUPERUSUARIO')}" 
+          <a  
             th:href="@{/productos/aumentar}"
             class="btn btn-secondary btn-acciones-principales ms-3 me-4"
             data-bs-toggle="tooltip"
@@ -67,7 +67,7 @@
         <table class="table table-hover caption-top">
           <thead class="bg-light">
             <tr class="text-uppercase">
-              <th sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}">Accion</th>
+              <th sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('ADMINISTRADOR')}">Accion</th>
               <th scope="col">Codigo</th>
               <th scope="col">Categoria</th>
               <th scope="col">Producto</th>
@@ -82,7 +82,7 @@
               th:each="p : ${productos}"
               th:class="${p.stockSucursalUno == 0 or p.stockSucursalDos == 0} ? 'table-danger' : (${10 > p.stockSucursalUno or 10 > p.stockSucursalDos} ? 'table-warning' : '')"
               >
-              <th sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}">
+              <th sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('ADMINISTRADOR')}">
                 <a 
                   th:href="@{/productos/editar/} + ${p.id}"
                   class="btn btn-primary btn-sm btn-accion"

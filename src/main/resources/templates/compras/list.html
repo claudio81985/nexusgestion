@@ -20,7 +20,7 @@
                     <button type="submit" class="btn btn-secondary btn-acciones-principales">Buscar</button>
                 </div>
             </form>
-            <div sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS') or hasRole('EMPLEADO')}"class="me-5">
+            <div sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('ADMINISTRADOR')}"class="me-5">
                 <h4>Acciones</h4>
                 <a
                     th:href="@{/compras/nuevo}"
@@ -60,7 +60,7 @@
                                 <i class="bi bi-eye-fill"></i>
                             </a>
                             <a 
-                                sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}"
+                                sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('ADMINISTRADOR')}"
                                 th:href="@{/compras/borrar/} + ${c.id}"
                                 class="btn btn-danger btn-sm btn-accion"
                                 id="btnEliminarCompra" 
