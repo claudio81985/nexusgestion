@@ -118,17 +118,54 @@ $(document).ready(function () {
 
 
 
-$(document).ready(function () {
-    const origenSelect = document.getElementById("origen");
-    const destino = document.getElementById("destino");
-    console.log('Select origen: ', origenSelect)
-    console.log('td destino: ', destino)
 
-    origenSelect.addEventListener("change", function() {
-        const seleccionActual = origenSelect.value;
-        console.log('valor actual del Select origen: ', seleccionActual)
-        const valorOpuesto = seleccionActual === "sucursalUno" ? "sucursalDos" : "sucursalUno";
-        console.log('valor actual del Select origen: ', valorOpuesto)
-        destino.textContent = valorOpuesto;
-    });
-});
+function enviarDatos() {
+  console.log("Función enviarDatos");
+  // Crear arreglos para almacenar los datos
+  var codigoIdentificacion = [];
+  var cantidad = [];
+  var origen = [];
+
+  $("table#tabla_productos tbody tr").each(function () {
+      var codigo = $(this).find("th[name='codigo[]']").text();
+      var cantidadInput = $(this).find("input[name='cantidad[]']");
+      var origenSelect = $(this).find("select[name='origen[]']");
+
+      codigoIdentificacion.push(codigo);
+      cantidad.push(cantidadInput.val());
+      origen.push(origenSelect.val());
+  });
+
+  console.log(codigoIdentificacion);
+  console.log(cantidad);
+  console.log(origen);
+
+  debugger;
+
+  // Asignar los arreglos a los campos ocultos
+  $("#codigoIdentificacionInput").val(JSON.stringify(codigoIdentificacion));
+  $("#cantidadInput").val(JSON.stringify(cantidad));
+  $("#origenInput").val(JSON.stringify(origen));
+
+  // Enviar el formulario oculto al servidor
+  $("#formularioOculto").submit();
+}
+
+
+// function enviarDatos() {
+//   var id = document.getElementById("productoID").value;
+//   var codigoIdentificacion = document.getElementById("codigoIdentificacion").innerText;
+//   var cantidad = document.getElementById("cantidad_" + id).value;
+//   var origen = document.getElementById("origen").value;
+
+//   console.log("ID producto = ", id);
+//   console.log("codigoIdentificacion = ", codigoIdentificacion);
+//   console.log("cantidad = ", cantidad);
+//   console.log("origen = ", origen);
+//   debugger;
+//   document.getElementById("codigoIdentificacionInput").value = codigoIdentificacion;
+//   document.getElementById("cantidadInput").value = cantidad;
+//   document.getElementById("origenInput").value = origen;
+
+//   document.getElementById("formularioOculto").submit();
+// }
