@@ -1,5 +1,6 @@
 package nexus.nexusgestion.controller;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import nexus.nexusgestion.Model.Entities.Permiso;
+import nexus.nexusgestion.Model.Entities.Sucursal;
 import nexus.nexusgestion.Model.Entities.Usuario;
 import nexus.nexusgestion.Model.Service.IPermisoService;
+import nexus.nexusgestion.Model.Service.ISucursalService;
 import nexus.nexusgestion.Model.Service.IUsuarioService;
 
 import javax.validation.Valid;
@@ -30,7 +33,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/usuarios")
 @SessionAttributes("usuario")
-@Secured({"ROLE_SUPERUSUARIO"})
+@Secured({ "ROLE_SUPERUSUARIO" })
 public class UsuarioController {
 
     @Autowired
@@ -38,6 +41,9 @@ public class UsuarioController {
 
     @Autowired
     IPermisoService permisoService;
+
+    @Autowired
+    ISucursalService sucursalService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -58,13 +64,15 @@ public class UsuarioController {
         model.addAttribute("titulo", "Nuevo Usuario");
         model.addAttribute("usuario", new Usuario());
         model.addAttribute("permisos", permisoService.buscarTodo());
+        model.addAttribute("sucursales", sucursalService.buscarTodos());
+
 
         return "usuarios/form";
     }
 
     @PostMapping("/guardar")
-    public String guardar(@Valid Usuario usuario, BindingResult result, @RequestParam("rol") Long idRol,
-            Model model, RedirectAttributes msgFlash, SessionStatus status) {
+    public String guardar(@Valid Usuario usuario, BindingResult result, @RequestParam("permiso") Long idPermiso,
+            @RequestParam("sucursalAsignada") Long idSucursal, Model model, RedirectAttributes msgFlash, SessionStatus status) {
 
         // Verificar si hay errores de validación
         if (result.hasErrors()) {
@@ -73,15 +81,13 @@ public class UsuarioController {
         }
 
         if (usuario.getId() == null) {
-
+            // Esto es para nuevos usuarios
             usuario.setClave(passwordEncoder.encode(usuario.getClave()));
         } else {
-
+            // Esto es para usuarios existentes
             Usuario usuarioExistente = usuarioService.buscarPorId(usuario.getId());
             if (usuarioExistente != null) {
-
                 usuarioExistente.setNombre(usuario.getNombre());
-
                 usuario = usuarioExistente;
             } else {
                 model.addAttribute("danger", "Usuario no encontrado");
@@ -89,7 +95,24 @@ public class UsuarioController {
             }
         }
 
-        usuario.setPermiso(permisoService.buscarPorId(idRol));
+        // Asignar el permiso al usuario
+        Permiso permisoEmpleado = permisoService.buscarPorId(idPermiso);
+        if (permisoEmpleado != null) {
+            usuario.setPermiso(permisoEmpleado);
+        } else {
+            model.addAttribute("danger", "Permiso no encontrado");
+            return "usuarios/form";
+        }
+
+        // Asignar la sucursal al usuario
+        Sucursal sucursalUno = sucursalService.buscarPorId(idSucursal);
+        if (sucursalUno != null) {
+            usuario.setSucursalAsignada(sucursalUno);
+        } else {
+            model.addAttribute("danger", "Sucursal no encontrada");
+            return "usuarios/form";
+        }
+
         usuarioService.guardar(usuario);
 
         msgFlash.addFlashAttribute("success", "Usuario Registrado Correctamente.");
@@ -98,6 +121,7 @@ public class UsuarioController {
         return "redirect:/usuarios/listado";
     }
 
+    
     @GetMapping("/borrar/{id}")
     public String deshabOrHabUsuario(@PathVariable("id") Long id, RedirectAttributes msgFlash) {
 
@@ -123,6 +147,11 @@ public class UsuarioController {
     @ModelAttribute("permisos")
     public List<Permiso> getPermisos() {
         return permisoService.buscarTodo();
+    }
+
+    @ModelAttribute("sucursales")
+    public List<Sucursal> getSucursales(){
+        return sucursalService.buscarTodos();
     }
 
 }

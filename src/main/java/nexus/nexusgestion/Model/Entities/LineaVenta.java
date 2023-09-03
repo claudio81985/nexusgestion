@@ -2,8 +2,6 @@ package nexus.nexusgestion.Model.Entities;
 
 import java.math.BigDecimal;
 
-import org.springframework.format.annotation.NumberFormat;
-import org.springframework.format.annotation.NumberFormat.Style;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

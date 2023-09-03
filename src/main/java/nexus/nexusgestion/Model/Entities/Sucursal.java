@@ -1,28 +1,28 @@
 package nexus.nexusgestion.Model.Entities;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "permisos")
-public class Permiso {
+@Table(name = "sucursales")
+public class Sucursal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Este campo es obligatorio.")
-    private String nombre;
-
-    @OneToMany(mappedBy = "permiso")
-    private List<Usuario> usuarios;
+    private String nombre;  
+    
+    public Sucursal() {
+    }
+    
+    public Sucursal(Long id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
 
     public Long getId() {
         return id;
@@ -40,14 +40,6 @@ public class Permiso {
         this.nombre = nombre;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
-
     
-
+    
 }

@@ -24,7 +24,6 @@
                                     th:errorClass="'form-control alert-warning'" />
                                 <small class="form-label text-danger" th:errors="*{nombre}"></small>
                             </div>
-
                             <div class="form">
                                 <label for="cla" class="form-label">Contraseña</label>
                                 <input id="cla" type="password" class="form-control" th:field="*{clave}"
@@ -32,12 +31,19 @@
                                 <small class="form-label text-danger" th:errors="*{clave}"></small>
                             </div>
                             <div class="form">
-                                <label for="rol" class="form-label">Permiso</label>
-                                <select name="rol" id="rol" class="form-select">
+                                <label for="permiso" class="form-label">Permiso</label>
+                                <select name="permiso" id="permiso" class="form-select">
                                     <option th:each="p : ${permisos}" th:value="${p.id}" th:text="${p.nombre}"></option>
                                 </select>
-                                
                             </div>
+                            <div class="form">
+                                <label for="sucursalAsignada" class="form-label">Sucursal Asignada</label>
+                                <select name="sucursalAsignada" id="sucursalAsignada" class="form-select">
+                                    <option th:each="s : ${sucursales}" th:value="${s.id}" th:text="${s.nombre}">
+                                    </option>
+                                </select>
+                            </div>
+
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-outline-primary float-end ms-2">
