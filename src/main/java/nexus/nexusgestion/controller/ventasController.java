@@ -46,7 +46,6 @@ public class ventasController {
     @Autowired
     IUsuarioService usuarioService;
 
-    
     @GetMapping("/listado")
     public String listado(Model model) {
         model.addAttribute("titulo", "Listado de Ventas");
@@ -55,7 +54,6 @@ public class ventasController {
         return "ventas/list";
     }
 
-   
     @GetMapping("/nuevo")
     public String nuevaVenta(Model model) {
 
@@ -65,7 +63,6 @@ public class ventasController {
         return "ventas/form";
     }
 
-    
     @PostMapping("/guardar")
     public String guardar(@Valid Venta venta, BindingResult result,
             @RequestParam(name = "item_id[]") List<String> itemIds,
@@ -111,8 +108,10 @@ public class ventasController {
                 return "ventas/form";
             }
 
+                       
+
             // Actualizar stock de la sucursal y stock general:
-            if (rolUsuario.contains("ROLE_SUCURSALUNO")) {
+            if (rolUsuario.contains("ROLE_SUCURSALUNO") || rolUsuario.contains("ROLE_EMPLEADO")) {
                 producto.setStockSucursalUno(producto.getStockSucursalUno() - cant);
             } else if (rolUsuario.contains("ROLE_SUCURSALDOS")) {
                 producto.setStockSucursalDos(producto.getStockSucursalDos() - cant);
@@ -160,7 +159,7 @@ public class ventasController {
         return "{\"rol\":\"ROLE_DEFAULT\"}";
     }
 
-    @Secured({"ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO"})
+    @Secured({ "ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO" })
     @GetMapping("/borrar/{id}")
     public String deshabOrHabVenta(@PathVariable("id") Long id, RedirectAttributes msgFlash) {
 
@@ -179,7 +178,7 @@ public class ventasController {
     public ResponseEntity<?> generarNumeroVenta() {
         Long ultimoIdVenta = ventaService.obtenerUltimoIdVenta();
         Long numeroVenta = (ultimoIdVenta != null) ? ultimoIdVenta + 1 : 1;
-        
+
         return ResponseEntity.ok("{\"numeroVenta\":" + numeroVenta + "}");
     }
 
