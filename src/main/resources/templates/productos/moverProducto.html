@@ -12,96 +12,124 @@
 
 <body>
     <div layout:fragment="contenido">
-       
-        <form th:action="@{/productos/intercambiar-stock}" method="post">
-            <label for="codigoIdentificacion">Código de Identificación:</label>
-            <input type="text" id="codigoIdentificacion" name="codigoIdentificacion" required>
-            
-            <label for="cantidad">Cantidad a Intercambiar:</label>
-            <input type="number" id="cantidad" name="cantidad" required>
-            
-            <!-- <label for="origen">Origen (Sucursal Actual):</label>
-            <select id="origen" name="origen">
-                <option value="sucursalUno">Sucursal Uno</option>
-                <option value="sucursalDos">Sucursal Dos</option>
-            </select> -->
-            
-            <button type="submit">Intercambiar Stock de Sucursales</button>
-            <a th:href="@{/inventario}">Cancelar</a>
-        </form>
-
-        <hr>
         <div class="container">
-            <div class="row">
-                <div class="col-10">
-                    <h4>Buscador de productos</h4>
-                    <div class="input-group">
-                      <input
-                        id="buscar_productos"
-                        class="form-control"
-                        type="search"
-                        placeholder="Debes ingresar al menos 3 caracteres: Busca por código, nombre o alguna característica del producto."
-                      />
-                      <button type="button" id="btnBuscar" class="btn btn-secondary btn-acciones-principales">
-                        Buscar
-                      </button>
-                    </div>
-                  </div>
+          <div class="row">
+            <div class="col-1">
+              <a
+                th:href="@{/inventario}"
+                class="btn btn-secondary btn-acciones-principales"
+                data-bs-toggle="tooltip"
+                data-bs-placement="right"
+                title="Volver"
+              >
+                <i class="bi bi-chevron-left"></i>
+              </a>
             </div>
-            <br>
-            <div class="row">
-                <div class="col">
-                  <div class="overflow-auto">
-                    <table
-                      id="tabla_productos"
-                      class="table table-hover table-bordered"
-                    >
-                      <thead>
-                        <tr class="text-uppercase">
-                          <th>Codigo</th>
-                          <th>Producto</th>
-                          <th>Cantidad</th>
-                          <th>Mover desde</th>
-                          <th>Destino</th>
-                        </tr>
-                      </thead>
-                      <tbody></tbody>
-                    </table>
-                    <table class="d-none">
-                      <tbody id="lineas">
-                        <tr id="fila_{ID}">
-                            <td class="d-none">
-                                <input type="hidden" value="{ID}" name="item_id[]" />
-                            </td>
-                            <th>{CODIGO}</th>
-                            <td>{DESCRIPCION}</td>
-                            <td>
-                                <input
-                                type="number"
-                                value="1"
-                                min="1"
-                                name="cantidad[]"
-                                id="cantidad_{ID}"
-                                class="form-control"
-                                style="width: 100px"
-                                />
-                            </td>
-                            <td>
-                                <select id="origen" name="origen" class="form-select">
-                                    <option value="sucursalUno">Sucursal Uno</option>
-                                    <option value="sucursalDos">Sucursal Dos</option>
-                                </select>
-                            </td>
-                            <td id="destino">
-                               
-                            </td>
-                        </tr>
-                      </tbody>
-                    </table>
+            <div class="col text-center text-uppercase">
+              <h3>Mover productos</h3>
+            </div>
+            <div class="col-2 text-end">
+              <button
+                class="btn btn-success"
+                onclick="enviarDatos()"
+              >
+                Mover
+              </button>
+              <a
+                th:href="@{/inventario}"
+                class="btn btn-danger"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="Cancelar"
+              >
+                <i class="bi bi-x-lg"></i>
+              </a>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+              <div class="col-10">
+                  <h4>Buscador de productos</h4>
+                  <div class="input-group">
+                    <input
+                      id="buscar_productos"
+                      class="form-control"
+                      type="search"
+                      placeholder="Debes ingresar al menos 3 caracteres: Busca por código, nombre o alguna característica del producto."
+                    />
+                    <button type="button" id="btnBuscar" class="btn btn-secondary btn-acciones-principales">
+                      Buscar
+                    </button>
                   </div>
                 </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <div class="overflow-auto">
+                <table
+                  id="tabla_productos"
+                  class="table table-hover table-bordered"
+                >
+                  <thead>
+                    <tr class="text-uppercase">
+                      <th>Codigo</th>
+                      <th>Producto</th>
+                      <th>Cantidad</th>
+                      <th>Mover desde</th>
+                      <th>Destino</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+                
+                <table class="d-none">
+                  <tbody id="lineas">
+                    <tr id="fila_{ID}">
+                        <td class="d-none">
+                          <input id="productoID" type="hidden" value="{ID}" name="item_id[]" />
+                        </td>
+                        <th id="codigoIdentificacion" name="codigo[]">{CODIGO}</th>
+                        <td>{DESCRIPCION}</td>
+                        <td>
+                          <input
+                            type="number"
+                            value="1"
+                            min="1"
+                            name="cantidad[]"
+                            id="cantidad_{ID}"
+                            class="form-control"
+                            style="width: 100px"
+                          />
+                        </td>
+                        <td>
+                          <select id="origen" name="origen[]" class="form-select">
+                            <option value="sucursalUno">Sucursal Uno</option>
+                            <option value="sucursalDos">Sucursal Dos</option>
+                          </select>
+                        </td>
+                        <td id="destino">
+                          
+                        </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
+          </div>
         </div>
+      
+        
+      <form 
+        id="formularioOculto" 
+        th:action="@{/productos/intercambiar-stock}"
+        method="post"
+        class="d-none"
+      >
+        <input type="hidden" id="codigoIdentificacionInput" name="codigoIdentificacion" value="">
+        <input type="hidden" id="cantidadInput" name="cantidad" value="">
+        <input type="hidden" id="origenInput" name="origen" value="">
+      </form>
     </div>
 
     <script layout:fragment="js" th:src="@{/js/moverProducto.js}"></script>
