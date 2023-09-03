@@ -1,5 +1,5 @@
-let permisoUsuario;
-let stock = {};
+let sucursalUsuario;
+let stock = 0;
 let listaProductos;
 const lineasUtil = {
   incrementarCantidad: function (id, precio) {
@@ -16,20 +16,14 @@ const lineasUtil = {
     console.log(`stk.stockSucursalUno = ${stk.stockSucursalUno}`);
     console.log(`stk.stockSucursalDos = ${stk.stockSucursalDos}`);
     
-    if (
-      (permisoUsuario === "ROLE_SUCURSALUNO" || permisoUsuario === "ROLE_EMPLEADO") &&
-      cantidad > stk.stockSucursalUno
-    ) {
+    if (sucursalUsuario === 1 && cantidad > stk.stockSucursalUno) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "No hay stock suficiente en Sucursal Sauzalito!",
       });
       $(`#cantidad_${id}`).val(stk.stockSucursalUno);
-    } else if (
-      permisoUsuario === "ROLE_SUCURSALDOS" &&
-      cantidad > stk.stockSucursalDos
-    ) {
+    } else if (sucursalUsuario === 2 && cantidad > stk.stockSucursalDos) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -72,14 +66,16 @@ const lineasUtil = {
 };
 
 $(document).ready(function () {
-  // Función para obtener el rol del usuario
-  function obtenerRolUsuario() {
+  function obtenerSucursalUsuario() {
     $.ajax({
-      url: "/ventas/obtener-rol-usuario",
+      url: "/ventas/obtener-sucursal-usuario",
       dataType: "json",
       success: function (data) {
-        permisoUsuario = data.rol;
+        sucursalUsuario = data;
         console.log("usuario:", data);
+        if (data = 2) {
+          console.log("Sucursal usuario = Sucursal Fontana");
+        }
 
         $("#buscar_productos").autocomplete({
           minLength: 3,
@@ -95,13 +91,28 @@ $(document).ready(function () {
                 listaProductos = data;
                 response(
                   $.map(data, (item) => {
-                    if (permisoUsuario === "ROLE_SUCURSALUNO" || permisoUsuario === "ROLE_EMPLEADO") {
-                      stock = item.stockSucursalUno;
-                    } else if (permisoUsuario === "ROLE_SUCURSALDOS") {
-                      stock = item.stockSucursalDos;
+                    if (sucursalUsuario !== null) {
+                      if (sucursalUsuario === 0) {
+                        Swal.fire({
+                          icon: "error",
+                          title: "Error al obtener stock",
+                          text: "El usuario actual no pertenece a ninguna sucursal",
+                        });
+                      }
+                      if (sucursalUsuario === 1) {
+                        stock = item.stockSucursalUno;
+                      } 
+                      if (sucursalUsuario === 2) {
+                        stock = item.stockSucursalDos;
+                      } 
                     } else {
-                      stock = item.stockGeneral;
+                      Swal.fire({
+                        icon: "error",
+                        title: "ERROR",
+                        text: "Algo salió mal al obtener el stock de la sucursal.",
+                      });
                     }
+              
 
                     return {
                       value: item.id,
@@ -148,13 +159,13 @@ $(document).ready(function () {
         });
       },
       error: function (error) {
-        console.error("Error al obtener el rol del usuario: ", error);
+        console.error("Error en la petición de datos al servidor: ", error);
       },
     });
   }
 
   // Llamar a la función para obtener el rol del usuario al cargar la página
-  obtenerRolUsuario();
+  obtenerSucursalUsuario();
 });
 
 

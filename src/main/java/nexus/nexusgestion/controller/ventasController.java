@@ -85,7 +85,8 @@ public class ventasController {
         // Si no hay errores...
         LineaVenta linea;
         Producto producto;
-        String rolUsuario = obtenerRolUsuario();
+        // String rolUsuario = obtenerRolUsuario();
+        Long sucursalUsuario = obtenerSucursalUsuario();
         // System.out.printf("####----- Rol de usuario = " + rolUsuario);
 
         // Cargar las lineas en la venta...
@@ -111,9 +112,9 @@ public class ventasController {
                        
 
             // Actualizar stock de la sucursal y stock general:
-            if (rolUsuario.contains("ROLE_SUCURSALUNO") || rolUsuario.contains("ROLE_EMPLEADO")) {
+            if (sucursalUsuario == 1) {
                 producto.setStockSucursalUno(producto.getStockSucursalUno() - cant);
-            } else if (rolUsuario.contains("ROLE_SUCURSALDOS")) {
+            } else if (sucursalUsuario == 2) {
                 producto.setStockSucursalDos(producto.getStockSucursalDos() - cant);
             }
 
@@ -159,7 +160,19 @@ public class ventasController {
         return "{\"rol\":\"ROLE_DEFAULT\"}";
     }
 
-    @Secured({ "ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO" })
+    @GetMapping(value = "/obtener-sucursal-usuario", produces = { "application/json" })
+    public @ResponseBody Long obtenerSucursalUsuario() {
+        // Aquí debes obtener la sucursal asignada al usuario desde tu lógica de negocio
+        // Por ejemplo, podrías acceder a una base de datos o a cualquier otra fuente de datos.
+        
+        // Supongamos que obtienes la sucursal y la almacenas en una variable llamada "sucursalUsuario".
+        
+        Long sucursalUsuario = usuarioService.obtenerSucursalAsignada(); // Reemplaza con la lógica para obtener la sucursal real
+        
+        return sucursalUsuario;
+    }
+
+    @Secured({"ROLE_ADMINISTRADOR", "ROLE_SUPERUSUARIO"})
     @GetMapping("/borrar/{id}")
     public String deshabOrHabVenta(@PathVariable("id") Long id, RedirectAttributes msgFlash) {
 
