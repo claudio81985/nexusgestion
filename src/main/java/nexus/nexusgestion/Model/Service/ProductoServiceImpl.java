@@ -47,14 +47,19 @@ public class ProductoServiceImpl implements IProductoService {
     @Override
     public void aumentarPreciosPorProveedor(Long proveedorId, BigDecimal aumentoPorcentaje) {
         List<Producto> productos = productoRepo.findByProveedorId(proveedorId);
+        System.out.println("Productos con igual proveedor encontrados = " + productos);
 
         if (productos.isEmpty()) {
             throw new ProveedorSinProductosException("El proveedor no tiene productos asignados.");
         }
 
         for (Producto producto : productos) {
+            System.out.println("Producto = " + producto);
             BigDecimal aumento = producto.getPrecio().multiply(aumentoPorcentaje.divide(new BigDecimal(100)));
+            System.out.println("Aumento = " + aumento);
             producto.setPrecio(producto.getPrecio().add(aumento));
+            System.out.println("Producto = " + producto);
+            System.out.println("Producto precio = " + producto.getPrecio());
         }
 
         productoRepo.saveAll(productos);
