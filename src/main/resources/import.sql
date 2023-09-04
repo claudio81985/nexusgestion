@@ -4,9 +4,6 @@ INSERT INTO `nexusgestion_db`.`permisos` (`nombre`) VALUES ('ROLE_SUCURSALFONTAN
 INSERT INTO `nexusgestion_db`.`permisos` (`nombre`) VALUES ('ROLE_SUCURSALSAUSALITO');
 
 
-
-
-
 /*Cargar Categoria*/
 INSERT INTO categorias (id, activo, nombre)
 VALUES

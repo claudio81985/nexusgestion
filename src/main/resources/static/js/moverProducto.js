@@ -23,7 +23,7 @@ const lineasUtil = {
     $(`span[id^="subtotal_"]`).each(function () {
       total += parseFloat($(this).html());
     });
-    console.log("Total = ",total);
+    console.log("Total = ", total);
     $("#total").html("$" + parseFloat(total).toFixed(2));
   },
 
@@ -127,30 +127,27 @@ function enviarDatos() {
   var origen = [];
 
   $("table#tabla_productos tbody tr").each(function () {
-      var codigo = $(this).find("th[name='codigo[]']").text();
-      var cantidadInput = $(this).find("input[name='cantidad[]']");
-      var origenSelect = $(this).find("select[name='origen[]']");
+    var codigo = $(this).find("th[name='codigo[]']").text();
+    var cantidadInput = $(this).find("input[name='cantidad[]']");
+    var origenSelect = $(this).find("select[name='origen[]']");
 
-      codigoIdentificacion.push(codigo);
-      cantidad.push(cantidadInput.val());
-      origen.push(origenSelect.val());
+    codigoIdentificacion.push(codigo);
+    cantidad.push(cantidadInput.val());
+    origen.push(origenSelect.val());
   });
 
   console.log(codigoIdentificacion);
   console.log(cantidad);
   console.log(origen);
 
-  debugger;
-
   // Asignar los arreglos a los campos ocultos
-  $("#codigoIdentificacionInput").val(JSON.stringify(codigoIdentificacion));
-  $("#cantidadInput").val(JSON.stringify(cantidad));
-  $("#origenInput").val(JSON.stringify(origen));
+  $("#codigoIdentificacionInput").val(codigoIdentificacion.join(','));
+  $("#cantidadInput").val(cantidad.join(','));
+  $("#origenInput").val(origen.join(','));
 
   // Enviar el formulario oculto al servidor
   $("#formularioOculto").submit();
 }
-
 
 // function enviarDatos() {
 //   var id = document.getElementById("productoID").value;

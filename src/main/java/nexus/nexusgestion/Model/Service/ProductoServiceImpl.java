@@ -60,37 +60,51 @@ public class ProductoServiceImpl implements IProductoService {
         productoRepo.saveAll(productos);
     }
 
+    @Transactional
     @Override
-    public void intercambiarStockSucursales(Producto producto, int cantidadDesde, int cantidadHacia) {
-        if (cantidadDesde < 0 || cantidadHacia < 0) {
-            throw new IllegalArgumentException("La cantidad debe ser positiva.");
+    public void intercambiarStockSucursales(Producto producto, String origenSucursal, int cantidad) {
+        if (producto == null) {
+            throw new IllegalArgumentException("El producto no puede ser nulo.");
         }
-    
-        if (cantidadDesde > 0) {
-            int stockActualSucursalUno = producto.getStockSucursalUno();
-            int stockActualSucursalDos = producto.getStockSucursalDos();
-    
-            if (stockActualSucursalUno >= cantidadDesde) {
-                producto.setStockSucursalUno(stockActualSucursalUno - cantidadDesde);
-                producto.setStockSucursalDos(stockActualSucursalDos + cantidadDesde);
-            } else {
-                throw new IllegalStateException("No hay suficiente stock en la Sucursal Uno.");
-            }
+
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor que cero.");
         }
-    
-        if (cantidadHacia > 0) {
-            int stockActualSucursalUno = producto.getStockSucursalUno();
-            int stockActualSucursalDos = producto.getStockSucursalDos();
-    
-            if (stockActualSucursalDos >= cantidadHacia) {
-                producto.setStockSucursalUno(stockActualSucursalUno + cantidadHacia);
-                producto.setStockSucursalDos(stockActualSucursalDos - cantidadHacia);
+
+        int stockActualOrigen = 0;
+        int stockActualDestino = 0;
+
+        if ("sucursalUno".equals(origenSucursal)) {
+            stockActualOrigen = producto.getStockSucursalUno();
+            stockActualDestino = producto.getStockSucursalDos();
+        } else if ("sucursalDos".equals(origenSucursal)) {
+            stockActualOrigen = producto.getStockSucursalDos();
+            stockActualDestino = producto.getStockSucursalUno();
+        } else {
+            throw new IllegalArgumentException("La sucursal de origen no es válida.");
+        }
+
+        if (stockActualOrigen >= cantidad) {
+            // Actualizar el stock de la sucursal de origen
+            stockActualOrigen -= cantidad;
+            if ("sucursalUno".equals(origenSucursal)) {
+                producto.setStockSucursalUno(stockActualOrigen);
             } else {
-                throw new IllegalStateException("No hay suficiente stock en la Sucursal Dos.");
+                producto.setStockSucursalDos(stockActualOrigen);
             }
+
+            // Actualizar el stock de la sucursal de destino
+            stockActualDestino += cantidad;
+            if ("sucursalUno".equals(origenSucursal)) {
+                producto.setStockSucursalDos(stockActualDestino);
+            } else {
+                producto.setStockSucursalUno(stockActualDestino);
+            }
+        } else {
+            throw new IllegalStateException("No hay suficiente stock en la sucursal de origen.");
         }
     }
-    
+
     @Override
     public Producto buscarPorCodigoIdentificacion(String codigoIdentificacion) {
         List<Producto> productos = productoRepo.findByCodigoIdentificacion(codigoIdentificacion);
