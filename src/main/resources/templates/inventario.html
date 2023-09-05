@@ -66,7 +66,7 @@
         </div>
         <!-- precioModal -->
         <div class="modal fade" id="precioModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-sm">
               <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Modificar precios</h5>
@@ -74,27 +74,44 @@
                   </div>
                   <div class="modal-body">
                     <form th:action="@{/aumentar-precios}" method="post">
-                      
                       <label for="proveedorId">Seleccionar Proveedor:</label>
                       <select name="proveedorId" id="proveedorId" class="form-select">
                         <option th:each="p : ${proveedores}" th:value="${p.id}" th:text="${p}"></option>
                       </select>
-          
-          
-                      <label for="aumentoPorcentaje">Porcentaje de Aumento:</label>
-                      <input type="number" id="aumentoPorcentaje" name="aumentoPorcentaje" step="0.01" required>
-
-                      <a 
-                        th:href="@{/inventario}"
-                        data-bs-dismiss="modal"
+                      <br>
+                      <button 
+                        class="btn m-0 p-0"
+                        data-bs-toggle="popover" 
+                        data-bs-placement="left"
+                        data-bs-content="Para INCREMENTAR ingresa solo número: 5. Para DECREMENTAR ingresa símbolo menos seguido del valor: -10"
                       >
-                        Cancelar
-                      </a>
-                      <button type="submit" class="btn btn-primary">Aplicar</button>
+                        <a
+                        class="link-primary"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Ayuda"
+                        >
+                          <i class="bi bi-question-square"></i>
+                        </a>
+                      </button>
+                      <label for="aumentoPorcentaje">Porcentaje:</label>
+                      <div class="input-group">
+                        <input class="form-control" type="number" id="aumentoPorcentaje" name="aumentoPorcentaje" step="0.01" required>
+                        <span class="input-group-text">
+                          <i class="bi bi-percent"></i>
+                        </span>
+                      </div>
                     </form>
                   </div>
                   <div class="modal-footer">
-                    
+                    <a 
+                      th:href="@{/inventario}"
+                      data-bs-dismiss="modal"
+                      class="btn btn-secondary"
+                    >
+                      Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary">Aplicar</button>
                   </div>
               </div>
             </div>
