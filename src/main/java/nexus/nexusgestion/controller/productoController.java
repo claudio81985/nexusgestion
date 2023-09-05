@@ -106,8 +106,11 @@ public class productoController {
 
         Producto producto = productoService.buscarPorId(id);
 
+        boolean productoExistente = (producto != null);
+
         model.addAttribute("titulo", "Nuevo Producto");
         model.addAttribute("producto", producto);
+        model.addAttribute("productoExistente", productoExistente);
 
         return "productos/form";
     }

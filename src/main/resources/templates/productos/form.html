@@ -64,12 +64,12 @@
                             />
                             </svg>
                         </a>
-
                         <select name="provee" id="provee" class="form-select">
                             <option
                             th:each="p : ${proveedores}"
                             th:value="${p.id}"
                             th:text="${p}"
+                            th:selected="${p.id == producto.proveedor.id}"
                             ></option>
                         </select>
                     </div>
@@ -87,6 +87,7 @@
                         autocomplete="off"
                         th:field="*{codigoIdentificacion}"
                         th:errorClass="'form-control alert-danger'"
+                        th:readonly="${productoExistente}"
                     />
                     </div>
                     <div class="col-4">
