@@ -85,8 +85,7 @@ public class ventasController {
         // Si no hay errores...
         LineaVenta linea;
         Producto producto;
-        String rolUsuario = obtenerRolUsuario();
-        // System.out.printf("####----- Rol de usuario = " + rolUsuario);
+        Long sucursalUsuario = obtenerSucursalUsuario();
 
         // Cargar las lineas en la venta...
         for (int i = 0; i < itemIds.size() - 1; i++) {
@@ -111,9 +110,9 @@ public class ventasController {
                        
 
             // Actualizar stock de la sucursal y stock general:
-            if (rolUsuario.contains("ROLE_SUCURSALUNO") || rolUsuario.contains("ROLE_EMPLEADO")) {
+            if (sucursalUsuario == 1) {
                 producto.setStockSucursalUno(producto.getStockSucursalUno() - cant);
-            } else if (rolUsuario.contains("ROLE_SUCURSALDOS")) {
+            } else if (sucursalUsuario == 2) {
                 producto.setStockSucursalDos(producto.getStockSucursalDos() - cant);
             }
 
@@ -159,7 +158,14 @@ public class ventasController {
         return "{\"rol\":\"ROLE_DEFAULT\"}";
     }
 
-    @Secured({ "ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO" })
+    @GetMapping(value = "/obtener-sucursal-usuario", produces = { "application/json" })
+    public @ResponseBody Long obtenerSucursalUsuario() {
+        Long sucursalUsuario = usuarioService.obtenerSucursalAsignada(); // Reemplaza con la lógica para obtener la sucursal real
+        
+        return sucursalUsuario;
+    }
+
+    @Secured({"ROLE_ADMINISTRADOR", "ROLE_SUPERUSUARIO"})
     @GetMapping("/borrar/{id}")
     public String deshabOrHabVenta(@PathVariable("id") Long id, RedirectAttributes msgFlash) {
 

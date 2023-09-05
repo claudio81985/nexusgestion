@@ -33,7 +33,7 @@ import nexus.nexusgestion.Model.Service.ProveedorSinProductosException;
 @RequestMapping("/productos")
 @SessionAttributes("producto")
 
-@Secured({ "ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO" })
+@Secured({ "ROLE_ADMINISTRADOR", "ROLE_SUPERUSUARIO" })
 
 public class productoController {
 
@@ -111,35 +111,7 @@ public class productoController {
 
         return "productos/form";
     }
-
-    @PostMapping("/aumentar-precios")
-    public String aumentarPrecios(@RequestParam("proveedorId") Long proveedorId,
-            @RequestParam("aumentoPorcentaje") BigDecimal aumentoPorcentaje,
-            RedirectAttributes msgFlash) {
-
-        try {
-            productoService.aumentarPreciosPorProveedor(proveedorId, aumentoPorcentaje);
-            msgFlash.addFlashAttribute("success", "Precios aumentados correctamente.");
-        } catch (ProveedorSinProductosException e) {
-            msgFlash.addFlashAttribute("warning", e.getMessage());
-        } catch (Exception e) {
-            msgFlash.addFlashAttribute("danger", "Error al aumentar precios.");
-        }
-
-        return "redirect:/inventario";
-    }
-
-    @GetMapping("/aumentar")
-    public String auemetar(Model model) {
-
-        model.addAttribute("titulo", "Incrementar Precio");
-        model.addAttribute("productos", productoService.buscarTodo());
-        model.addAttribute("proveedores", proveedorService.buscarTodo());
-
-        return "productos/aumentar";
-
-    }
-
+    
     @GetMapping("/moverProducto")
     public String mover(Model model) {
 

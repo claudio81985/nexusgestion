@@ -30,7 +30,7 @@ import nexus.nexusgestion.Model.Service.IProvinciasService;
 @Controller
 @RequestMapping("/proveedores")
 @SessionAttributes("proveedor")
-@Secured({"ROLE_SUCURSALUNO", "ROLE_SUCURSALDOS", "ROLE_SUPERUSUARIO"})
+@Secured({"ROLE_ADMINISTRADOR", "ROLE_SUPERUSUARIO"})
 public class ProveedorController {
 
     @Autowired

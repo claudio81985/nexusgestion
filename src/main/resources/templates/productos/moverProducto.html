@@ -78,6 +78,7 @@
                       <th>Cantidad</th>
                       <th>Mover desde</th>
                       <th>Destino</th>
+                      <th>Accion</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -110,6 +111,17 @@
                         </td>
                         <td id="destino">
                           
+                        </td>
+                        <td>
+                          <button
+                            class="btn btn-danger btn-sm"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="bottom"
+                            title="Eliminar"
+                            onclick="lineasUtil.borrar({ID})"
+                          >
+                            <i class="bi bi-trash3"></i>
+                          </button>
                         </td>
                     </tr>
                   </tbody>

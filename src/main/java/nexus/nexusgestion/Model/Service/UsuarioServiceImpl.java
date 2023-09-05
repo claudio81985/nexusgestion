@@ -2,8 +2,9 @@ package nexus.nexusgestion.Model.Service;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,10 +42,33 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-@Transactional(readOnly = true)
-public Usuario buscarPorNombre(String nombreUsuario) {
-    return usuarioRepository.findByNombre(nombreUsuario);
-}
+    @Transactional(readOnly = true)
+    public Usuario buscarPorNombre(String nombreUsuario) {
+        return usuarioRepository.findByNombre(nombreUsuario);
+    }
 
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long obtenerSucursalAsignada() {
+        // Obtiene el objeto de autenticación actual
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            // Obtén el nombre de usuario del objeto de autenticación
+            String nombreUsuario = authentication.getName();
+            
+            // Luego, busca el usuario correspondiente en función del nombre de usuario
+            Usuario usuario = usuarioRepository.findByNombre(nombreUsuario);
+
+            if (usuario != null) {
+                // Retorna el valor del atributo sucursalAsignada del usuario
+                return usuario.getSucursalAsignada().getId();
+            }
+        }
+
+        // Si no se encuentra un usuario o no está autenticado, puedes devolver un valor predeterminado o manejarlo según tu lógica.
+        return (long) 0;
+    }
 
 }

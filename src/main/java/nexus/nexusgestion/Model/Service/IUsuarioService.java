@@ -15,5 +15,7 @@ public interface IUsuarioService {
 
     public Usuario buscarPorId(Long id);
 
-   public Usuario buscarPorNombre(String nombreUsuario);
+    public Usuario buscarPorNombre(String nombreUsuario);
+
+    public Long obtenerSucursalAsignada();
 }

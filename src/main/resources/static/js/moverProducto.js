@@ -1,12 +1,44 @@
-let permisoUsuario;
-let stock = {};
+let sucursalUsuario;
+let stock = 0;
 let listaProductos;
 const lineasUtil = {
-  incrementarCantidad: function (id) {
+  incrementarCantidad: function (id, precio) {
     let cantidad = parseInt($(`#cantidad_${id}`).val());
     console.log(`Cantidad = ${cantidad}`);
     $(`#cantidad_${id}`).val(++cantidad);
+    this.calcularSubtotal(id, precio, cantidad);
   },
+
+  calcularSubtotal: function (id, precio, cantidad) {
+    console.log(`Contenido de 'id'=${id}`);
+    let stk = listaProductos.find((i) => i.id === id); // Busca el stock que coincide con el id del producto
+    console.log(`Contenido de 'stk'=${stk}`);
+    console.log(`stk.stockSucursalUno = ${stk.stockSucursalUno}`);
+    console.log(`stk.stockSucursalDos = ${stk.stockSucursalDos}`);
+    
+    if (sucursalUsuario === 1 && cantidad > stk.stockSucursalUno) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No hay stock suficiente en Sucursal Sauzalito!",
+      });
+      $(`#cantidad_${id}`).val(stk.stockSucursalUno);
+    } else if (sucursalUsuario === 2 && cantidad > stk.stockSucursalDos) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No hay stock suficiente en Sucursal Fontana!",
+      });
+      $(`#cantidad_${id}`).val(stk.stockSucursalDos);
+    } else {
+      console.log(`Cantidad = ${cantidad}`);
+      $(`#subtotal_${id}`).html(
+        (parseFloat(precio) * parseInt(cantidad)).toFixed(2)
+      );
+      this.calcularTotal();
+    }
+  },
+  
 
   esRepetido: function (id) {
     let result = false;
@@ -34,14 +66,16 @@ const lineasUtil = {
 };
 
 $(document).ready(function () {
-  // Función para obtener el rol del usuario
-  function obtenerRolUsuario() {
+  function obtenerSucursalUsuario() {
     $.ajax({
-      url: "/ventas/obtener-rol-usuario",
+      url: "/ventas/obtener-sucursal-usuario",
       dataType: "json",
       success: function (data) {
-        permisoUsuario = data.rol;
+        sucursalUsuario = data;
         console.log("usuario:", data);
+        if (data = 2) {
+          console.log("Sucursal usuario = Sucursal Fontana");
+        }
 
         $("#buscar_productos").autocomplete({
           minLength: 3,
@@ -57,17 +91,32 @@ $(document).ready(function () {
                 listaProductos = data;
                 response(
                   $.map(data, (item) => {
-                    if (permisoUsuario === "ROLE_SUCURSALUNO") {
-                      stock = item.stockSucursalUno;
-                    } else if (permisoUsuario === "ROLE_SUCURSALDOS") {
-                      stock = item.stockSucursalDos;
+                    if (sucursalUsuario !== null) {
+                      if (sucursalUsuario === 0) {
+                        Swal.fire({
+                          icon: "error",
+                          title: "Error al obtener stock",
+                          text: "El usuario actual no pertenece a ninguna sucursal",
+                        });
+                      }
+                      if (sucursalUsuario === 1) {
+                        stock = item.stockSucursalUno;
+                      } 
+                      if (sucursalUsuario === 2) {
+                        stock = item.stockSucursalDos;
+                      } 
                     } else {
-                      stock = item.stockGeneral;
+                      Swal.fire({
+                        icon: "error",
+                        title: "ERROR",
+                        text: "Algo salió mal al obtener el stock de la sucursal.",
+                      });
                     }
+              
 
                     return {
                       value: item.id,
-                      label: `[${item.codigoIdentificacion}] ${item.nombreComun} ${item.nombreTecnico} ${item.descripcion}`,
+                      label: `[${item.codigoIdentificacion}] ${item.nombreComun} ${item.nombreTecnico} ${item.descripcion} - $${item.precio}`,
                     };
                   })
                 );
@@ -82,8 +131,8 @@ $(document).ready(function () {
             let producto = ui.item.label;
             let descripcion = producto.split("]")[1].trim(); //let descripcion = producto.split('-')[0];
             descripcion = descripcion.split("-")[0];
-            // let precio = producto.split("-")[1];
-            // precio = precio.split("$")[1];
+            let precio = producto.split("-")[1];
+            precio = precio.split("$")[1];
             let id = ui.item.value;
             let codigoIdentificacion = producto.split("[")[1].split("]")[0];
 
@@ -91,7 +140,7 @@ $(document).ready(function () {
 
             //Verificar si es repetido el producto...
             if (lineasUtil.esRepetido(id)) {
-              lineasUtil.incrementarCantidad(id);
+              lineasUtil.incrementarCantidad(id, precio);
               return false;
             }
 
@@ -99,19 +148,24 @@ $(document).ready(function () {
             linea = linea.replace(/{ID}/g, id);
             linea = linea.replace(/{CODIGO}/g, codigoIdentificacion);
             linea = linea.replace(/{DESCRIPCION}/g, descripcion);
+            linea = linea.replace(/{PRECIO}/g, precio);
 
             $("#tabla_productos tbody").append(linea);
+
+            // console.log(`id del producto antes de calcularSubtotal ${id}`);
+            // console.log(`precio del producto antes de calcularSubtotal ${precio}`);
+            lineasUtil.calcularSubtotal(id, precio, 1);
           },
         });
       },
       error: function (error) {
-        console.error("Error al obtener el rol del usuario: ", error);
+        console.error("Error en la petición de datos al servidor: ", error);
       },
     });
   }
 
   // Llamar a la función para obtener el rol del usuario al cargar la página
-  obtenerRolUsuario();
+  obtenerSucursalUsuario();
 });
 
 

@@ -29,7 +29,7 @@
             <button type="submit" class="btn btn-secondary btn-acciones-principales">Buscar</button>
           </div>
         </form>
-        <div sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}">
+        <div sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('ADMINISTRADOR')}">
           <h4>Acciones</h4>
           <a 
             th:href="@{/productos/nuevo}"
@@ -50,15 +50,50 @@
             <i class="bi bi-arrow-left-right fs-5"></i>
           </a
           >
-          <a sec:authorize="${hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS') or hasRole('SUPERUSUARIO')}" 
-            th:href="@{/productos/aumentar}"
-            class="btn btn-secondary btn-acciones-principales ms-3 me-4"
-            data-bs-toggle="tooltip"
-            data-bs-placement="bottom"  
-            title="Modificar precio"
-          >
-            <i class="bi bi-currency-dollar fs-5"></i>
-          </a>
+          <div data-bs-toggle="tooltip" data-bs-placement="bottom" title="Modificar precio">
+            <button                
+              class="btn btn-secondary btn-acciones-principales ms-3 me-4"  
+              data-bs-toggle="modal"
+              data-bs-target="#precioModal"
+            >
+              <i class="bi bi-currency-dollar fs-5"></i>
+            </button>
+          </div>
+        </div>
+        <!-- precioModal -->
+        <div class="modal fade" id="precioModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modificar precios</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form th:action="@{/aumentar-precios}" method="post">
+                      
+                      <label for="proveedorId">Seleccionar Proveedor:</label>
+                      <select name="proveedorId" id="proveedorId" class="form-select">
+                        <option th:each="p : ${proveedores}" th:value="${p.id}" th:text="${p}"></option>
+                      </select>
+          
+          
+                      <label for="aumentoPorcentaje">Porcentaje de Aumento:</label>
+                      <input type="number" id="aumentoPorcentaje" name="aumentoPorcentaje" step="0.01" required>
+
+                      <a 
+                        th:href="@{/inventario}"
+                        data-bs-dismiss="modal"
+                      >
+                        Cancelar
+                      </a>
+                      <button type="submit" class="btn btn-primary">Aplicar</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    
+                  </div>
+              </div>
+            </div>
         </div>
       </div>
 
@@ -67,7 +102,7 @@
         <table class="table table-hover caption-top">
           <thead class="bg-light">
             <tr class="text-uppercase">
-              <th sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}">Accion</th>
+              <th sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('ADMINISTRADOR')}">Accion</th>
               <th scope="col">Codigo</th>
               <th scope="col">Categoria</th>
               <th scope="col">Producto</th>
@@ -82,7 +117,7 @@
               th:each="p : ${productos}"
               th:class="${p.stockSucursalUno == 0 or p.stockSucursalDos == 0} ? 'table-danger' : (${10 > p.stockSucursalUno or 10 > p.stockSucursalDos} ? 'table-warning' : '')"
               >
-              <th sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('SUCURSALUNO') or hasRole('SUCURSALDOS')}">
+              <th sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('ADMINISTRADOR')}">
                 <a 
                   th:href="@{/productos/editar/} + ${p.id}"
                   class="btn btn-primary btn-sm btn-accion"
