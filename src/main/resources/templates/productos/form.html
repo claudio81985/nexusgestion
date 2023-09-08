@@ -46,7 +46,7 @@
                         >
                         <a
                             th:href="@{/proveedores/nuevo/}"
-                            class="link-primary"
+                            class="link-secondary"
                             data-bs-toggle="tooltip"
                             data-bs-placement="top"
                             title="Agregar nuevo proveedor"
@@ -96,12 +96,13 @@
                     </label>
                     <button
                         class="btn m-0 p-0"
+                        type="button"
                         data-bs-toggle="modal"
                         data-bs-target="#modalNuevaCategoria"
                     >
                         <a
                         href="#"
-                        class="link-primary"
+                        class="link-secondary"
                         data-bs-toggle="tooltip"
                         data-bs-placement="top"
                         title="Agregar nueva categoría"
@@ -143,29 +144,30 @@
                             <div class="modal-body">
                             <form
                                 id="formModalNuevaCategoria"
-                                th:action="@{/categoria/guardar}"
+                                th:action="@{/categorias/guardar}"
                                 method="post"
                             >
                                 <label for="nuevaCat" class="form-label"
                                 >Nombre de la categoría:</label
                                 >
                                 <input id="nuevaCat" type="text" class="form-control" />
-                                <hr />
-                                <button
-                                type="button"
-                                class="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                                >
-                                Cerrar
-                                </button>
-                                <button
-                                id="btnGuardarCategoria"
-                                type="button"
-                                class="btn btn-primary"
-                                onclick="guardarCategoria()"
-                                >
-                                Guardar
-                                </button>
+                                <hr/>
+                                <div class="text-end">
+                                    <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                    >
+                                        Cerrar
+                                    </button>
+                                    <button
+                                        id="btnGuardarCategoria"
+                                        class="btn btn-primary"
+                                        onclick="guardarCategoria()"
+                                    >
+                                        Guardar
+                                    </button>
+                                </div>
                             </form>
                             </div>
                         </div>
@@ -176,6 +178,7 @@
                         th:each="c : ${categorias}"
                         th:value="${c.id}"
                         th:text="${c}"
+                        th:selected="${producto != null and producto.categoria != null and c.id == producto.categoria.id}"
                         ></option>
                     </select>
                     </div>
@@ -356,5 +359,7 @@
             </div>
         </form>
     </div>
+
+    <script layout:fragment="js" th:src="@{/js/productoForm.js}"></script>
   </body>
 </html>

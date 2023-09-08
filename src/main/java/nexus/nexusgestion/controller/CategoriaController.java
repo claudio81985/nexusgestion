@@ -25,7 +25,7 @@ import nexus.nexusgestion.Model.Service.IProductoService;
 @Controller
 @RequestMapping("/categorias")
 @SessionAttributes("categoria")
-@Secured({"ROLE_SUPERUSUARIO,  ROLE_ADMINISTRADOR"})
+@Secured({"ROLE_SUPERUSUARIO",  "ROLE_ADMINISTRADOR"})
 
 public class CategoriaController {
 
