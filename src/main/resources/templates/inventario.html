@@ -81,9 +81,10 @@
                       <br>
                       <button 
                         class="btn m-0 p-0"
+                        type="button"
                         data-bs-toggle="popover" 
                         data-bs-placement="left"
-                        data-bs-content="Para INCREMENTAR ingresa solo número: 5. Para DECREMENTAR ingresa símbolo menos seguido del valor: -10"
+                        data-bs-content="Para INCREMENTAR ingresa solo el número, por ejemplo: 5. Para DECREMENTAR ingresa símbolo menos seguido del valor, por ejemplo: -10"
                       >
                         <a
                         class="link-primary"
@@ -101,18 +102,20 @@
                           <i class="bi bi-percent"></i>
                         </span>
                       </div>
+                      <br>
+                      <div class="d-flex justify-content-around">
+                        <a 
+                          th:href="@{/inventario}"
+                          data-bs-dismiss="modal"
+                          class="btn btn-secondary"
+                        >
+                          Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">Aplicar</button>
+                      </div>
                     </form>
                   </div>
-                  <div class="modal-footer">
-                    <a 
-                      th:href="@{/inventario}"
-                      data-bs-dismiss="modal"
-                      class="btn btn-secondary"
-                    >
-                      Cancelar
-                    </a>
-                    <button type="submit" class="btn btn-primary">Aplicar</button>
-                  </div>
+                  
               </div>
             </div>
         </div>

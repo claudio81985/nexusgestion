@@ -31,11 +31,11 @@ const lineasUtil = {
     //   });
     //   $(`#cantidad_${id}`).val(stk.stockSucursalDos);
     // } else {
-    //   console.log(`Cantidad = ${cantidad}`);
-    //   $(`#subtotal_${id}`).html(
-    //     (parseFloat(precio) * parseInt(cantidad)).toFixed(2)
-    //   );
-    //   this.calcularTotal();
+      console.log(`Cantidad = ${cantidad}`);
+      $(`#subtotal_${id}`).html(
+        (parseFloat(precio) * parseInt(cantidad)).toFixed(2)
+      );
+      this.calcularTotal();
     // }
   },
   
