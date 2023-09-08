@@ -12,7 +12,7 @@
 
 <body>
     <div layout:fragment="contenido">
-        <div class="container">
+        <div class="container border rounded shadow p-3 bg-light">
           <div class="row">
             <div class="col-1">
               <a
@@ -86,7 +86,7 @@
                 
                 <table class="d-none">
                   <tbody id="lineas">
-                    <tr id="fila_{ID}">
+                    <tr id="fila_{ID}" data-stock-uno="{STOCK_SUCURSAL_UNO}" data-stock-dos="{STOCK_SUCURSAL_DOS}">
                         <td class="d-none">
                           <input id="productoID" type="hidden" value="{ID}" name="item_id[]" />
                         </td>
@@ -101,16 +101,22 @@
                             id="cantidad_{ID}"
                             class="form-control"
                             style="width: 100px"
+                            onchange="lineasUtil.validarStockDisponible({ID}, this.value, this.id)"
                           />
                         </td>
                         <td>
-                          <select id="origen" name="origen[]" class="form-select">
-                            <option value="sucursalUno">Sucursal Uno</option>
-                            <option value="sucursalDos">Sucursal Dos</option>
+                          <select 
+                            id="sucOrigen_{ID}" 
+                            name="origen[]" 
+                            class="form-select" 
+                            onchange="lineasUtil.actualizarStock({ID}, 'cantidad_{ID}')"
+                          >
+                              <option value="sucursalUno">Sauzalito</option>
+                              <option value="sucursalDos">Fontana</option>
                           </select>
                         </td>
-                        <td id="destino">
-                          
+                        <td>
+                          <span class="sucDestino"></span>
                         </td>
                         <td>
                           <button
@@ -143,6 +149,7 @@
         <input type="hidden" id="origenInput" name="origen" value="">
       </form>
     </div>
+
 
     <script layout:fragment="js" th:src="@{/js/moverProducto.js}"></script>
 </body>

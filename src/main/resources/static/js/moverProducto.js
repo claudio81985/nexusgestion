@@ -4,40 +4,52 @@ let listaProductos;
 const lineasUtil = {
   incrementarCantidad: function (id, precio) {
     let cantidad = parseInt($(`#cantidad_${id}`).val());
-    console.log(`Cantidad = ${cantidad}`);
     $(`#cantidad_${id}`).val(++cantidad);
     this.calcularSubtotal(id, precio, cantidad);
   },
 
-  calcularSubtotal: function (id, precio, cantidad) {
-    console.log(`Contenido de 'id'=${id}`);
-    let stk = listaProductos.find((i) => i.id === id); // Busca el stock que coincide con el id del producto
-    console.log(`Contenido de 'stk'=${stk}`);
-    console.log(`stk.stockSucursalUno = ${stk.stockSucursalUno}`);
-    console.log(`stk.stockSucursalDos = ${stk.stockSucursalDos}`);
-    
-    if (sucursalUsuario === 1 && cantidad > stk.stockSucursalUno) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No hay stock suficiente en Sucursal Sauzalito!",
-      });
-      $(`#cantidad_${id}`).val(stk.stockSucursalUno);
-    } else if (sucursalUsuario === 2 && cantidad > stk.stockSucursalDos) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No hay stock suficiente en Sucursal Fontana!",
-      });
-      $(`#cantidad_${id}`).val(stk.stockSucursalDos);
+  sucursalOrigen: function (id) {
+    let sucOrigen = document.getElementById(`sucOrigen_${id}`);
+    // console.log(`Sucursal Origen (${id}) = `, sucOrigen.value);
+    return sucOrigen.value;
+  },
+
+  actualizarStock: function(id, cantidadId) {
+    let stk = listaProductos.find((i) => i.id === id);
+    let sucActual = this.sucursalOrigen(id);
+    let cantidad = document.getElementById(cantidadId);
+
+    if (sucActual === "sucursalUno") {
+      cantidad.value = Math.min(cantidad.value, stk.stockSucursalUno);
+    } else if (sucActual === "sucursalDos") {
+      cantidad.value = Math.min(cantidad.value, stk.stockSucursalDos);
     } else {
-      console.log(`Cantidad = ${cantidad}`);
-      $(`#subtotal_${id}`).html(
-        (parseFloat(precio) * parseInt(cantidad)).toFixed(2)
-      );
-      this.calcularTotal();
+      cantidad.value = 0;
     }
   },
+
+  validarStockDisponible: function (id, cantidad, inputId) {
+    let stk = listaProductos.find((i) => i.id === id);
+    let sucOrigen = this.sucursalOrigen(id);
+    let input = document.getElementById(inputId);
+
+    if (sucOrigen === "sucursalUno" && cantidad > stk.stockSucursalUno) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No hay stock suficiente en Sucursal Sauzalito!",
+        });
+        input.value = stk.stockSucursalUno;
+    } else if (sucOrigen === "sucursalDos" && cantidad > stk.stockSucursalDos) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No hay stock suficiente en Sucursal Fontana!",
+        });
+        input.value = stk.stockSucursalDos;
+    }
+  },
+
   
 
   esRepetido: function (id) {
@@ -48,15 +60,6 @@ const lineasUtil = {
       }
     });
     return result;
-  },
-
-  calcularTotal: function () {
-    let total = 0;
-    $(`span[id^="subtotal_"]`).each(function () {
-      total += parseFloat($(this).html());
-    });
-    console.log("Total = ", total);
-    $("#total").html("$" + parseFloat(total).toFixed(2));
   },
 
   borrar: function (id) {
@@ -72,10 +75,6 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         sucursalUsuario = data;
-        console.log("usuario:", data);
-        if (data = 2) {
-          console.log("Sucursal usuario = Sucursal Fontana");
-        }
 
         $("#buscar_productos").autocomplete({
           minLength: 3,
@@ -87,7 +86,6 @@ $(document).ready(function () {
                 term: request.term,
               },
               success: (data) => {
-                console.log("Datos recibidos:", data);
                 listaProductos = data;
                 response(
                   $.map(data, (item) => {
@@ -112,7 +110,6 @@ $(document).ready(function () {
                         text: "Algo salió mal al obtener el stock de la sucursal.",
                       });
                     }
-              
 
                     return {
                       value: item.id,
@@ -124,21 +121,15 @@ $(document).ready(function () {
             });
           },
           select: (event, ui) => {
-            //Crear una línea
             let linea = $("#lineas").html();
-
-            //Asignar valores a sus celdas
             let producto = ui.item.label;
-            let descripcion = producto.split("]")[1].trim(); //let descripcion = producto.split('-')[0];
+            let descripcion = producto.split("]")[1].trim();
             descripcion = descripcion.split("-")[0];
             let precio = producto.split("-")[1];
             precio = precio.split("$")[1];
             let id = ui.item.value;
             let codigoIdentificacion = producto.split("[")[1].split("]")[0];
 
-            // console.log(`Producto seleccionado: ${producto}`);
-
-            //Verificar si es repetido el producto...
             if (lineasUtil.esRepetido(id)) {
               lineasUtil.incrementarCantidad(id, precio);
               return false;
@@ -151,10 +142,7 @@ $(document).ready(function () {
             linea = linea.replace(/{PRECIO}/g, precio);
 
             $("#tabla_productos tbody").append(linea);
-
-            // console.log(`id del producto antes de calcularSubtotal ${id}`);
-            // console.log(`precio del producto antes de calcularSubtotal ${precio}`);
-            lineasUtil.calcularSubtotal(id, precio, 1);
+            lineasUtil.validarStockDisponible(id, 1);
           },
         });
       },
@@ -164,7 +152,6 @@ $(document).ready(function () {
     });
   }
 
-  // Llamar a la función para obtener el rol del usuario al cargar la página
   obtenerSucursalUsuario();
 });
 
@@ -203,20 +190,20 @@ function enviarDatos() {
   $("#formularioOculto").submit();
 }
 
-// function enviarDatos() {
-//   var id = document.getElementById("productoID").value;
-//   var codigoIdentificacion = document.getElementById("codigoIdentificacion").innerText;
-//   var cantidad = document.getElementById("cantidad_" + id).value;
-//   var origen = document.getElementById("origen").value;
 
-//   console.log("ID producto = ", id);
-//   console.log("codigoIdentificacion = ", codigoIdentificacion);
-//   console.log("cantidad = ", cantidad);
-//   console.log("origen = ", origen);
-//   debugger;
-//   document.getElementById("codigoIdentificacionInput").value = codigoIdentificacion;
-//   document.getElementById("cantidadInput").value = cantidad;
-//   document.getElementById("origenInput").value = origen;
 
-//   document.getElementById("formularioOculto").submit();
+
+// Obtén todos los elementos select con clase 'sucOrigen'
+// let listaSucOrigen = document.querySelectorAll('.sucOrigen');
+// console.log(`Lista sucOrigen: ${listaSucOrigen}`);
+// for (let i = 0; i < listaSucOrigen.length; i++) {
+//   let sucOrigen = listaSucOrigen[i]
+//   console.log(`sucOrigen: ${sucOrigen}`);
+//   let sucDestino = document.querySelector(".sucDestino");
+//   if (sucOrigen.value === 'sucursalUno') {
+//     sucDestino.textContent = 'sucursalDos';
+//   } else {
+//     sucDestino.textContent = 'sucursalUno';
+//   }
 // }
+

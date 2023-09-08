@@ -69,7 +69,7 @@
                             th:each="p : ${proveedores}"
                             th:value="${p.id}"
                             th:text="${p}"
-                            th:selected="${p.id == producto.proveedor.id}"
+                            th:selected="${producto != null and producto.proveedor != null and p.id == producto.proveedor.id}"
                             ></option>
                         </select>
                     </div>
