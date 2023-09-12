@@ -188,18 +188,19 @@ public class productoController {
 
         // Si no hay ningún código previo, comienza desde 1, de lo contrario, incrementa el número
         int numeroIncremental = 1;
-        if (ultimoCodigo != null && ultimoCodigo.matches("PAISA-(\\d+)")) {
-            numeroIncremental = Integer.parseInt(ultimoCodigo.split("-")[1]) + 1;
+        if (ultimoCodigo != null && ultimoCodigo.matches("PAISA(\\d+)")) {
+            numeroIncremental = Integer.parseInt(ultimoCodigo.substring(5)) + 1;
         }
 
         // Formatea el número con ceros a la izquierda según su longitud
         String numeroFormateado = String.format("%03d", numeroIncremental); // "%03d" asegura que siempre haya al menos 3 dígitos
 
-        // Genera el nuevo código
+        // Genera el nuevo código sin el guion "-"
         String nuevoCodigo = "PAISA" + numeroFormateado;
 
         return nuevoCodigo;
     }
+
 
 
 
