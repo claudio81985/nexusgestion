@@ -1,31 +1,19 @@
-function guardarCategoria() {
-    // Obtén el valor del campo de entrada
-    let nombreCategoria = document.getElementById("nuevaCat").value;
-  
-    // Crea un objeto con los datos de la nueva categoría
-    let categoriaData = {
-      nombre: nombreCategoria,
-      // Otros campos de la categoría si los tienes
-    };
-  
-    // Realiza la solicitud AJAX para guardar la categoría
+$(document).ready(function() {
+    // Cuando se cargue el documento
+    obtenerNuevoCodigo(); // Llama a la función para obtener el nuevo código
+});
+
+function obtenerNuevoCodigo() {
     $.ajax({
-      type: "POST",
-      url: "/categorias/guardar", // Reemplaza con la ruta de tu controlador
-      data: JSON.stringify(categoriaData),
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      success: function (response) {
-        // La categoría se ha guardado con éxito
-        alert("Categoría guardada con éxito");
-      },
-      error: function (xhr, status, error) {
-        // Ocurrió un error al guardar la categoría
-        alert("Error al guardar la categoría: " + error);
-      },
+        url: '/productos/generarCodigo', // La URL del controlador que genera el código
+        type: 'GET',
+        success: function(data) {
+            // Cuando la solicitud AJAX sea exitosa, actualiza el campo de entrada con el nuevo código
+            $('#codigoProducto').val(data);
+        },
+        error: function() {
+            // Maneja los errores si es necesario
+            console.error('Error al obtener el nuevo código de producto');
+        }
     });
-  }
-  
-  // Agrega un evento click al botón para llamar a la función guardarCategoria
-//   document.getElementById("btnGuardarCategoria").addEventListener("click", guardarCategoria);
-  
+}

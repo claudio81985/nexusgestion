@@ -49,9 +49,14 @@
         </a>
       </li>
       <li>
-        <a th:href="@{/inventario}"
-        th:class="${#strings.concat('nav-link link-dark', 
-        (#strings.equals(#httpServletRequest.requestURI, '/inventario') or #strings.equals(#httpServletRequest.requestURI, '/') ? ' active' : ''))}">          <i class="bi bi-boxes"></i>
+        <a 
+          th:href="@{/inventario}"
+          th:class="${#strings.concat('nav-link link-dark', 
+              #strings.equals(#httpServletRequest.requestURI, '/productos/nuevo') or
+              #strings.equals(#httpServletRequest.requestURI, '/productos/moverProducto') or
+              #strings.equals(#httpServletRequest.requestURI, '/inventario') ? ' active' : '')}"
+        >
+          <i class="bi bi-boxes"></i>
           Inventario
         </a>
       </li>

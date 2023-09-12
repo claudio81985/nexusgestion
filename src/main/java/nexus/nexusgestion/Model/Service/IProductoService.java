@@ -21,4 +21,6 @@ public interface IProductoService {
     public void intercambiarStockSucursales(Producto producto, String origenSucursal, int cantidad);
 
     public Producto buscarPorCodigoIdentificacion(String codigoIdentificacion);
+
+    public String obtenerUltimoCodigo();
 }

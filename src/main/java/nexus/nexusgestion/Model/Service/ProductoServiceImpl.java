@@ -121,4 +121,27 @@ public class ProductoServiceImpl implements IProductoService {
         }
     }
 
+    @Override
+    public String obtenerUltimoCodigo() {
+        List<Producto> listaProductos = productoRepo.findAll();
+    
+        // Verifica si la lista de productos no está vacía
+        if (!listaProductos.isEmpty()) {
+            // Ordena la lista de productos por ID de forma descendente
+            listaProductos.sort((p1, p2) -> p2.getId().compareTo(p1.getId()));
+    
+            // Obtén el primer producto de la lista (que tiene el ID más alto)
+            Producto ultimoProducto = listaProductos.get(0);
+
+            System.out.println("Último producto con ID mayor: " + ultimoProducto);
+    
+            // Obtén el codigoIdentificacion del último producto y devuélvelo
+            return ultimoProducto.getCodigoIdentificacion();
+        }
+    
+        // Si la lista de productos está vacía, puedes manejarlo de acuerdo a tus necesidades
+        // Puedes devolver un valor predeterminado, lanzar una excepción, etc.
+        return "PAISA-1"; // Por ejemplo, si no hay productos, se devuelve "PAISA-1"
+    }    
+
 }

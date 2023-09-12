@@ -44,7 +44,7 @@
                         <label for="provee" class="form-label" style="width: 90%"
                             >Proveedor:</label
                         >
-                        <a
+                        <!-- <a
                             th:href="@{/proveedores/nuevo/}"
                             class="link-secondary"
                             data-bs-toggle="tooltip"
@@ -63,7 +63,7 @@
                                 d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"
                             />
                             </svg>
-                        </a>
+                        </a> -->
                         <select name="provee" id="provee" class="form-select">
                             <option
                             th:each="p : ${proveedores}"
@@ -74,113 +74,110 @@
                         </select>
                     </div>
                     <div class="col-2">
-                    <label for="cod" class="form-label">Código del producto:</label>
-                    <input
-                        id="cod"
-                        type="text"
-                        class="form-control"
-                        maxlength="10"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="bottom"
-                        title="Máximo 10 carácteres"
-                        placeholder="xxxxxxxxxx"
-                        autocomplete="off"
-                        th:field="*{codigoIdentificacion}"
-                        th:errorClass="'form-control alert-danger'"
-                        th:readonly="${productoExistente}"
-                    />
+                        <label for="codigoProducto" class="form-label">Código del producto:</label>
+                        <input
+                            id="codigoProducto"
+                            type="text"
+                            class="form-control disabled"
+                            autocomplete="off"
+                            th:field="*{codigoIdentificacion}"
+                            th:errorClass="'form-control alert-danger'"
+                            readonly="readonly"
+                        />
                     </div>
+                    
+
+                    <!-- CATEGORIA -->
                     <div class="col-4">
-                    <label for="cate" class="form-label" style="width: 90%">
-                        Categoría:
-                    </label>
-                    <button
-                        class="btn m-0 p-0"
-                        type="button"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalNuevaCategoria"
-                    >
-                        <a
-                        href="#"
-                        class="link-secondary"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Agregar nueva categoría"
+                        <label for="cate" class="form-label" style="width: 90%">
+                            Categoría:
+                        </label>
+                        <!-- <button
+                            class="btn m-0 p-0"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalNuevaCategoria"
                         >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            fill="currentColor"
-                            class="bi bi-plus-square-fill"
-                            viewBox="0 0 16 16"
-                        >
-                            <path
-                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"
-                            />
-                        </svg>
-                        </a>
-                    </button>
-                    <div
-                        class="modal fade"
-                        id="modalNuevaCategoria"
-                        tabindex="-1"
-                        aria-labelledby="exampleModalLabel"
-                        aria-hidden="true"
-                    >
-                        <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title text-uppercase" id="exampleModalLabel">
-                                Nueva categoría
-                            </h5>
-                            <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
-                            </div>
-                            <div class="modal-body">
-                            <form
-                                id="formModalNuevaCategoria"
-                                th:action="@{/categorias/guardar}"
-                                method="post"
+                            <a
+                            class="link-secondary"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Agregar nueva categoría"
                             >
-                                <label for="nuevaCat" class="form-label"
-                                >Nombre de la categoría:</label
-                                >
-                                <input id="nuevaCat" type="text" class="form-control" />
-                                <hr/>
-                                <div class="text-end">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                fill="currentColor"
+                                class="bi bi-plus-square-fill"
+                                viewBox="0 0 16 16"
+                            >
+                                <path
+                                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"
+                                />
+                            </svg>
+                            </a>
+                        </button> -->
+                        <!-- <div
+                            class="modal fade"
+                            id="modalNuevaCategoria"
+                            tabindex="-1"
+                            aria-labelledby="exampleModalLabel"
+                            aria-hidden="true"
+                        >
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title text-uppercase" id="exampleModalLabel">
+                                        Nueva categoría
+                                    </h5>
                                     <button
                                         type="button"
-                                        class="btn btn-secondary"
+                                        class="btn-close"
                                         data-bs-dismiss="modal"
-                                    >
-                                        Cerrar
-                                    </button>
-                                    <button
-                                        id="btnGuardarCategoria"
-                                        class="btn btn-primary"
-                                        onclick="guardarCategoria()"
-                                    >
-                                        Guardar
-                                    </button>
+                                        aria-label="Close"
+                                    ></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form
+                                            id="formModalNuevaCategoria"
+                                            th:action="@{/categorias/guardar}"
+                                            method="post"
+                                        >
+                                            <label for="nuevaCat" class="form-label"
+                                            >Nombre de la categoría:</label
+                                            >
+                                            <input id="nuevaCat" type="text" class="form-control" />
+                                            <hr/>
+                                            <div class="text-end">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-secondary"
+                                                    data-bs-dismiss="modal"
+                                                >
+                                                    Cerrar
+                                                </button>
+                                                <button
+                                                    id="btnGuardarCategoria"
+                                                    class="btn btn-primary"
+                                                    type="submit"
+                                                >
+                                                    Guardar
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </form>
                             </div>
-                        </div>
-                        </div>
-                    </div>
-                    <select name="cate" id="cate" class="form-select">
-                        <option
-                        th:each="c : ${categorias}"
-                        th:value="${c.id}"
-                        th:text="${c}"
-                        th:selected="${producto != null and producto.categoria != null and c.id == producto.categoria.id}"
-                        ></option>
-                    </select>
+                        </div> -->
+                        <select name="cate" id="cate" class="form-select">
+                            <option
+                            th:each="c : ${categorias}"
+                            th:value="${c.id}"
+                            th:text="${c}"
+                            th:selected="${producto != null and producto.categoria != null and c.id == producto.categoria.id}"
+                            ></option>
+                        </select>
                     </div>
                 </div>
                 <br>
@@ -359,6 +356,9 @@
             </div>
         </form>
     </div>
+
+
+    
 
     <script layout:fragment="js" th:src="@{/js/productoForm.js}"></script>
   </body>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -177,5 +178,29 @@ public class productoController {
     public List<Proveedor> getProveedor() {
         return proveedorService.buscarTodo();
     }
+
+
+    @GetMapping("/generarCodigo")
+    @ResponseBody
+    public String generarCodigo() {
+        // Consulta la base de datos para obtener el último número utilizado
+        String ultimoCodigo = productoService.obtenerUltimoCodigo();
+
+        // Si no hay ningún código previo, comienza desde 1, de lo contrario, incrementa el número
+        int numeroIncremental = 1;
+        if (ultimoCodigo != null && ultimoCodigo.matches("PAISA-(\\d+)")) {
+            numeroIncremental = Integer.parseInt(ultimoCodigo.split("-")[1]) + 1;
+        }
+
+        // Formatea el número con ceros a la izquierda según su longitud
+        String numeroFormateado = String.format("%03d", numeroIncremental); // "%03d" asegura que siempre haya al menos 3 dígitos
+
+        // Genera el nuevo código
+        String nuevoCodigo = "PAISA" + numeroFormateado;
+
+        return nuevoCodigo;
+    }
+
+
 
 }
