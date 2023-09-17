@@ -45,6 +45,16 @@
                     </div>
                 </div>
                 <div class="col">
+                    <h6>
+                        Nota:
+                    </h6>
+                    <div class="card">
+                        <div class="card-body">
+                            <span th:text="${compra.descripcion}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
                     <div class="fw-bold fs-3 text-end">
                         Total:
                         <span th:text="${compra.calcularTotal()}" class="badge bg-success money"></span>
