@@ -106,6 +106,15 @@ $(document).ready(function () {
             let id = ui.item.value;
             let codigoIdentificacion = producto.split("[")[1].split("]")[0];
 
+            if (precio === '0') {
+              Swal.fire({
+                icon: "warning",
+                title: "Sin precio de compra",
+                text: "Es necesario que el producto tenga precio de compra asignado. Vaya a inventario y edite el producto para añadir el precio de compra.",
+              });
+              return false;
+            };
+
             //Verificar si es repetido el producto...
             if (lineasUtil.esRepetido(id)) {
               lineasUtil.incrementarCantidad(id, precio);
