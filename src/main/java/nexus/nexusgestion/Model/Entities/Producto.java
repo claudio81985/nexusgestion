@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -42,7 +43,8 @@ public class Producto {
     private String nombreTecnico;
 
     @NotNull(message = "Este campo es obligatorio.")
-    @Positive(message = "El precio debe ser un valor positivo.")
+    @DecimalMin(value = "0.0", inclusive = true, message = "El precio debe ser un valor no negativo.")
+    // @Positive(message = "El precio debe ser un valor positivo.")
     private BigDecimal precio;
 
     @Column(name = "activo", columnDefinition = "boolean default 1")
@@ -58,7 +60,8 @@ public class Producto {
     private int stockGeneral;
 
     @NotNull(message = "El precio es requerido.")
-    @Positive(message = "El precio debe ser un valor positivo.")
+    @DecimalMin(value = "0.0", inclusive = true, message = "El precio debe ser un valor no negativo.")
+    // @Positive(message = "El precio debe ser un valor positivo.")
     private BigDecimal precioCompra;
 
     @JsonIgnore
