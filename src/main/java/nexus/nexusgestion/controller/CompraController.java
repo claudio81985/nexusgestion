@@ -110,7 +110,7 @@ public class CompraController {
             producto = productoService.buscarPorId(id);
 
             linea.setProducto(producto);
-            linea.setPrecioActual(producto.getPrecio());
+            linea.setPrecioActual(producto.getPrecioCompra());
             linea.setCantidad(cant);
 
            

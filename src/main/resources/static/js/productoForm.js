@@ -1,5 +1,9 @@
 $(document).ready(function() {
     // Cuando se cargue el documento
+    let url = window.location.href;
+    if (url.indexOf("/productos/editar/") !== -1) {
+        return false
+    };
     obtenerNuevoCodigo(); // Llama a la función para obtener el nuevo código
 });
 

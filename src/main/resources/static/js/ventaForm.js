@@ -1,5 +1,6 @@
 let sucursalUsuario;
 let stock = 0;
+let producto;
 let listaProductos;
 const lineasUtil = {
   incrementarCantidad: function (id, precio) {
@@ -124,6 +125,14 @@ $(document).ready(function () {
             });
           },
           select: (event, ui) => {
+            if (stock === 0) {
+              Swal.fire({
+                icon: "error",
+                title: "No hay stock",
+                text: "No es posible agregar el producto seleccionado a la venta.",
+              });
+              return false;
+            };
             //Crear una línea
             let linea = $("#lineas").html();
 
