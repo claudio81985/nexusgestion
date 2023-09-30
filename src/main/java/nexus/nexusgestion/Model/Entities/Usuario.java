@@ -22,7 +22,7 @@ public class Usuario {
 
     @Size(max = 30, min = 5)
     @Column(name = "nombre", unique = true)
-    @Pattern(regexp = "[a-zA-ZÀ-ÖØ-öø-ÿ]+\\.?(( |\\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\\.?)*", message = "Escribe nuevamente tu nombre")
+    // @Pattern(regexp = "[a-zA-ZÀ-ÖØ-öø-ÿ]+\\.?(( |\\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\\.?)*", message = "Escribe nuevamente tu nombre")
     private String nombre;
 
     @Size(max = 70, min = 6, message = "La contraseña debe contener al menos 6 caracteres.")
