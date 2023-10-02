@@ -1,6 +1,4 @@
 let sucursalUsuario;
-let stock = 0;
-let producto;
 let listaProductos;
 const lineasUtil = {
   incrementarCantidad: function (id, precio) {
@@ -11,12 +9,20 @@ const lineasUtil = {
   },
 
   calcularSubtotal: function (id, precio, cantidad) {
-    console.log(`Contenido de 'id'=${id}`);
+    let cant = document.getElementById("cantidad_{ID}");
+    cant.addEventListener("change", function(event) {
+      let valorCampo = parseFloat(cantidadInput.value);
+      if (valorCampo === 0) {
+          cantidadInput.value = 1;
+      }
+    });
+
+
+    // console.log(`ìd:${id}, precio: ${precio}, cantidad: ${cantidad}`);
     let stk = listaProductos.find((i) => i.id === id); // Busca el stock que coincide con el id del producto
-    console.log(`Contenido de 'stk'=${stk}`);
-    console.log(`stk.stockSucursalUno = ${stk.stockSucursalUno}`);
-    console.log(`stk.stockSucursalDos = ${stk.stockSucursalDos}`);
-    
+    // console.log("lista productos = ", stk);
+    // console.log("stk = ", stk.stockSucursalUno);
+    // console.log("sucursal usuario = ", sucursalUsuario);
     if (sucursalUsuario === 1 && cantidad > stk.stockSucursalUno) {
       Swal.fire({
         icon: "error",
@@ -32,7 +38,6 @@ const lineasUtil = {
       });
       $(`#cantidad_${id}`).val(stk.stockSucursalDos);
     } else {
-      console.log(`Cantidad = ${cantidad}`);
       $(`#subtotal_${id}`).html(
         (parseFloat(precio) * parseInt(cantidad)).toFixed(2)
       );
@@ -56,7 +61,6 @@ const lineasUtil = {
     $(`span[id^="subtotal_"]`).each(function () {
       total += parseFloat($(this).html());
     });
-    console.log("Total = ", total);
     $("#total").html("$" + parseFloat(total).toFixed(2));
   },
 
@@ -67,16 +71,25 @@ const lineasUtil = {
 };
 
 $(document).ready(function () {
+
+
+
+
+
   function obtenerSucursalUsuario() {
     $.ajax({
       url: "/ventas/obtener-sucursal-usuario",
       dataType: "json",
       success: function (data) {
         sucursalUsuario = data;
-        console.log("usuario:", data);
-        if (data = 2) {
-          console.log("Sucursal usuario = Sucursal Fontana");
-        }
+        // if (sucursalUsuario === 2) {
+        //   console.log("Sucursal usuario = Sucursal Fontana");
+        // }
+        // else if (sucursalUsuario === 1) {
+        //   console.log("Sucursal usuario = Sucursal Sauzalito");
+        // } else {
+        //   console.log("usuario sin sucursal asignada.");
+        // }
 
         $("#buscar_productos").autocomplete({
           minLength: 3,
@@ -88,7 +101,7 @@ $(document).ready(function () {
                 term: request.term,
               },
               success: (data) => {
-                console.log("Datos recibidos:", data);
+                // console.log("Datos recibidos:", data);
                 listaProductos = data;
                 response(
                   $.map(data, (item) => {
@@ -100,12 +113,6 @@ $(document).ready(function () {
                           text: "El usuario actual no pertenece a ninguna sucursal",
                         });
                       }
-                      if (sucursalUsuario === 1) {
-                        stock = item.stockSucursalUno;
-                      } 
-                      if (sucursalUsuario === 2) {
-                        stock = item.stockSucursalDos;
-                      } 
                     } else {
                       Swal.fire({
                         icon: "error",
@@ -117,6 +124,7 @@ $(document).ready(function () {
 
                     return {
                       value: item.id,
+                      stock: [item.stockSucursalUno, item.stockSucursalDos],
                       label: `[${item.codigoIdentificacion}] ${item.nombreComun} ${item.nombreTecnico} ${item.descripcion} - $${item.precio}`,
                     };
                   })
@@ -125,45 +133,52 @@ $(document).ready(function () {
             });
           },
           select: (event, ui) => {
-            if (stock === 0) {
+            console.log("sucursal usuario: ", sucursalUsuario);
+            console.log("item stock: ", ui.item.stock[0])
+            if (sucursalUsuario === 1 && ui.item.stock[0] === 0 || 
+              sucursalUsuario === 2 && ui.item.stock[1] === 0) 
+            {
               Swal.fire({
                 icon: "error",
                 title: "No hay stock",
-                text: "No es posible agregar el producto seleccionado a la venta.",
+                text: "No es posible agregar el producto a la venta.",
               });
               return false;
-            };
-            //Crear una línea
-            let linea = $("#lineas").html();
+            } 
 
-            //Asignar valores a sus celdas
-            let producto = ui.item.label;
-            let descripcion = producto.split("]")[1].trim(); //let descripcion = producto.split('-')[0];
-            descripcion = descripcion.split("-")[0];
-            let precio = producto.split("-")[1];
-            precio = precio.split("$")[1];
-            let id = ui.item.value;
-            let codigoIdentificacion = producto.split("[")[1].split("]")[0];
+          //  if (hayStock) {
+             //Crear una línea
+             let linea = $("#lineas").html();
 
-            // console.log(`Producto seleccionado: ${producto}`);
-
-            //Verificar si es repetido el producto...
-            if (lineasUtil.esRepetido(id)) {
-              lineasUtil.incrementarCantidad(id, precio);
-              return false;
-            }
-
-            //Reemplazar los valores de la linea auxiliar por los buscados...
-            linea = linea.replace(/{ID}/g, id);
-            linea = linea.replace(/{CODIGO}/g, codigoIdentificacion);
-            linea = linea.replace(/{DESCRIPCION}/g, descripcion);
-            linea = linea.replace(/{PRECIO}/g, precio);
-
-            $("#tabla_productos tbody").append(linea);
-
-            // console.log(`id del producto antes de calcularSubtotal ${id}`);
-            // console.log(`precio del producto antes de calcularSubtotal ${precio}`);
-            lineasUtil.calcularSubtotal(id, precio, 1);
+             //Asignar valores a sus celdas
+             let producto = ui.item.label;
+             let descripcion = producto.split("]")[1].trim(); //let descripcion = producto.split('-')[0];
+             descripcion = descripcion.split("-")[0];
+             let precio = producto.split("-")[1];
+             precio = precio.split("$")[1];
+             let id = ui.item.value;
+             let codigoIdentificacion = producto.split("[")[1].split("]")[0];
+ 
+             // console.log(`Producto seleccionado: ${producto}`);
+ 
+             //Verificar si es repetido el producto...
+             if (lineasUtil.esRepetido(id)) {
+               lineasUtil.incrementarCantidad(id, precio);
+               return false;
+             }
+ 
+             //Reemplazar los valores de la linea auxiliar por los buscados...
+             linea = linea.replace(/{ID}/g, id);
+             linea = linea.replace(/{CODIGO}/g, codigoIdentificacion);
+             linea = linea.replace(/{DESCRIPCION}/g, descripcion);
+             linea = linea.replace(/{PRECIO}/g, precio);
+ 
+             $("#tabla_productos tbody").append(linea);
+ 
+             // console.log(`id del producto antes de calcularSubtotal ${id}`);
+             // console.log(`precio del producto antes de calcularSubtotal ${precio}`);
+             lineasUtil.calcularSubtotal(id, precio, 1);
+          //  }
           },
         });
       },
