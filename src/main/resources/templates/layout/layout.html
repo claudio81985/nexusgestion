@@ -52,6 +52,7 @@
         <a 
           th:href="@{/inventario}"
           th:class="${#strings.concat('nav-link link-dark', 
+              #strings.equals(#httpServletRequest.requestURI, '/') or
               #strings.equals(#httpServletRequest.requestURI, '/productos/nuevo') or
               #strings.equals(#httpServletRequest.requestURI, '/productos/moverProducto') or
               #strings.equals(#httpServletRequest.requestURI, '/inventario') ? ' active' : '')}"
